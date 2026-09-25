@@ -5,7 +5,6 @@ export type AnimalClass = 'reptile' | 'amphibian' | 'bird' | 'mammal' | 'fish' |
 export interface AnimalProfile {
   id: string;
   name: string;
-  emoji: string;
   animalClass: AnimalClass;
   /** Short title shown under the name, e.g. "The Eight-Armed Genius". */
   tagline: string;

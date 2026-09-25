@@ -6,7 +6,7 @@ import { generateResult } from '../src/lib/resultGenerator';
 import { scoreAnswers } from '../src/lib/scoring';
 import { validateAnimal } from '../src/lib/validation';
 import type { Answer, TraitMappings } from '../src/types';
-import { ANIMALS, cloneAnimal, personaPicker, runQuiz, SNOW_LEOPARD } from './helpers';
+import { ANIMALS, cloneAnimal, personaPicker, runQuiz, HONEY_BADGER } from './helpers';
 
 const ctx = createQuizContext();
 
@@ -54,16 +54,16 @@ describe('edge cases', () => {
   });
 
   it('stops once only one candidate remains', () => {
-    const single = createQuizContext({ animals: [SNOW_LEOPARD] });
+    const single = createQuizContext({ animals: [HONEY_BADGER] });
     const { answers, evaluation } = runQuiz(single, (qid) => single.questionsById.get(qid)!.options[0]!.id);
     expect(evaluation.stopReason).toBe('certain');
     expect(answers).toHaveLength(single.broadQuestions.length);
-    expect(generateResult(single, answers).animal.id).toBe('snow-leopard');
+    expect(generateResult(single, answers).animal.id).toBe('honey-badger');
   });
 
   it('breaks exact ties by data order', () => {
-    const twinA = cloneAnimal(SNOW_LEOPARD, { id: 'twin-a', name: 'Twin A' });
-    const twinB = cloneAnimal(SNOW_LEOPARD, { id: 'twin-b', name: 'Twin B' });
+    const twinA = cloneAnimal(HONEY_BADGER, { id: 'twin-a', name: 'Twin A' });
+    const twinB = cloneAnimal(HONEY_BADGER, { id: 'twin-b', name: 'Twin B' });
     const answers = runQuiz(ctx, personaPicker(ctx, 'canada-lynx')).answers;
 
     const ab = createQuizContext({ animals: [...ANIMALS, twinA, twinB] });
@@ -78,22 +78,22 @@ describe('edge cases', () => {
   });
 
   it('accepts a new animal with a valid profile and rejects invalid ones', () => {
-    expect(validateAnimal(SNOW_LEOPARD)).toEqual([]);
+    expect(validateAnimal(HONEY_BADGER)).toEqual([]);
 
-    const outOfRange = cloneAnimal(SNOW_LEOPARD, { profile: { ...SNOW_LEOPARD.profile, mind: { intellect: 1.5 } } });
+    const outOfRange = cloneAnimal(HONEY_BADGER, { profile: { ...HONEY_BADGER.profile, mind: { intellect: 1.5 } } });
     expect(validateAnimal(outOfRange).join()).toMatch(/between 0 and 1/);
 
-    const unknownTrait = cloneAnimal(SNOW_LEOPARD, {
-      profile: { ...SNOW_LEOPARD.profile, mind: { telepathy: 1 } as never },
+    const unknownTrait = cloneAnimal(HONEY_BADGER, {
+      profile: { ...HONEY_BADGER.profile, mind: { telepathy: 1 } as never },
     });
     expect(validateAnimal(unknownTrait).join()).toMatch(/unknown trait/);
 
     expect(() => createQuizContext({ animals: [...ANIMALS, outOfRange] })).toThrow(/Invalid quiz data/);
-    expect(() => createQuizContext({ animals: [...ANIMALS, { ...SNOW_LEOPARD, id: 'tiger' }] })).toThrow(/Duplicate/);
+    expect(() => createQuizContext({ animals: [...ANIMALS, { ...HONEY_BADGER, id: 'tiger' }] })).toThrow(/Duplicate/);
   });
 
-  it('ships with a valid data set of exactly 52 animals', () => {
-    expect(ANIMALS).toHaveLength(52);
+  it('ships with a valid data set of exactly 69 animals', () => {
+    expect(ANIMALS).toHaveLength(69);
     expect(ANIMALS.flatMap(validateAnimal)).toEqual([]);
     expect(Object.keys(TRAIT_MAPPINGS).sort()).toEqual(QUESTIONS.map((q) => q.id).sort());
   });

@@ -3,9 +3,9 @@
  *
  *  1. Ideal personas: for every animal, answer each question the way that animal
  *     most likely would. Every animal should win its own persona.
- *  2. Noisy personas: sample answers from P(option | animal) — how often does the
+ *  2. Noisy personas: sample answers from P(option | animal). How often does the
  *     "true" animal land in the top 1 / top 3?
- *  3. Random users: uniformly random answers — how evenly are results spread,
+ *  3. Random users: uniformly random answers. How evenly are results spread,
  *     and how many questions does it take?
  */
 import { evaluateQuiz } from '../src/lib/adaptiveQuiz';
@@ -53,7 +53,7 @@ animals.forEach((animal, a) => {
   const rank = ranked.findIndex((s) => s.animal.id === animal.id) + 1;
   lengths.push(answers.length);
   if (rank === 1) reachable++;
-  const flag = rank === 1 ? '  ' : '✗ ';
+  const flag = rank === 1 ? '  ' : 'x ';
   console.log(
     `${flag}${animal.name.padEnd(26)} rank ${String(rank).padStart(2)}  q=${answers.length} (${evaluation.stopReason})` +
       `  top=${ranked[0]!.animal.name} ${(ranked[0]!.probability * 100).toFixed(0)}% ` +

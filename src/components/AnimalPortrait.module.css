@@ -38,10 +38,15 @@
   opacity: 0.35;
 }
 
-.emoji {
+.monogram {
   position: relative;
-  font-size: clamp(5rem, 14vw, 9rem);
-  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.4));
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(6rem, 16vw, 11rem);
+  line-height: 1;
+  color: color-mix(in oklab, var(--accent) 40%, var(--text));
+  text-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
 }
 
 .photo {

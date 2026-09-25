@@ -1,7 +1,7 @@
 import { TRAIT_SCHEMA, isTraitId, type TraitGroup } from '../data/traits';
 import type { AnimalProfile, Question, TraitMappings } from '../types';
 
-const REQUIRED_TEXT_FIELDS = ['id', 'name', 'emoji', 'tagline', 'description', 'funFact', 'color'] as const;
+const REQUIRED_TEXT_FIELDS = ['id', 'name', 'tagline', 'description', 'funFact', 'color'] as const;
 
 export function validateAnimal(animal: AnimalProfile): string[] {
   const errors: string[] = [];

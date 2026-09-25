@@ -44,7 +44,7 @@ export const QUESTIONS: Question[] = [
     prompt: 'Who are you bringing with you?',
     kicker: 'Wherever you ended up. Pick your people.',
     options: [
-      { id: 'alone', label: 'Nobody — I work best alone' },
+      { id: 'alone', label: 'Nobody. I work best alone' },
       { id: 'bestFriend', label: 'My best friend' },
       { id: 'family', label: 'My family' },
       { id: 'squad', label: 'My entire squad' },
@@ -129,12 +129,12 @@ export const QUESTIONS: Question[] = [
     prompt: 'Your friends would describe you as…',
     kicker: 'What they say when you leave the room.',
     options: [
-      { id: 'leader', label: 'The leader — somehow everyone ends up following me' },
-      { id: 'chaotic', label: 'The chaotic one — nobody knows what I’m going to do next' },
-      { id: 'dependable', label: 'The dependable one — I’ll always have your back' },
-      { id: 'quiet', label: 'The quiet one — I notice more than I say' },
-      { id: 'comedian', label: 'The comedian — I refuse to take anything seriously' },
-      { id: 'wildcard', label: 'The wildcard — depends who you ask' },
+      { id: 'leader', label: 'The leader: somehow everyone ends up following me' },
+      { id: 'chaotic', label: 'The chaotic one: nobody knows what I’m going to do next' },
+      { id: 'dependable', label: 'The dependable one: I’ll always have your back' },
+      { id: 'quiet', label: 'The quiet one: I notice more than I say' },
+      { id: 'comedian', label: 'The comedian: I refuse to take anything seriously' },
+      { id: 'wildcard', label: 'The wildcard: depends who you ask' },
     ],
   },
   {

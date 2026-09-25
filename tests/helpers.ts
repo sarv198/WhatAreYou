@@ -46,27 +46,27 @@ export function randomPicker(ctx: QuizContext, seed: number) {
   };
 }
 
-export const SNOW_LEOPARD: AnimalProfile = {
-  id: 'snow-leopard',
-  name: 'Snow Leopard',
-  emoji: '🐆',
+/** An animal that is deliberately not in the shipped data, used to test adding new ones. */
+export const HONEY_BADGER: AnimalProfile = {
+  id: 'honey-badger',
+  name: 'Honey Badger',
   animalClass: 'mammal',
-  tagline: 'The Ghost of the Mountains',
-  color: '#b9c2c9',
-  description: 'You are elusive, self-reliant and at home where others struggle.',
-  traits: ['Elusive', 'Self-reliant', 'Calm'],
-  strengths: ['Stealth', 'Endurance', 'Composure'],
-  funFact: 'Snow leopards can’t roar.',
+  tagline: 'The Unbothered Menace',
+  color: '#5a5550',
+  description: 'You are fearless, stubborn and completely unconcerned with what anyone thinks.',
+  traits: ['Fearless', 'Stubborn', 'Resourceful'],
+  strengths: ['Nerve', 'Grit', 'Ingenuity'],
+  funFact: 'Honey badgers have loose, thick skin that lets them twist around and bite back when grabbed.',
   profile: {
-    habitat: { snow: 1, grassland: 0.2 },
-    rhythm: { morning: 0.7, evening: 0.9, night: 0.3, afternoon: 0.1 },
-    lifestyle: { roaming: 0.9, hunter: 0.9, homebody: 0.2, restless: 0.3, appetite: 0.4 },
-    social: { independence: 1, territorial: 0.4, family: 0.4, gregarious: 0, pack: 0, pairBond: 0.1, easygoing: 0.2 },
-    mind: { patience: 0.9, precision: 0.8, intellect: 0.5, curiosity: 0.4, cunning: 0.5, creativity: 0.3 },
-    temperament: { reserve: 1, calm: 0.9, confidence: 0.7, aggression: 0.2, playfulness: 0.3, chaos: 0.1, ambition: 0.3, persistence: 0.7, leadership: 0.2, loyalty: 0.3 },
-    defense: { hide: 0.8, assess: 0.7, flee: 0.6, standGround: 0.3, intimidate: 0.2, exploit: 0.4 },
-    gifts: { camouflage: 1, endurance: 0.8, adaptability: 0.6, strength: 0.6, speed: 0.5, flight: 0 },
-    drive: { aesthetic: 0.7, industrious: 0.1 },
+    habitat: { desert: 0.8, grassland: 0.9, rainforest: 0.2 },
+    rhythm: { morning: 0.3, afternoon: 0.2, evening: 0.8, night: 1 },
+    lifestyle: { roaming: 0.8, hunter: 0.9, homebody: 0.2, restless: 0.8, appetite: 0.9 },
+    social: { independence: 1, territorial: 0.3, family: 0.3, gregarious: 0, pack: 0, pairBond: 0.1, easygoing: 0.2 },
+    mind: { cunning: 0.8, creativity: 0.8, intellect: 0.7, curiosity: 0.7, patience: 0.2, precision: 0.4 },
+    temperament: { aggression: 1, confidence: 1, persistence: 1, chaos: 0.8, calm: 0.3, reserve: 0.3, playfulness: 0.4, ambition: 0.6, leadership: 0.3, loyalty: 0.2 },
+    defense: { standGround: 1, intimidate: 0.8, exploit: 0.7, flee: 0, hide: 0.1, assess: 0.3 },
+    gifts: { strength: 0.7, endurance: 0.9, regeneration: 0.6, adaptability: 0.8, speed: 0.4, camouflage: 0.2, flight: 0 },
+    drive: { industrious: 0.5, aesthetic: 0.1 },
   },
 };
 

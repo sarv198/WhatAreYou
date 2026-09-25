@@ -6,7 +6,7 @@ import { createQuizContext } from '../src/lib/context';
 import { expectedInformationGain } from '../src/lib/informationGain';
 import { scoreAnswers } from '../src/lib/scoring';
 import type { Answer, Question } from '../src/types';
-import { ANIMALS, personaPicker, randomPicker, runQuiz, SNOW_LEOPARD } from './helpers';
+import { ANIMALS, personaPicker, randomPicker, runQuiz, HONEY_BADGER } from './helpers';
 
 const ctx = createQuizContext();
 
@@ -101,11 +101,11 @@ describe('adaptive question selection', () => {
   });
 
   it('incorporates a newly added animal without any other changes', () => {
-    const extended = createQuizContext({ animals: [...ANIMALS, SNOW_LEOPARD] });
+    const extended = createQuizContext({ animals: [...ANIMALS, HONEY_BADGER] });
     expect(extended.animals).toHaveLength(ANIMALS.length + 1);
 
-    const { evaluation } = runQuiz(extended, personaPicker(extended, 'snow-leopard'));
-    expect(evaluation.scores.ranked[0]!.animal.id).toBe('snow-leopard');
+    const { evaluation } = runQuiz(extended, personaPicker(extended, 'honey-badger'));
+    expect(evaluation.scores.ranked[0]!.animal.id).toBe('honey-badger');
 
     for (let seed = 1; seed <= 10; seed++) {
       const run = runQuiz(extended, randomPicker(extended, seed));

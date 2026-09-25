@@ -21,7 +21,7 @@ export interface QuizState {
   cursor: number;
   /**
    * Every selection the user has made, keyed by question id. May include
-   * answers from a path they later abandoned — those pre-fill the question
+   * answers from a path they later abandoned. Those pre-fill the question
    * if it comes up again but never count towards scoring.
    */
   selections: Record<string, string>;

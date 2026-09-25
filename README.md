@@ -1,6 +1,6 @@
 # What Animal Are You?
 
-An adaptive personality quiz that matches you to one of 52 animals. It isn't a fixed list of questions. After four broad questions, each question is picked live because it best separates the animals you might still be.
+An adaptive personality quiz that matches you to one of 69 animals. It isn't a fixed list of questions. After four broad questions, each question is picked live because it best separates the animals you might still be.
 
 ```bash
 npm install
@@ -32,21 +32,20 @@ Append an object to `src/data/animals.ts`:
 
 ```ts
 {
-  id: 'snow-leopard',
-  name: 'Snow Leopard',
-  emoji: '🐆',
+  id: 'honey-badger',
+  name: 'Honey Badger',
   animalClass: 'mammal',
-  tagline: 'The Ghost of the Mountains',
-  color: '#b9c2c9',
-  wikiTitle: 'Snow_leopard',          // optional: pulls a photo from Wikipedia
-  description: 'You are elusive, self-reliant…',
-  traits: ['Elusive', 'Self-reliant', 'Calm'],
-  strengths: ['Stealth', 'Endurance', 'Composure'],
-  funFact: 'Snow leopards can’t roar.',
+  tagline: 'The Unbothered Menace',
+  color: '#5a5550',
+  wikiTitle: 'Honey_badger',          // optional: pulls a photo from Wikipedia
+  description: 'You are fearless, stubborn…',
+  traits: ['Fearless', 'Stubborn', 'Resourceful'],
+  strengths: ['Nerve', 'Grit', 'Ingenuity'],
+  funFact: 'Honey badgers have loose, thick skin that lets them twist around and bite back.',
   profile: {
-    habitat: { snow: 1 },
-    rhythm: { morning: 0.7, evening: 0.9 },
-    social: { independence: 1 },
+    habitat: { desert: 0.8, grassland: 0.9 },
+    rhythm: { evening: 0.8, night: 1 },
+    temperament: { aggression: 1, confidence: 1 },
     // …only the traits that matter; the rest fall back to neutral defaults
   },
 }

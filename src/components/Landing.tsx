@@ -71,7 +71,7 @@ export function Landing({ animals, onStart, onRestart, resumeLabel }: LandingPro
         animate={{ opacity: 1 }}
         transition={{ delay: 1.1, duration: 1 }}
       >
-        <span>Adaptive — every answer changes the next question</span>
+        <span>Adaptive: every answer changes the next question</span>
         <span className={styles.dot} aria-hidden>·</span>
         <span>Usually 9–13 questions</span>
         <span className={styles.dot} aria-hidden>·</span>

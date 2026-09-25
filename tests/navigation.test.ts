@@ -80,7 +80,7 @@ describe('quiz navigation', () => {
     state = reduce(state, { type: 'answer', optionId: newHabitat });
     expect(state.selections.habitat).toBe(newHabitat);
 
-    // The scores must equal a fresh computation — nothing from the old answer lingers.
+    // The scores must equal a fresh computation; nothing from the old answer lingers.
     const view = deriveQuizView(ctx, state);
     const fresh = scoreAnswers(ctx, [{ questionId: 'habitat', optionId: newHabitat }]);
     expect(view.candidateScores.map((s) => s.probability)).toEqual(fresh.ranked.map((s) => s.probability));

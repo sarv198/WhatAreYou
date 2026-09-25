@@ -17,7 +17,7 @@ function save(state: QuizState) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   } catch {
-    // Storage unavailable (private mode, quota) — progress just won't survive a reload.
+    // Storage unavailable (private mode, quota); progress just won't survive a reload.
   }
 }
 

@@ -85,7 +85,7 @@ export function compatibility(profile: UserProfile, animalVector: TraitVector): 
 
 export interface CandidateScore {
   animal: AnimalProfile;
-  /** Position in the animal list — used for deterministic tie-breaking. */
+  /** Position in the animal list, used for deterministic tie-breaking. */
   index: number;
   compatibility: number;
   logit: number;

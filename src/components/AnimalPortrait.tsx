@@ -30,7 +30,7 @@ export function AnimalPortrait({ animal, className }: AnimalPortraitProps) {
               <ellipse key={i} cx="100" cy="150" rx={20 + i * 16} ry={14 + i * 13} />
             ))}
           </svg>
-          <span className={styles.emoji}>{animal.emoji}</span>
+          <span className={styles.monogram}>{animal.name.charAt(0)}</span>
         </div>
         {showPhoto && (
           <img

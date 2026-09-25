@@ -4,7 +4,7 @@ import type { QuizResult } from '../lib/resultGenerator';
 import type { CandidateScore } from '../lib/scoring';
 import type { AnimalProfile } from '../types';
 import { AnimalPortrait } from './AnimalPortrait';
-import { Field } from './Field';
+import { CLASS_COLORS, Field } from './Field';
 import styles from './ResultScreen.module.css';
 
 interface ResultScreenProps {
@@ -26,7 +26,7 @@ export function ResultScreen({ result, animals, scores, onRestart, onBack }: Res
 
   useEffect(() => {
     const previous = document.title;
-    document.title = `I’m ${article(animal.name)} ${animal.name} — What Animal Are You?`;
+    document.title = `I’m ${article(animal.name)} ${animal.name} | What Animal Are You?`;
     window.scrollTo({ top: 0 });
     return () => {
       document.title = previous;
@@ -46,7 +46,7 @@ export function ResultScreen({ result, animals, scores, onRestart, onBack }: Res
   );
 
   const share = async () => {
-    const text = `I’m ${article(animal.name)} ${animal.name} ${animal.emoji} — ${animal.tagline}. What animal are you?`;
+    const text = `I’m ${article(animal.name)} ${animal.name}: ${animal.tagline}. What animal are you?`;
     const url = window.location.href.split('#')[0]!;
     try {
       if (navigator.share) {
@@ -75,7 +75,7 @@ export function ResultScreen({ result, animals, scores, onRestart, onBack }: Res
             You are {article(animal.name)}…
           </motion.p>
           <motion.h1 className={styles.name} variants={rise} initial="hidden" animate="show" custom={1}>
-            {animal.name} <span className={styles.emoji}>{animal.emoji}</span>
+            {animal.name}
           </motion.h1>
           <motion.p className={styles.tagline} variants={rise} initial="hidden" animate="show" custom={2}>
             {animal.tagline}
@@ -131,9 +131,11 @@ export function ResultScreen({ result, animals, scores, onRestart, onBack }: Res
             {result.matches.map((m, i) => (
               <li key={m.animal.id} data-winner={i === 0 || undefined}>
                 <span className={styles.rank}>{i + 1}</span>
-                <span className={styles.matchEmoji} aria-hidden>
-                  {m.animal.emoji}
-                </span>
+                <span
+                  className={styles.matchDot}
+                  style={{ background: CLASS_COLORS[m.animal.animalClass] }}
+                  aria-hidden
+                />
                 <span className={styles.matchName}>{m.animal.name}</span>
                 <span className={styles.matchScore}>{m.matchStrength}% similarity</span>
                 <span className={styles.bar} aria-hidden>
@@ -148,7 +150,7 @@ export function ResultScreen({ result, animals, scores, onRestart, onBack }: Res
             ))}
           </ol>
           <p className={styles.note}>
-            A playful personality model, not science. Similarity scores are for fun — please don’t put them on your CV.
+            A playful personality model, not science. Similarity scores are for fun, so please don’t put them on your CV.
           </p>
         </motion.article>
 

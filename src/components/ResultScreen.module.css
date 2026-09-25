@@ -70,13 +70,6 @@
   text-wrap: balance;
 }
 
-.emoji {
-  display: inline-block;
-  font-size: 0.7em;
-  vertical-align: 0.08em;
-  text-transform: none;
-}
-
 .tagline {
   font-family: var(--font-display);
   font-style: italic;
@@ -251,8 +244,11 @@
   font-variant-numeric: tabular-nums;
 }
 
-.matchEmoji {
-  font-size: 1.2rem;
+.matchDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  justify-self: center;
 }
 
 .matchName {

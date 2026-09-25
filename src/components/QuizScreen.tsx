@@ -83,7 +83,7 @@ export function QuizScreen({ animals, broadCount, view, insight, onAnswer, onBac
       : 'Narrowing in';
 
   const why = isBroad
-    ? 'The first few questions sketch the big picture — where you live, how you spend your time, who you run with and when you come alive.'
+    ? 'The first few questions sketch the big picture: where you live, how you spend your time, who you run with and when you come alive.'
     : `Chosen because it best separates the ${view.pool.length} animals still in the running. Your answers decide what comes next.`;
 
   return (
