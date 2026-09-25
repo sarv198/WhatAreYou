@@ -1,6 +1,6 @@
 # What Animal Are You?
 
-An adaptive personality quiz that matches you to one of 69 animals. It isn't a fixed list of questions. After four broad questions, each question is picked live because it best separates the animals you might still be.
+An adaptive personality quiz that matches you to one of 70 animals. It isn't a fixed list of questions. After four broad questions, each question is picked live because it best separates the animals you might still be.
 
 ```bash
 npm install

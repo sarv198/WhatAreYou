@@ -248,8 +248,8 @@ export const TRAIT_MAPPINGS: TraitMappings = {
     flight: { 'gifts.flight': 1 },
     camouflage: { 'gifts.camouflage': 1, 'defense.hide': 0.3 },
     regeneration: { 'gifts.regeneration': 1, 'gifts.endurance': 0.4 },
-    intelligence: { 'mind.intellect': 1 },
-    adaptation: { 'gifts.adaptability': 1 },
+    indestructible: { 'gifts.armor': 1, 'gifts.endurance': 0.5, 'defense.standGround': 0.3 },
+    poison: { 'gifts.venom': 1, 'defense.intimidate': 0.2 },
   },
 
   personalSpace: {

@@ -9,6 +9,8 @@ interface TraitMeta {
   label: string;
   /** Noun phrase used when explaining a match: "you share its {phrase}". */
   phrase: string;
+  /** Overrides the group default for traits most animals simply don't have. */
+  defaultValue?: number;
 }
 
 interface TraitGroupMeta {
@@ -115,6 +117,8 @@ export const TRAIT_SCHEMA = {
       regeneration: { label: 'Resilient', phrase: 'remarkable powers of recovery' },
       adaptability: { label: 'Adaptable', phrase: 'chameleon-level adaptability' },
       endurance: { label: 'Enduring', phrase: 'serious staying power' },
+      armor: { label: 'Armoured', phrase: 'a near-indestructible shell', defaultValue: 0.2 },
+      venom: { label: 'Venomous', phrase: 'a dangerously toxic edge', defaultValue: 0 },
     },
   },
   drive: {
@@ -145,13 +149,13 @@ export interface TraitDefinition {
 
 export const TRAIT_DEFINITIONS: readonly TraitDefinition[] = Object.entries(TRAIT_SCHEMA).flatMap(
   ([group, meta]) =>
-    Object.entries(meta.traits).map(([key, trait]) => ({
+    Object.entries(meta.traits).map(([key, trait]: [string, TraitMeta]) => ({
       id: `${group}.${key}` as TraitId,
       group: group as TraitGroup,
       key,
       label: trait.label,
       phrase: trait.phrase,
-      defaultValue: meta.defaultValue,
+      defaultValue: trait.defaultValue ?? meta.defaultValue,
     })),
 );
 

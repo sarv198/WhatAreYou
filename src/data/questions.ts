@@ -208,8 +208,8 @@ export const QUESTIONS: Question[] = [
       { id: 'flight', label: 'Flight' },
       { id: 'camouflage', label: 'Camouflage / invisibility' },
       { id: 'regeneration', label: 'Regeneration' },
-      { id: 'intelligence', label: 'Super intelligence' },
-      { id: 'adaptation', label: 'Adaptation' },
+      { id: 'indestructible', label: 'Indestructible' },
+      { id: 'poison', label: 'Poison' },
     ],
   },
   {
