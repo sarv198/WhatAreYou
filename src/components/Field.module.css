@@ -1,0 +1,68 @@
+.field {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.orbit {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 0.6;
+  stroke-dasharray: 1 5;
+}
+
+.constellation {
+  fill: none;
+  stroke: rgba(217, 179, 108, 0.45);
+  stroke-width: 0.8;
+  stroke-linejoin: round;
+}
+
+.spinSlow {
+  transform-origin: 0 0;
+  animation: spin 220s linear infinite;
+}
+
+.spinSlower {
+  transform-origin: 0 0;
+  animation: spin 600s linear infinite;
+}
+
+.twinkle {
+  animation: twinkle 6s ease-in-out infinite;
+}
+
+.pulse {
+  fill: none;
+  stroke-width: 1.2;
+  transform-origin: 0 0;
+  animation: pulse 2.4s var(--ease-out) infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  to {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+}

@@ -1,0 +1,82 @@
+.portrait {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 999px 999px var(--radius-lg) var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  box-shadow:
+    0 40px 90px -40px color-mix(in srgb, var(--accent) 70%, transparent),
+    var(--shadow);
+  background: var(--bg-raised);
+}
+
+.art {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 60%, color-mix(in srgb, var(--accent) 55%, transparent), transparent 65%),
+    linear-gradient(180deg, color-mix(in srgb, var(--accent) 25%, #0b110e), #0b110e);
+}
+
+.contours {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: color-mix(in srgb, var(--accent) 45%, white);
+  stroke-width: 0.5;
+  opacity: 0.35;
+}
+
+.emoji {
+  position: relative;
+  font-size: clamp(5rem, 14vw, 9rem);
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.4));
+}
+
+.photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.06);
+  transition:
+    opacity 1.2s var(--ease-out),
+    transform 2.4s var(--ease-out);
+}
+
+.photo[data-loaded] {
+  opacity: 1;
+  transform: none;
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent 55%, rgba(8, 12, 10, 0.55)),
+    radial-gradient(ellipse at center, transparent 55%, rgba(8, 12, 10, 0.35));
+}
+
+.credit {
+  font-size: 0.72rem;
+  color: var(--text-faint);
+  text-align: center;
+}
+
+.credit a {
+  color: var(--text-muted);
+}

@@ -1,0 +1,263 @@
+.quiz {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem clamp(20px, 4vw, 56px);
+}
+
+.brand {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  transition: color 0.2s;
+}
+
+.brand:hover {
+  color: var(--text);
+}
+
+.controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.ghost {
+  appearance: none;
+  cursor: pointer;
+  background: none;
+  border: 1px solid var(--line);
+  color: var(--text-muted);
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font-size: 0.88rem;
+  white-space: nowrap;
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    background 0.2s;
+}
+
+.ghost:hover {
+  color: var(--text);
+  border-color: var(--line-strong);
+}
+
+.ghost[data-warn] {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.9fr);
+  gap: clamp(24px, 5vw, 80px);
+  align-items: center;
+  padding: 0 clamp(20px, 4vw, 56px) clamp(32px, 5vw, 64px);
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.questionCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  min-width: 0;
+}
+
+.phase {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.phaseDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--sage);
+  box-shadow: 0 0 0 4px rgba(143, 179, 154, 0.18);
+}
+
+.phaseDot[data-adaptive] {
+  background: var(--gold);
+  box-shadow: 0 0 0 4px var(--gold-soft);
+  animation: breathe 2.4s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  50% {
+    box-shadow: 0 0 0 7px rgba(217, 179, 108, 0.05);
+  }
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(20, 29, 25, 0.7), rgba(14, 20, 17, 0.5));
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow);
+}
+
+.fieldBox {
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.4rem;
+  align-items: center;
+}
+
+.count {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.count strong {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 350;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--gold);
+}
+
+.count span {
+  font-size: 0.8rem;
+  line-height: 1.3;
+  color: var(--text-muted);
+  max-width: 8.5em;
+}
+
+.certainty {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.certaintyLabel {
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+.meter {
+  height: 4px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.meterFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--sage), var(--gold));
+  transform-origin: left;
+  border-radius: inherit;
+}
+
+.narration {
+  min-height: 1.5em;
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--text);
+  font-size: 1.02rem;
+}
+
+.why {
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--text-faint);
+  border-top: 1px solid var(--line);
+  padding-top: 1rem;
+}
+
+@media (max-width: 480px) {
+  .topbar {
+    padding: 0.9rem 16px;
+  }
+
+  .brand {
+    font-size: 0.95rem;
+  }
+
+  .ghost {
+    padding: 0.45rem 0.8rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .stage {
+    padding-inline: 16px;
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 1.5rem;
+  }
+
+  .panel {
+    order: -1;
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    grid-template-areas:
+      'field stats'
+      'field narration';
+    gap: 0.4rem 1rem;
+    padding: 0.9rem 1rem;
+    border-radius: var(--radius);
+  }
+
+  .fieldBox {
+    grid-area: field;
+  }
+
+  .stats {
+    grid-area: stats;
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+
+  .count strong {
+    font-size: 1.8rem;
+  }
+
+  .count span {
+    max-width: none;
+  }
+
+  .narration {
+    grid-area: narration;
+    font-size: 0.88rem;
+    min-height: 0;
+  }
+
+  .why {
+    display: none;
+  }
+}
