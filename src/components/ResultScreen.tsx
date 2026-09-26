@@ -19,6 +19,8 @@ interface ResultScreenProps {
   onBack: () => void;
 }
 
+const countFormatter = new Intl.NumberFormat('en-US');
+
 function article(name: string): 'a' | 'an' {
   return /^[aeiou]/i.test(name) ? 'an' : 'a';
 }
@@ -112,15 +114,19 @@ export function ResultScreen({ result, animals, scores, recorded, onRestart, onB
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: reduceMotion ? 0 : 0.8, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               >
-                {shareSummary.kind === 'first' ? (
+                {shareSummary.others === 0 ? (
                   <>
-                    You’re the <strong>first person</strong> to get the {animal.name}.
+                    You’re the <strong>first person</strong> to take this quiz.
                   </>
                 ) : (
                   <>
-                    <strong>{formatShare(shareSummary.share)}</strong> of other people who took this quiz{' '}
-                    {shareSummary.share >= 0.01 ? 'are' : 'is'} also {article(animal.name)} {animal.name}.
-                    {shareSummary.rarity === 'rare' && ' You’re a rare one.'}
+                    <strong>
+                      {countFormatter.format(shareSummary.sameAnimal)}/{countFormatter.format(shareSummary.others)}
+                    </strong>{' '}
+                    of quiz takers got the same animal as you
+                    {shareSummary.showPercent && shareSummary.share !== null && ` (${formatShare(shareSummary.share)})`}.
+                    {shareSummary.sameAnimal === 0 && ' You’re the first!'}
+                    {shareSummary.sameAnimal > 0 && shareSummary.rarity === 'rare' && ' You’re a rare one.'}
                     {shareSummary.rarity === 'common' && ' You’re in good company.'}
                   </>
                 )}

@@ -75,18 +75,20 @@ describe('completion stats API', () => {
 });
 
 describe('same-animal share', () => {
-  it('stays hidden until there are enough completions to be meaningful', () => {
-    expect(summarizeShare({ total: MIN_COMPLETIONS_FOR_SHARE - 1, animalCount: 20 }, 80)).toBeNull();
-    expect(summarizeShare({ total: MIN_COMPLETIONS_FOR_SHARE, animalCount: 20 }, 80)).not.toBeNull();
+  it('always reports the raw count, but only adds a percentage once it is meaningful', () => {
+    expect(summarizeShare({ total: 13, animalCount: 3 }, 80)).toMatchObject({ sameAnimal: 2, others: 12, showPercent: false, rarity: null });
+    expect(summarizeShare({ total: MIN_COMPLETIONS_FOR_SHARE - 1, animalCount: 20 }, 80).showPercent).toBe(false);
+    expect(summarizeShare({ total: MIN_COMPLETIONS_FOR_SHARE, animalCount: 20 }, 80).showPercent).toBe(true);
   });
 
   it('excludes the user’s own completion', () => {
     // 201 completions including yours; 11 ended on your animal, 10 of them other people.
-    expect(summarizeShare({ total: 201, animalCount: 11 }, 80)).toMatchObject({ kind: 'share', share: 10 / 200 });
+    expect(summarizeShare({ total: 201, animalCount: 11 }, 80)).toMatchObject({ sameAnimal: 10, others: 200, share: 10 / 200 });
   });
 
-  it('recognises being the first person to get an animal', () => {
-    expect(summarizeShare({ total: 500, animalCount: 1 }, 80)).toEqual({ kind: 'first' });
+  it('handles being the first to get an animal, and the first to take the quiz at all', () => {
+    expect(summarizeShare({ total: 500, animalCount: 1 }, 80)).toMatchObject({ sameAnimal: 0, others: 499 });
+    expect(summarizeShare({ total: 1, animalCount: 1 }, 80)).toMatchObject({ sameAnimal: 0, others: 0, share: null, showPercent: false });
   });
 
   it('labels rarity relative to an even split across animals', () => {
@@ -97,7 +99,7 @@ describe('same-animal share', () => {
   });
 
   it('formats percentages readably', () => {
-    expect(formatShare(0.004)).toBe('Less than 1%');
+    expect(formatShare(0.004)).toBe('less than 1%');
     expect(formatShare(0.038)).toBe('3.8%');
     expect(formatShare(0.05)).toBe('5%');
     expect(formatShare(0.237)).toBe('24%');
