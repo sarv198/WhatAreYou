@@ -1,5 +1,7 @@
-import { motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
+import { useAnimalStats, type RecordedCompletion } from '../hooks/useQuizCount';
+import { formatShare, summarizeShare } from '../lib/animalShare';
 import type { QuizResult } from '../lib/resultGenerator';
 import type { CandidateScore } from '../lib/scoring';
 import type { AnimalProfile } from '../types';
@@ -11,6 +13,8 @@ interface ResultScreenProps {
   result: QuizResult;
   animals: readonly AnimalProfile[];
   scores: readonly CandidateScore[];
+  /** Stats returned when this result was just recorded, if it was. */
+  recorded: RecordedCompletion | null;
   onRestart: () => void;
   onBack: () => void;
 }
@@ -19,9 +23,11 @@ function article(name: string): 'a' | 'an' {
   return /^[aeiou]/i.test(name) ? 'an' : 'a';
 }
 
-export function ResultScreen({ result, animals, scores, onRestart, onBack }: ResultScreenProps) {
+export function ResultScreen({ result, animals, scores, recorded, onRestart, onBack }: ResultScreenProps) {
   const reduceMotion = useReducedMotion();
   const { animal } = result;
+  const animalStats = useAnimalStats(animal.id, recorded);
+  const shareSummary = animalStats ? summarizeShare(animalStats, animals.length) : null;
   const [shareState, setShareState] = useState<'idle' | 'copied' | 'failed'>('idle');
 
   useEffect(() => {
@@ -98,6 +104,29 @@ export function ResultScreen({ result, animals, scores, onRestart, onBack }: Res
               <small>out of 100 · vibes-based</small>
             </span>
           </motion.div>
+          <AnimatePresence>
+            {shareSummary && (
+              <motion.p
+                className={styles.shareLine}
+                initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: reduceMotion ? 0 : 0.8, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {shareSummary.kind === 'first' ? (
+                  <>
+                    You’re the <strong>first person</strong> to get the {animal.name}.
+                  </>
+                ) : (
+                  <>
+                    <strong>{formatShare(shareSummary.share)}</strong> of other people who took this quiz{' '}
+                    {shareSummary.share >= 0.01 ? 'are' : 'is'} also {article(animal.name)} {animal.name}.
+                    {shareSummary.rarity === 'rare' && ' You’re a rare one.'}
+                    {shareSummary.rarity === 'common' && ' You’re in good company.'}
+                  </>
+                )}
+              </motion.p>
+            )}
+          </AnimatePresence>
         </div>
       </section>
 

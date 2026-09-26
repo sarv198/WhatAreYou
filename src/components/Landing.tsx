@@ -2,12 +2,14 @@ import { motion } from 'motion/react';
 import type { AnimalProfile } from '../types';
 import { Field } from './Field';
 import styles from './Landing.module.css';
+import { QuizCounter } from './QuizCounter';
 
 interface LandingProps {
   animals: readonly AnimalProfile[];
   onStart: () => void;
   onRestart: () => void;
   resumeLabel: string | null;
+  quizCount: number | null;
 }
 
 const rise = {
@@ -19,7 +21,7 @@ const rise = {
   }),
 };
 
-export function Landing({ animals, onStart, onRestart, resumeLabel }: LandingProps) {
+export function Landing({ animals, onStart, onRestart, resumeLabel, quizCount }: LandingProps) {
   return (
     <main className={styles.landing}>
       <motion.div
@@ -58,6 +60,7 @@ export function Landing({ animals, onStart, onRestart, resumeLabel }: LandingPro
               Find my animal <span aria-hidden>→</span>
             </button>
           )}
+          <QuizCounter count={quizCount} variant="landing" />
         </motion.div>
 
         <motion.p className={styles.disclaimer} variants={rise} initial="hidden" animate="show" custom={4}>

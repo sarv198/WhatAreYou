@@ -5,20 +5,38 @@ import { QuizScreen } from './components/QuizScreen';
 import { ResultScreen } from './components/ResultScreen';
 import { Revealing } from './components/Revealing';
 import { useQuiz } from './hooks/useQuiz';
+import { useQuizCount } from './hooks/useQuizCount';
 import { createQuizContext } from './lib/context';
+import { startNewRun } from './lib/statsClient';
 
 const ctx = createQuizContext();
 
 export function App() {
   const { state, view, actions, insight, hasProgress, resumeLabel } = useQuiz(ctx);
+  const { count: quizCount, lastRecorded, recordCompletion } = useQuizCount();
 
-  // Play the reveal only when a quiz has just been completed, not when restoring a saved result.
+  const start = useCallback(() => {
+    if (!hasProgress) startNewRun();
+    actions.start();
+  }, [actions, hasProgress]);
+
+  const restart = useCallback(() => {
+    startNewRun();
+    actions.restart();
+  }, [actions]);
+
+  // Play the reveal (and count the completion) only when a quiz has just been
+  // completed, not when restoring a saved result.
   const [revealing, setRevealing] = useState(false);
   const previousStatus = useRef(state.status);
+  const resultAnimalId = view.result?.animal.id;
   useEffect(() => {
-    if (previousStatus.current === 'quiz' && state.status === 'result') setRevealing(true);
+    if (previousStatus.current === 'quiz' && state.status === 'result') {
+      setRevealing(true);
+      if (resultAnimalId) void recordCompletion(resultAnimalId);
+    }
     previousStatus.current = state.status;
-  }, [state.status]);
+  }, [state.status, resultAnimalId, recordCompletion]);
   const finishReveal = useCallback(() => setRevealing(false), []);
 
   const screen =
@@ -47,9 +65,10 @@ export function App() {
           {screen === 'intro' && (
             <Landing
               animals={ctx.animals}
-              onStart={actions.start}
-              onRestart={actions.restart}
+              onStart={start}
+              onRestart={restart}
               resumeLabel={hasProgress ? resumeLabel() : null}
+              quizCount={quizCount}
             />
           )}
           {screen === 'quiz' && view.currentQuestion && (
@@ -58,9 +77,10 @@ export function App() {
               broadCount={ctx.broadQuestions.length}
               view={view}
               insight={insight}
+              quizCount={quizCount}
               onAnswer={actions.answer}
               onBack={actions.back}
-              onRestart={actions.restart}
+              onRestart={restart}
               onExit={actions.exit}
             />
           )}
@@ -72,7 +92,8 @@ export function App() {
               result={view.result}
               animals={ctx.animals}
               scores={view.candidateScores}
-              onRestart={actions.restart}
+              recorded={lastRecorded}
+              onRestart={restart}
               onBack={actions.back}
             />
           )}

@@ -132,6 +132,23 @@
   color: var(--text-faint);
 }
 
+.shareLine {
+  max-width: 34rem;
+  padding: 0.85rem 1.1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.shareLine strong {
+  color: var(--gold);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
 .cards {
   display: grid;
   grid-template-columns: 1.25fr 1fr;

@@ -5,6 +5,7 @@ import type { QuizView } from '../lib/quizState';
 import type { AnimalProfile } from '../types';
 import { Field } from './Field';
 import { QuestionCard } from './QuestionCard';
+import { QuizCounter } from './QuizCounter';
 import styles from './QuizScreen.module.css';
 
 interface QuizScreenProps {
@@ -12,6 +13,7 @@ interface QuizScreenProps {
   broadCount: number;
   view: QuizView;
   insight: Insight | null;
+  quizCount: number | null;
   onAnswer: (optionId: string) => void;
   onBack: () => void;
   onRestart: () => void;
@@ -48,7 +50,17 @@ function narrate(insight: Insight): string {
   return `Still weighing ${insight.remaining} possibilities.`;
 }
 
-export function QuizScreen({ animals, broadCount, view, insight, onAnswer, onBack, onRestart, onExit }: QuizScreenProps) {
+export function QuizScreen({
+  animals,
+  broadCount,
+  view,
+  insight,
+  quizCount,
+  onAnswer,
+  onBack,
+  onRestart,
+  onExit,
+}: QuizScreenProps) {
   const [confirmRestart, setConfirmRestart] = useState(false);
   useEffect(() => {
     if (!confirmRestart) return;
@@ -89,9 +101,12 @@ export function QuizScreen({ animals, broadCount, view, insight, onAnswer, onBac
   return (
     <div className={styles.quiz}>
       <header className={styles.topbar}>
-        <button type="button" className={styles.brand} onClick={onExit}>
-          What animal are you?
-        </button>
+        <div className={styles.brandGroup}>
+          <button type="button" className={styles.brand} onClick={onExit}>
+            What animal are you?
+          </button>
+          <QuizCounter count={quizCount} variant="header" />
+        </div>
         <div className={styles.controls}>
           <button type="button" className={styles.ghost} onClick={onBack} aria-keyshortcuts="Backspace">
             <span aria-hidden>←</span> Back

@@ -1,6 +1,6 @@
 # What Animal Are You?
 
-An adaptive personality quiz that matches you to one of 70 animals. It isn't a fixed list of questions. After four broad questions, each question is picked live because it best separates the animals you might still be.
+An adaptive personality quiz that matches you to one of 80 animals. It isn't a fixed list of questions. After four broad questions, each question is picked live because it best separates the animals you might still be.
 
 ```bash
 npm install
@@ -68,6 +68,18 @@ scripts/       simulate.ts, the tuning harness
 ```
 
 Quiz progress is saved to `localStorage`, so a reload never loses your place. Going back and changing an answer recomputes everything from the answers themselves, and later questions are re-chosen if the path changes.
+
+## Quizzes Taken counter
+
+The landing page and every question show a live "### Quizzes Taken" count, served by a Vercel function at `api/stats.ts` and stored in Upstash Redis. Each attempt counts once: reloading, revisiting a result or changing an answer doesn't add to it, but "Take it again" does. Each completion also records which animal it ended on, and the result page tells people what share of *other* quiz takers got the same animal ("2% of other people who took this quiz are also a Giant Pacific Octopus"), with a nudge when it's rare or common. That line stays hidden until there are 100 completions, so early numbers don't mislead.
+
+To enable it on Vercel:
+
+1. Import the repo at vercel.com/new (Vite is detected automatically).
+2. In the project, open **Storage → Create Database → Upstash for Redis** and connect it to the project. This adds the connection settings for you.
+3. Redeploy.
+
+Until storage is connected, the counter simply stays hidden. During `npm run dev` it works against an in-memory store seeded with about 700 sample completions (so the share line is visible locally); it resets when the dev server restarts and never runs in production.
 
 Animal photos load at runtime from the Wikipedia REST API and are credited on the result page. If a photo can't load, an illustrated fallback is shown instead.
 
