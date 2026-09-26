@@ -208,7 +208,7 @@ export function ResultScreen({ result, animals, scores, recorded, onRestart, onB
 
       <motion.nav className={styles.actions} aria-label="What next" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: reduceMotion ? 0 : 1 }}>
         <button type="button" className={styles.primary} onClick={share}>
-          {shareState === 'copied' ? 'Copied to clipboard' : shareState === 'failed' ? 'Couldn’t share' : 'Share my animal'}
+          {shareState === 'copied' ? 'Copied to clipboard' : shareState === 'failed' ? 'Couldn’t share' : 'Share This Quiz'}
         </button>
         <button type="button" className={styles.secondary} onClick={onRestart}>
           Take it again

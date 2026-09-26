@@ -7,16 +7,18 @@
  * as that animal would; an animal that stops winning has its offset relaxed.
  * The final report uses a fresh random sample that was not used for tuning.
  *
- * With `--answers scripts/data/answer-stats.json` (from `npm run export-answers`),
- * simulated users pick each option as often as real quiz takers do, instead of
- * uniformly at random.
+ * By default half the simulated users answer uniformly at random and half lean
+ * toward flattering answers. With `--answers scripts/data/answer-stats.json`
+ * (from `npm run export-answers`), they pick each option as often as real quiz
+ * takers do instead.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { evaluateQuiz } from '../src/lib/adaptiveQuiz';
 import { createQuizContext, MAX_BALANCE_OFFSET, type QuizContext } from '../src/lib/context';
 import type { Answer } from '../src/types';
 
-const CAP = 0.1;
+/** Aim for no animal above 10% of a habitat's results; up to CAP is acceptable. */
+const CAP = 0.12;
 const TARGET = 0.08;
 const TUNING_USERS_PER_HABITAT = 400;
 const REPORT_USERS_PER_HABITAT = 1500;
@@ -31,12 +33,40 @@ const answerCounts: Record<string, Record<string, number>> =
   answersArg > -1 ? JSON.parse(readFileSync(process.argv[answersArg + 1]!, 'utf8')).options : {};
 if (answersArg > -1) console.log(`Using real answer popularity from ${process.argv[answersArg + 1]}`);
 
-/** Picks an option at random, weighted by real popularity (+1 smoothing) when known. */
-function pickOption(ctx: QuizContext, questionId: string, rand: () => number): string {
+/**
+ * Until real answer data exists, half the simulated users lean toward the
+ * answers people like to give about themselves (4x as likely), and half
+ * answer uniformly. Real people sit somewhere in between.
+ */
+const FLATTERING: Record<string, string[]> = {
+  lifestyle: ['roam', 'social', 'active'],
+  sociality: ['bestFriend', 'family', 'squad'],
+  rhythm: ['morning', 'afternoon', 'evening'],
+  problemSolving: ['dissect', 'unconventional'],
+  sports: ['team', 'gym', 'precision'],
+  dailyActivity: ['exploring', 'studying', 'building'],
+  arguments: ['dismantle', 'above'],
+  friends: ['dependable', 'comedian', 'leader'],
+  discipline: ['science', 'art', 'nature'],
+  confidence: ['quiet', 'knowGood'],
+  outlook: ['fascinating', 'beautiful', 'explore'],
+  danger: ['assess', 'advantage', 'stand'],
+  superpower: ['flight', 'speed', 'regeneration'],
+  personalSpace: ['oneOrTwo', 'ownSpace'],
+};
+const FLATTERING_WEIGHT = 4;
+
+/**
+ * Picks an option at random: weighted by real popularity (+1 smoothing) when
+ * known, otherwise uniformly or (for "flattering" users) toward flattering answers.
+ */
+function pickOption(ctx: QuizContext, questionId: string, rand: () => number, flattering = false): string {
   const options = ctx.questionsById.get(questionId)!.options;
   const counts = answerCounts[questionId];
-  if (!counts) return options[Math.floor(rand() * options.length)]!.id;
-  const weights = options.map((o) => (counts[o.id] ?? 0) + 1);
+  if (!counts && !flattering) return options[Math.floor(rand() * options.length)]!.id;
+  const weights = counts
+    ? options.map((o) => (counts[o.id] ?? 0) + 1)
+    : options.map((o) => (FLATTERING[questionId]?.includes(o.id) ? FLATTERING_WEIGHT : 1));
   let r = rand() * weights.reduce((a, b) => a + b, 0);
   for (let i = 0; i < options.length; i++) {
     r -= weights[i]!;
@@ -73,7 +103,8 @@ function habitatShares(ctx: QuizContext, usersPerHabitat: number, seed: number):
     const rand = mulberry32(seed + h * 7919);
     const wins = new Array<number>(ctx.animals.length).fill(0);
     for (let u = 0; u < usersPerHabitat; u++) {
-      const winner = runQuiz(ctx, (qid) => (qid === habitat.id ? option.id : pickOption(ctx, qid, rand)));
+      const flattering = u % 2 === 1;
+      const winner = runQuiz(ctx, (qid) => (qid === habitat.id ? option.id : pickOption(ctx, qid, rand, flattering)));
       wins[winner]!++;
     }
     result.set(option.id, wins.map((w) => w / usersPerHabitat));

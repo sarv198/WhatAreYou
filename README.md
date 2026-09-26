@@ -55,7 +55,7 @@ That's all. Scoring, question selection, the animal field on screen and the resu
 
 ### Balancing
 
-Some animals naturally fit more answer patterns than others, so without correction a few would dominate (for example, Harris's Hawk took a third of all desert results). `npm run balance` simulates thousands of quiz-takers per habitat and tunes a small per-animal offset in `src/data/balance.ts` until no animal takes more than 10% of any habitat's results, while making sure every animal can still win when answering as itself. The offsets are tiny nudges on compatibility, so they only tip close calls and never override a clear match. The script reports its result on a fresh sample it wasn't tuned on.
+Some animals naturally fit more answer patterns than others, so without correction a few would dominate (for example, Harris's Hawk took a third of all desert results). `npm run balance` simulates thousands of quiz-takers per habitat and tunes a small per-animal offset in `src/data/balance.ts` until no animal takes more than about 10% (at most 12%) of any habitat's results, while making sure every animal can still win when answering as itself. The offsets are tiny nudges on compatibility, so they only tip close calls and never override a clear match. The script reports its result on a fresh sample it wasn't tuned on.
 
 By default the simulated quiz-takers answer at random. Real people don't: they favour flattering answers ("Science & discovery", "The comedian"), which is why animals like the dolphin can still come up more often in practice. Once real completions have built up, tune against them instead:
 

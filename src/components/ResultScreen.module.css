@@ -132,20 +132,26 @@
   color: var(--text-faint);
 }
 
+/* Tinted with the animal's colour, the same hue as the page's background glow. */
 .shareLine {
   max-width: 34rem;
   padding: 0.85rem 1.1rem;
   border-radius: var(--radius);
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid color-mix(in oklab, var(--accent) 45%, transparent);
+  background: linear-gradient(
+    120deg,
+    color-mix(in oklab, var(--accent) 30%, transparent),
+    color-mix(in oklab, var(--accent) 8%, transparent)
+  );
   font-size: 0.95rem;
   line-height: 1.5;
-  color: var(--text-muted);
+  color: var(--text);
 }
 
 .shareLine strong {
-  color: var(--gold);
-  font-weight: 600;
+  /* Lightened toward the text colour so dark accents (orca navy) stay legible. */
+  color: color-mix(in oklab, var(--accent) 45%, white);
+  font-weight: 650;
   font-variant-numeric: tabular-nums;
 }
 
