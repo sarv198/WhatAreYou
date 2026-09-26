@@ -1,7 +1,12 @@
 import { Redis } from '@upstash/redis';
 // Explicit .js extensions: Vercel runs this file as native ES modules, which require them.
 import { ANIMALS } from '../src/data/animals.js';
-import { createStatsHandlers, STATS_KEYS, type StatsStore } from '../src/lib/statsService.js';
+import {
+  createStatsHandlers,
+  findRedisCredentials,
+  STATS_KEYS,
+  type StatsStore,
+} from '../src/lib/statsService.js';
 
 /**
  * Vercel function at /api/stats.
@@ -9,16 +14,14 @@ import { createStatsHandlers, STATS_KEYS, type StatsStore } from '../src/lib/sta
  *   GET ?animal=<id>    → { total, animalCount }
  *   POST { animalId }   → records a completed quiz, returns { total, animalCount }
  *
- * Needs an Upstash Redis database connected to the Vercel project. The
- * marketplace integration provides KV_REST_API_*; a manual setup may use
- * UPSTASH_REDIS_REST_*. Either works.
+ * Needs an Upstash Redis database connected to the Vercel project; see
+ * findRedisCredentials for the environment variable names it accepts.
  */
 function redisStore(): StatsStore | null {
-  const url = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
-  if (!url || !token) return null;
+  const credentials = findRedisCredentials(process.env);
+  if (!credentials) return null;
 
-  const redis = new Redis({ url, token });
+  const redis = new Redis(credentials);
   return {
     getTotal: async () => Number((await redis.get<number>(STATS_KEYS.total)) ?? 0),
     getAnimalStats: async (animalId) => {

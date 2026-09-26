@@ -21,6 +21,26 @@ export const STATS_KEYS = {
   byAnimal: 'quiz:completions:by-animal',
 } as const;
 
+/**
+ * Finds the Upstash REST credentials in the environment. Vercel's storage
+ * integration names them KV_REST_API_URL / KV_REST_API_TOKEN, optionally with
+ * a custom prefix chosen when connecting the database (e.g.
+ * "animalquiz_KV_REST_API_URL"); a manual setup uses UPSTASH_REDIS_REST_*.
+ * The read-only token is never used, since recording completions needs writes.
+ */
+export function findRedisCredentials(env: Record<string, string | undefined>): { url: string; token: string } | null {
+  const bySuffix = (suffix: string) => {
+    if (env[suffix]) return env[suffix];
+    const key = Object.keys(env)
+      .sort()
+      .find((k) => k.endsWith(`_${suffix}`) && env[k]);
+    return key ? env[key] : undefined;
+  };
+  const url = env.UPSTASH_REDIS_REST_URL || bySuffix('KV_REST_API_URL');
+  const token = env.UPSTASH_REDIS_REST_TOKEN || bySuffix('KV_REST_API_TOKEN');
+  return url && token ? { url, token } : null;
+}
+
 const json = (body: unknown, init?: ResponseInit) =>
   new Response(JSON.stringify(body), {
     ...init,

@@ -1,6 +1,30 @@
 import { describe, expect, it } from 'vitest';
 import { formatShare, MIN_COMPLETIONS_FOR_SHARE, summarizeShare } from '../src/lib/animalShare';
-import { createMemoryStore, createStatsHandlers } from '../src/lib/statsService';
+import { createMemoryStore, createStatsHandlers, findRedisCredentials } from '../src/lib/statsService';
+
+describe('Redis credential lookup', () => {
+  it('finds credentials that Vercel saved with a custom prefix', () => {
+    expect(
+      findRedisCredentials({
+        animalquiz_KV_REST_API_TOKEN: 'write-token',
+        animalquiz_KV_REST_API_READ_ONLY_TOKEN: 'read-only-token',
+        animalquiz_KV_REST_API_URL: 'https://example.upstash.io',
+        animalquiz_KV_URL: 'rediss://example',
+        animalquiz_REDIS_URL: 'rediss://example',
+      }),
+    ).toEqual({ url: 'https://example.upstash.io', token: 'write-token' });
+  });
+
+  it('accepts the standard and manual-setup names', () => {
+    expect(findRedisCredentials({ KV_REST_API_URL: 'u', KV_REST_API_TOKEN: 't' })).toEqual({ url: 'u', token: 't' });
+    expect(findRedisCredentials({ UPSTASH_REDIS_REST_URL: 'u', UPSTASH_REDIS_REST_TOKEN: 't' })).toEqual({ url: 'u', token: 't' });
+  });
+
+  it('never uses the read-only token, and reports missing credentials', () => {
+    expect(findRedisCredentials({ x_KV_REST_API_URL: 'u', x_KV_REST_API_READ_ONLY_TOKEN: 'ro' })).toBeNull();
+    expect(findRedisCredentials({})).toBeNull();
+  });
+});
 
 const valid = new Set(['tiger', 'orca']);
 const get = (query = '') => new Request(`http://test/api/stats${query}`);
