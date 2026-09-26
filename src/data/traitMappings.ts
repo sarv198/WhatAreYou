@@ -22,7 +22,7 @@ export const TRAIT_MAPPINGS: TraitMappings = {
       'lifestyle.roaming': -0.4,
       'temperament.calm': 0.3,
     },
-    hunt: { 'lifestyle.hunter': 1, 'temperament.ambition': 0.3, 'temperament.aggression': 0.3 },
+    hunt: { 'lifestyle.hunter': 0.7, 'temperament.ambition': 0.8, 'temperament.persistence': 0.4 },
     social: {
       'social.gregarious': 0.9,
       'social.independence': -0.6,

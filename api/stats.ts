@@ -1,6 +1,7 @@
 import { Redis } from '@upstash/redis';
-import { ANIMALS } from '../src/data/animals';
-import { createStatsHandlers, STATS_KEYS, type StatsStore } from '../src/lib/statsService';
+// Explicit .js extensions: Vercel runs this file as native ES modules, which require them.
+import { ANIMALS } from '../src/data/animals.js';
+import { createStatsHandlers, STATS_KEYS, type StatsStore } from '../src/lib/statsService.js';
 
 /**
  * Vercel function at /api/stats.

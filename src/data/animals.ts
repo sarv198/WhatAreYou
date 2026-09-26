@@ -92,7 +92,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Composure', 'Clear boundaries', 'Loyalty'],
     funFact: 'Timber rattlesnakes return to the same winter den year after year, and seem to recognise their relatives.',
     profile: {
-      habitat: { snow: 0.7, grassland: 0.3, rainforest: 0.1 },
+      habitat: { snow: 0.7, grassland: 0.3, rainforest: 0.6 },
       rhythm: { morning: 0.3, afternoon: 0.5, evening: 0.7, night: 0.6 },
       lifestyle: { homebody: 0.8, hunter: 0.5, roaming: 0.3, restless: 0.1, appetite: 0.4 },
       social: { independence: 0.7, family: 0.6, gregarious: 0.3, territorial: 0.3, pairBond: 0.2, easygoing: 0.2, pack: 0.1 },
@@ -404,7 +404,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Leadership', 'Vision', 'Commitment'],
     funFact: 'Bald eagle pairs keep adding to the same nest for years; one was estimated to weigh around two tonnes.',
     profile: {
-      habitat: { snow: 0.9, ocean: 0.5, grassland: 0.4 },
+      habitat: { snow: 0.9, ocean: 0.5, grassland: 0.4, rainforest: 0.3 },
       rhythm: { morning: 1, afternoon: 0.8, evening: 0.3, night: 0 },
       lifestyle: { roaming: 0.8, hunter: 0.8, restless: 0.3, homebody: 0.4, appetite: 0.5 },
       social: { pairBond: 1, family: 0.7, territorial: 0.8, independence: 0.6, gregarious: 0.3, pack: 0.1, easygoing: 0.2 },
@@ -572,7 +572,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Problem-solving', 'Adaptability', 'Memory'],
     funFact: 'Crows recognise individual human faces, and can hold a grudge for years.',
     profile: {
-      habitat: { grassland: 0.7, snow: 0.6, desert: 0.3, rainforest: 0.3, ocean: 0.3 },
+      habitat: { grassland: 0.7, snow: 0.6, desert: 0.3, rainforest: 0.4, ocean: 0.3 },
       rhythm: { morning: 1, afternoon: 0.8, evening: 0.5, night: 0 },
       lifestyle: { roaming: 0.5, restless: 0.7, appetite: 0.7, hunter: 0.3, homebody: 0.3 },
       social: { family: 0.8, pack: 0.5, gregarious: 0.6, easygoing: 0.5, pairBond: 0.6, independence: 0.2, territorial: 0.5 },
@@ -620,7 +620,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Wit', 'Vigilance', 'Foresight'],
     funFact: 'Blue jays can mimic the calls of hawks, possibly to scare other birds away from food.',
     profile: {
-      habitat: { snow: 0.8, grassland: 0.3 },
+      habitat: { snow: 0.8, grassland: 0.3, rainforest: 0.6 },
       rhythm: { morning: 1, afternoon: 0.7, evening: 0.3, night: 0 },
       lifestyle: { restless: 0.8, roaming: 0.3, homebody: 0.5, appetite: 0.6, hunter: 0.2 },
       social: { family: 0.8, pairBond: 0.8, gregarious: 0.6, pack: 0.5, easygoing: 0.4, territorial: 0.4, independence: 0.2 },
@@ -668,12 +668,12 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Nerve', 'Self-reliance', 'Cunning'],
     funFact: 'A leopard seal once repeatedly brought penguins to a photographer, apparently trying to feed him.',
     profile: {
-      habitat: { snow: 1, ocean: 1 },
-      rhythm: { morning: 0.4, afternoon: 0.4, evening: 0.5, night: 0.5 },
+      habitat: { snow: 0.9, ocean: 1 },
+      rhythm: { morning: 0.6, afternoon: 0.7, evening: 0.5, night: 0.3 },
       lifestyle: { hunter: 1, roaming: 0.6, restless: 0.4, homebody: 0.3, appetite: 0.8 },
       social: { independence: 1, territorial: 0.5, gregarious: 0, pack: 0, family: 0.2, pairBond: 0.1 },
       mind: { cunning: 0.8, intellect: 0.6, curiosity: 0.6, patience: 0.6, precision: 0.6, creativity: 0.4 },
-      temperament: { aggression: 0.8, confidence: 0.9, reserve: 0.6, calm: 0.4, chaos: 0.5, playfulness: 0.4, ambition: 0.5, leadership: 0.3, persistence: 0.6, loyalty: 0.1 },
+      temperament: { aggression: 0.8, confidence: 0.9, reserve: 0.6, calm: 0.4, chaos: 0.5, playfulness: 0.4, ambition: 0.7, leadership: 0.3, persistence: 0.6, loyalty: 0.1 },
       defense: { standGround: 0.8, exploit: 0.8, intimidate: 0.7, flee: 0.1, hide: 0.3, assess: 0.5 },
       gifts: { strength: 0.8, speed: 0.7, endurance: 0.6, adaptability: 0.5, camouflage: 0.2, flight: 0 },
       drive: { industrious: 0.1, aesthetic: 0.2 },
@@ -740,7 +740,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Focus', 'Resilience', 'Perception'],
     funFact: 'A Canada lynx’s huge furry paws work like snowshoes, and its population rises and falls with the snowshoe hare’s.',
     profile: {
-      habitat: { snow: 1 },
+      habitat: { snow: 1, rainforest: 0.5 },
       rhythm: { morning: 0.4, afternoon: 0.1, evening: 0.8, night: 0.8 },
       lifestyle: { hunter: 0.9, roaming: 0.6, homebody: 0.4, restless: 0.3, appetite: 0.4 },
       social: { independence: 1, territorial: 0.7, family: 0.4, gregarious: 0, pack: 0, pairBond: 0.1 },
@@ -860,7 +860,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Leadership', 'Endurance', 'Loyalty'],
     funFact: 'Wolves can travel more than 50 km in a single day while patrolling their territory.',
     profile: {
-      habitat: { snow: 1, grassland: 0.6, desert: 0.2 },
+      habitat: { snow: 1, grassland: 0.6, desert: 0.2, rainforest: 0.4 },
       rhythm: { morning: 0.7, afternoon: 0.2, evening: 0.8, night: 0.7 },
       lifestyle: { roaming: 1, hunter: 0.9, restless: 0.5, homebody: 0.2, appetite: 0.6 },
       social: { pack: 1, family: 1, pairBond: 0.8, independence: 0.1, territorial: 0.9, gregarious: 0.4, easygoing: 0.1 },
@@ -956,7 +956,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Tenacity', 'Speed', 'Nerve'],
     funFact: 'Stoats perform a bizarre, frenzied “war dance” that seems to mesmerise prey before they strike.',
     profile: {
-      habitat: { snow: 1, grassland: 0.6 },
+      habitat: { snow: 1, grassland: 0.6, rainforest: 0.3 },
       rhythm: { morning: 0.5, afternoon: 0.5, evening: 0.6, night: 0.7 },
       lifestyle: { hunter: 1, restless: 1, roaming: 0.5, homebody: 0.1, appetite: 0.7 },
       social: { independence: 1, territorial: 0.7, gregarious: 0, pack: 0, family: 0.2, pairBond: 0.1 },
@@ -980,7 +980,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Grit', 'Endurance', 'Courage'],
     funFact: 'Wolverines have been known to drive bears and wolves away from their kills.',
     profile: {
-      habitat: { snow: 1 },
+      habitat: { snow: 1, rainforest: 0.3 },
       rhythm: { morning: 0.5, afternoon: 0.4, evening: 0.6, night: 0.6 },
       lifestyle: { roaming: 1, hunter: 0.7, appetite: 0.9, restless: 0.8, homebody: 0.1 },
       social: { independence: 1, territorial: 1, pairBond: 0.2, family: 0.3, gregarious: 0, pack: 0 },
@@ -1196,7 +1196,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Work ethic', 'Kindness', 'Reliability'],
     funFact: 'Bumblebees have been observed rolling small balls for no reward, apparently just for fun.',
     profile: {
-      habitat: { grassland: 1, snow: 0.6, rainforest: 0.2 },
+      habitat: { grassland: 1, snow: 0.6, rainforest: 0.4 },
       rhythm: { morning: 1, afternoon: 0.8, evening: 0.3, night: 0 },
       lifestyle: { restless: 1, roaming: 0.5, appetite: 0.6, homebody: 0.3, hunter: 0 },
       social: { family: 1, pack: 0.8, gregarious: 0.6, easygoing: 0.6, independence: 0.1, territorial: 0.2, pairBond: 0.1 },
@@ -1364,7 +1364,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Problem-solving', 'Dexterity', 'Adaptability'],
     funFact: 'Raccoons can remember the solution to a puzzle for up to three years.',
     profile: {
-      habitat: { snow: 0.6, grassland: 0.5, rainforest: 0.2, desert: 0.2, ocean: 0.2 },
+      habitat: { snow: 0.6, grassland: 0.5, rainforest: 0.6, desert: 0.2, ocean: 0.2 },
       rhythm: { morning: 0.1, afternoon: 0, evening: 0.8, night: 1 },
       lifestyle: { appetite: 0.9, restless: 0.6, roaming: 0.5, homebody: 0.4, hunter: 0.3 },
       social: { independence: 0.5, easygoing: 0.8, family: 0.5, gregarious: 0.4, pack: 0.1, territorial: 0.2, pairBond: 0.1 },
@@ -1388,7 +1388,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Contentment', 'Charm', 'Self-care'],
     funFact: 'Red pandas spend up to 13 hours a day eating bamboo, and have a “false thumb” to help them grip it.',
     profile: {
-      habitat: { snow: 0.6, rainforest: 0.5 },
+      habitat: { snow: 0.6, rainforest: 0.8 },
       rhythm: { morning: 0.7, afternoon: 0.1, evening: 0.9, night: 0.5 },
       lifestyle: { homebody: 0.9, appetite: 0.8, roaming: 0.2, restless: 0.1, hunter: 0.1 },
       social: { independence: 0.9, territorial: 0.6, gregarious: 0, pack: 0, family: 0.3, pairBond: 0.2, easygoing: 0.3 },
@@ -1412,7 +1412,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Strength', 'Protectiveness', 'Balance'],
     funFact: 'Brown bears have one of the best noses in the animal kingdom, thought to be several times sharper than a bloodhound’s.',
     profile: {
-      habitat: { snow: 1, grassland: 0.4, rainforest: 0.2 },
+      habitat: { snow: 1, grassland: 0.4, rainforest: 0.6 },
       rhythm: { morning: 0.7, afternoon: 0.4, evening: 0.8, night: 0.4 },
       lifestyle: { appetite: 1, homebody: 0.7, roaming: 0.7, hunter: 0.5, restless: 0.3 },
       social: { independence: 0.9, family: 0.7, territorial: 0.4, easygoing: 0.4, gregarious: 0.2, pack: 0, pairBond: 0.1 },
@@ -1700,7 +1700,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Energy', 'Precision', 'Drive'],
     funFact: 'Ruby-throated hummingbirds fly non-stop across the Gulf of Mexico on migration, a journey of up to about 800 km.',
     profile: {
-      habitat: { snow: 0.6, rainforest: 0.5, grassland: 0.4 },
+      habitat: { snow: 0.6, rainforest: 0.6, grassland: 0.4 },
       rhythm: { morning: 1, afternoon: 0.8, evening: 0.4, night: 0 },
       lifestyle: { restless: 1, appetite: 0.9, roaming: 0.8, homebody: 0.1, hunter: 0.2 },
       social: { independence: 0.9, territorial: 1, gregarious: 0, pack: 0, family: 0.2, pairBond: 0, easygoing: 0.1 },
@@ -1724,7 +1724,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Tenacity', 'Presence', 'Grit'],
     funFact: 'Tasmanian devils have one of the strongest bites for their body size of any living mammal.',
     profile: {
-      habitat: { grassland: 0.6, rainforest: 0.4, snow: 0.3 },
+      habitat: { grassland: 0.6, rainforest: 0.6, snow: 0.3 },
       rhythm: { morning: 0.1, afternoon: 0, evening: 0.8, night: 1 },
       lifestyle: { appetite: 1, roaming: 0.7, hunter: 0.6, restless: 0.6, homebody: 0.3 },
       social: { independence: 0.8, easygoing: 0.4, gregarious: 0.3, territorial: 0.2, family: 0.2, pack: 0.1, pairBond: 0.1 },
@@ -1916,7 +1916,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Drive', 'Teamwork', 'Power'],
     funFact: 'Asian giant hornets are the largest hornets in the world, with queens reaching around 5 cm long.',
     profile: {
-      habitat: { rainforest: 0.5, grassland: 0.4, snow: 0.4 },
+      habitat: { rainforest: 0.6, grassland: 0.4, snow: 0.4 },
       rhythm: { morning: 0.8, afternoon: 0.9, evening: 0.3, night: 0 },
       lifestyle: { hunter: 1, restless: 0.9, roaming: 0.6, appetite: 0.7, homebody: 0.2 },
       social: { pack: 0.9, family: 0.9, territorial: 0.8, gregarious: 0.5, independence: 0.2, easygoing: 0.1, pairBond: 0 },

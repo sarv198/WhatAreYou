@@ -16,6 +16,8 @@ export function toTraitVector(profile: TraitProfile): TraitVector {
   return vector;
 }
 
+const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
+
 /** How close two values in [0, 1] are: 1 = identical, 0 = opposite ends. */
 export function closeness(a: number, b: number): number {
   return 1 - Math.abs(a - b);
@@ -133,8 +135,8 @@ export function computeLogits(ctx: QuizContext, answers: readonly Answer[]) {
   const scale = ctx.config.sharpness * profile.totalEvidence;
   const mix = ctx.config.distinctivenessWeight;
   const distinct = distinctiveness(ctx, answers);
-  const compat = ctx.animalVectors.map(
-    (v, a) => (1 - mix) * compatibility(profile, v) + mix * distinct[a]!,
+  const compat = ctx.animalVectors.map((v, a) =>
+    clamp01((1 - mix) * compatibility(profile, v) + mix * distinct[a]! + ctx.balance[a]!),
   );
   const logits = compat.map((c) => scale * c);
   return { profile, compat, logits };

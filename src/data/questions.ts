@@ -14,11 +14,11 @@ export const QUESTIONS: Question[] = [
     prompt: 'Where would you live for the rest of your life?',
     kicker: 'Choose carefully. This is forever.',
     options: [
-      { id: 'rainforest', label: 'Rainforest' },
+      { id: 'rainforest', label: 'Rainforest / forest' },
       { id: 'desert', label: 'Desert' },
       { id: 'snow', label: 'Somewhere with snowy winters' },
       { id: 'grassland', label: 'Open plains / grasslands' },
-      { id: 'ocean', label: 'On or around the ocean' },
+      { id: 'ocean', label: 'On a boat in the ocean' },
     ],
   },
   {
@@ -29,9 +29,9 @@ export const QUESTIONS: Question[] = [
     prompt: 'What’s your ideal way to spend most of your time?',
     kicker: 'Not what you do. What you’d do.',
     options: [
-      { id: 'roam', label: 'Exploring huge territories' },
+      { id: 'roam', label: 'Exploring huge places' },
       { id: 'home', label: 'Chilling at home / conserving energy' },
-      { id: 'hunt', label: 'Hunting or chasing something' },
+      { id: 'hunt', label: 'Chasing some goal' },
       { id: 'social', label: 'Hanging out with others' },
       { id: 'active', label: 'Constantly doing something / staying active' },
     ],
@@ -41,8 +41,8 @@ export const QUESTIONS: Question[] = [
     phase: 'broad',
     order: 3,
     weight: 1.3,
-    prompt: 'Who are you bringing with you?',
-    kicker: 'Wherever you ended up. Pick your people.',
+    prompt: 'When you need to get goals done, who are you doing it with?',
+    kicker: 'Big goal, tight deadline. Pick your people.',
     options: [
       { id: 'alone', label: 'Nobody. I work best alone' },
       { id: 'bestFriend', label: 'My best friend' },

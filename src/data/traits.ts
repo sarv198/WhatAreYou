@@ -25,7 +25,7 @@ export const TRAIT_SCHEMA = {
     label: 'Habitat',
     defaultValue: 0,
     traits: {
-      rainforest: { label: 'Rainforest', phrase: 'a pull toward lush, tangled places' },
+      rainforest: { label: 'Forest', phrase: 'a pull toward deep, leafy forests' },
       desert: { label: 'Desert', phrase: 'a feel for harsh, sun-baked places' },
       snow: { label: 'Snowy winters', phrase: 'a tolerance for the cold' },
       grassland: { label: 'Open plains', phrase: 'a need for wide-open space' },
@@ -48,7 +48,7 @@ export const TRAIT_SCHEMA = {
     traits: {
       roaming: { label: 'Roamer', phrase: 'a restless urge to roam' },
       homebody: { label: 'Energy saver', phrase: 'a talent for conserving energy' },
-      hunter: { label: 'Hunter', phrase: 'a hunter’s drive' },
+      hunter: { label: 'Go-getter', phrase: 'a hunter’s drive' },
       restless: { label: 'Always moving', phrase: 'a motor that never switches off' },
       appetite: { label: 'Big appetite', phrase: 'a serious appetite' },
     },

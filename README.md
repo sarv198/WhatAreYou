@@ -51,7 +51,11 @@ Append an object to `src/data/animals.ts`:
 }
 ```
 
-That's all. Scoring, question selection, the animal field on screen and the results pick it up automatically. The data is validated at startup (unknown traits, values outside 0–1 and duplicate ids all throw). Run `npm run simulate` afterwards to check the new animal can actually be reached and isn't shadowing a neighbour.
+That's all. Scoring, question selection, the animal field on screen and the results pick it up automatically. The data is validated at startup (unknown traits, values outside 0–1 and duplicate ids all throw). Run `npm run simulate` afterwards to check the new animal can actually be reached and isn't shadowing a neighbour, then `npm run balance` to recalibrate.
+
+### Balancing
+
+Some animals naturally fit more answer patterns than others, so without correction a few would dominate (for example, Harris's Hawk took a third of all desert results). `npm run balance` simulates thousands of quiz-takers per habitat and tunes a small per-animal offset in `src/data/balance.ts` until no animal takes more than 10% of any habitat's results, while making sure every animal can still win when answering as itself. The offsets are tiny nudges on compatibility, so they only tip close calls and never override a clear match. The script reports its result on a fresh sample it wasn't tuned on.
 
 Questions work the same way: add the question to `src/data/questions.ts` and its answer effects to `src/data/traitMappings.ts`.
 

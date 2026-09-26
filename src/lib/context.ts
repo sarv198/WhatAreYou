@@ -1,4 +1,5 @@
 import { ANIMALS } from '../data/animals';
+import { ANIMAL_BALANCE } from '../data/balance';
 import { QUESTIONS } from '../data/questions';
 import { TRAIT_MAPPINGS } from '../data/traitMappings';
 import type { AnimalProfile, Question, TraitMappings } from '../types';
@@ -22,6 +23,8 @@ export interface QuizContext {
   config: EngineConfig;
   /** questionId → [animalIndex][optionIndex] → P(option | animal) */
   likelihoods: ReadonlyMap<string, number[][]>;
+  /** Calibration offset per animal index, added to compatibility. */
+  balance: readonly number[];
 }
 
 export interface QuizContextInput {
@@ -29,15 +32,26 @@ export interface QuizContextInput {
   questions?: Question[];
   mappings?: TraitMappings;
   config?: Partial<EngineConfig>;
+  /** animalId → compatibility offset. Defaults to the generated calibration. */
+  balance?: Record<string, number>;
 }
+
+/** Offsets are small nudges; anything larger would override real personality matches. */
+export const MAX_BALANCE_OFFSET = 0.15;
 
 export function createQuizContext(input: QuizContextInput = {}): QuizContext {
   const animals = input.animals ?? ANIMALS;
   const questions = input.questions ?? QUESTIONS;
   const mappings = input.mappings ?? TRAIT_MAPPINGS;
   const config = { ...DEFAULT_CONFIG, ...input.config };
+  const balanceById = input.balance ?? ANIMAL_BALANCE;
 
   const errors = [...validateAnimalSet(animals), ...validateQuestionBank(questions, mappings)];
+  for (const [id, offset] of Object.entries(balanceById)) {
+    if (!(Math.abs(offset) <= MAX_BALANCE_OFFSET)) {
+      errors.push(`balance for "${id}" must be within ±${MAX_BALANCE_OFFSET}`);
+    }
+  }
   if (errors.length > 0) {
     throw new Error(`Invalid quiz data:\n  - ${errors.join('\n  - ')}`);
   }
@@ -59,5 +73,6 @@ export function createQuizContext(input: QuizContextInput = {}): QuizContext {
     mappings,
     config,
     likelihoods,
+    balance: animals.map((a) => balanceById[a.id] ?? 0),
   };
 }
