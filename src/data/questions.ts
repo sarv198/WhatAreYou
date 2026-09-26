@@ -10,7 +10,9 @@ export const QUESTIONS: Question[] = [
     id: 'habitat',
     phase: 'broad',
     order: 1,
-    weight: 2,
+    // Strong enough to visibly narrow the field, soft enough that a strong
+    // personality match can still win from a "wrong" habitat.
+    weight: 1.7,
     prompt: 'Where would you live for the rest of your life?',
     kicker: 'Choose carefully. This is forever.',
     options: [

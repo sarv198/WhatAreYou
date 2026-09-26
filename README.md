@@ -1,6 +1,6 @@
 # What Animal Are You?
 
-An adaptive personality quiz that matches you to one of 80 animals. It isn't a fixed list of questions. After four broad questions, each question is picked live because it best separates the animals you might still be.
+An adaptive personality quiz that matches you to one of 85 animals. It isn't a fixed list of questions. After four broad questions, each question is picked live because it best separates the animals you might still be.
 
 ```bash
 npm install
@@ -57,6 +57,16 @@ That's all. Scoring, question selection, the animal field on screen and the resu
 
 Some animals naturally fit more answer patterns than others, so without correction a few would dominate (for example, Harris's Hawk took a third of all desert results). `npm run balance` simulates thousands of quiz-takers per habitat and tunes a small per-animal offset in `src/data/balance.ts` until no animal takes more than 10% of any habitat's results, while making sure every animal can still win when answering as itself. The offsets are tiny nudges on compatibility, so they only tip close calls and never override a clear match. The script reports its result on a fresh sample it wasn't tuned on.
 
+By default the simulated quiz-takers answer at random. Real people don't: they favour flattering answers ("Science & discovery", "The comedian"), which is why animals like the dolphin can still come up more often in practice. Once real completions have built up, tune against them instead:
+
+```bash
+npx vercel env pull .env.local        # database credentials, once
+npm run export-answers                # writes scripts/data/answer-stats.json
+npm run balance -- --answers scripts/data/answer-stats.json
+```
+
+The habitat question is deliberately not a hard cut-off. It narrows the field visibly, but an animal whose personality comes through strongly still wins from a "wrong" habitat about half the time.
+
 Questions work the same way: add the question to `src/data/questions.ts` and its answer effects to `src/data/traitMappings.ts`.
 
 ## Project layout
@@ -73,15 +83,17 @@ scripts/       simulate.ts, the tuning harness
 
 Quiz progress is saved to `localStorage`, so a reload never loses your place. Going back and changing an answer recomputes everything from the answers themselves, and later questions are re-chosen if the path changes.
 
-## Quizzes Taken counter
+## Quiz Takers counter
 
-The landing page and every question show a live "### Quizzes Taken" count, served by a Vercel function at `api/stats.ts` and stored in Upstash Redis. Each attempt counts once: reloading, revisiting a result or changing an answer doesn't add to it, but "Take it again" does. Each completion also records which animal it ended on, and the result page tells people what share of *other* quiz takers got the same animal ("2% of other people who took this quiz are also a Giant Pacific Octopus"), with a nudge when it's rare or common. That line stays hidden until there are 100 completions, so early numbers don't mislead.
+The landing page and every question show a live "### Quiz Takers" count, served by a Vercel function at `api/stats.ts` and stored in Upstash Redis. Each attempt counts once: reloading, revisiting a result or changing an answer doesn't add to it, but "Take it again" does. Each completion also records which animal it ended on, and the result page tells people what share of *other* quiz takers got the same animal ("2% of other people who took this quiz are also a Giant Pacific Octopus"), with a nudge when it's rare or common. That line stays hidden until there are 100 completions, so early numbers don't mislead.
 
 To enable it on Vercel:
 
 1. Import the repo at vercel.com/new (Vite is detected automatically).
 2. In the project, open **Storage → Create Database → Upstash for Redis** and connect it to the project. This adds the connection settings for you.
 3. Redeploy.
+
+Each completion also stores the anonymous answer choices that led to it: a running tally per option plus a log of the most recent 10,000 answer sets. Nothing identifying is kept (no user id, IP address or exact time, just the answers, the result and the date). This is what `npm run export-answers` reads.
 
 Until storage is connected, the counter simply stays hidden. During `npm run dev` it works against an in-memory store seeded with about 700 sample completions (so the share line is visible locally); it resets when the dev server restarts and never runs in production.
 

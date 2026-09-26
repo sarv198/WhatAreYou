@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { AnimalStats } from '../lib/statsService';
+import type { Answer } from '../types';
 import { claimRunCompletion, fetchAnimalStats, fetchQuizCount, recordQuizCompletion } from '../lib/statsClient';
 
 export interface RecordedCompletion {
@@ -20,9 +21,9 @@ export function useQuizCount() {
     return () => controller.abort();
   }, []);
 
-  const recordCompletion = useCallback(async (animalId: string) => {
+  const recordCompletion = useCallback(async (animalId: string, answers: readonly Answer[]) => {
     if (!claimRunCompletion()) return;
-    const stats = await recordQuizCompletion(animalId);
+    const stats = await recordQuizCompletion(animalId, answers);
     if (!stats) return;
     setCount(stats.total);
     setLastRecorded({ animalId, stats });

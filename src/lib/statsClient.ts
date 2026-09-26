@@ -1,3 +1,4 @@
+import type { Answer } from '../types';
 import type { AnimalStats } from './statsService';
 
 const ENDPOINT = '/api/stats';
@@ -33,14 +34,15 @@ export async function fetchAnimalStats(animalId: string, signal?: AbortSignal): 
   }
 }
 
-export async function recordQuizCompletion(animalId: string): Promise<AnimalStats | null> {
+/** Records a completed quiz with its anonymous answer choices (no personal data). */
+export async function recordQuizCompletion(animalId: string, answers: readonly Answer[]): Promise<AnimalStats | null> {
   try {
     return toAnimalStats(
       await readJson(
         await fetch(ENDPOINT, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ animalId }),
+          body: JSON.stringify({ animalId, answers: answers.map((a) => [a.questionId, a.optionId]) }),
         }),
       ),
     );

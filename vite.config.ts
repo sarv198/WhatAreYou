@@ -1,7 +1,8 @@
 import { defineConfig, type Plugin } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import { ANIMALS } from './src/data/animals';
-import { createMemoryStore, createStatsHandlers } from './src/lib/statsService';
+import { QUESTIONS } from './src/data/questions';
+import { buildCatalog, createMemoryStore, createStatsHandlers } from './src/lib/statsService';
 
 /** Deterministic sample completions (roughly 700) so the stats UI is visible locally. */
 function sampleCompletions(): Record<string, number> {
@@ -24,7 +25,7 @@ function devStatsApi(): Plugin {
     name: 'dev-stats-api',
     apply: 'serve',
     configureServer(server) {
-      const handlers = createStatsHandlers(createMemoryStore(sampleCompletions()), new Set(ANIMALS.map((a) => a.id)));
+      const handlers = createStatsHandlers(createMemoryStore(sampleCompletions()), buildCatalog(ANIMALS, QUESTIONS));
       server.middlewares.use('/api/stats', async (req, res) => {
         try {
           const chunks: Buffer[] = [];

@@ -11,7 +11,8 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
     "simulate": "vite-node scripts/simulate.ts",
-    "balance": "vite-node scripts/balance.ts"
+    "balance": "vite-node scripts/balance.ts",
+    "export-answers": "vite-node scripts/export-answers.ts"
   },
   "dependencies": {
     "@fontsource-variable/fraunces": "^5.3.0",

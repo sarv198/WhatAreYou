@@ -6,8 +6,12 @@
  * Every round also checks that each animal still wins when answering exactly
  * as that animal would; an animal that stops winning has its offset relaxed.
  * The final report uses a fresh random sample that was not used for tuning.
+ *
+ * With `--answers scripts/data/answer-stats.json` (from `npm run export-answers`),
+ * simulated users pick each option as often as real quiz takers do, instead of
+ * uniformly at random.
  */
-import { writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { evaluateQuiz } from '../src/lib/adaptiveQuiz';
 import { createQuizContext, MAX_BALANCE_OFFSET, type QuizContext } from '../src/lib/context';
 import type { Answer } from '../src/types';
@@ -18,6 +22,28 @@ const TUNING_USERS_PER_HABITAT = 400;
 const REPORT_USERS_PER_HABITAT = 1500;
 const MAX_ROUNDS = 40;
 const STEP = 0.012;
+/** Animals that can't win as themselves may get a small boost, never more than this. */
+const MAX_BOOST = 0.05;
+
+/** Real answer popularity, if provided: questionId → optionId → times chosen. */
+const answersArg = process.argv.indexOf('--answers');
+const answerCounts: Record<string, Record<string, number>> =
+  answersArg > -1 ? JSON.parse(readFileSync(process.argv[answersArg + 1]!, 'utf8')).options : {};
+if (answersArg > -1) console.log(`Using real answer popularity from ${process.argv[answersArg + 1]}`);
+
+/** Picks an option at random, weighted by real popularity (+1 smoothing) when known. */
+function pickOption(ctx: QuizContext, questionId: string, rand: () => number): string {
+  const options = ctx.questionsById.get(questionId)!.options;
+  const counts = answerCounts[questionId];
+  if (!counts) return options[Math.floor(rand() * options.length)]!.id;
+  const weights = options.map((o) => (counts[o.id] ?? 0) + 1);
+  let r = rand() * weights.reduce((a, b) => a + b, 0);
+  for (let i = 0; i < options.length; i++) {
+    r -= weights[i]!;
+    if (r <= 0) return options[i]!.id;
+  }
+  return options[options.length - 1]!.id;
+}
 
 function mulberry32(seed: number) {
   return () => {
@@ -47,11 +73,7 @@ function habitatShares(ctx: QuizContext, usersPerHabitat: number, seed: number):
     const rand = mulberry32(seed + h * 7919);
     const wins = new Array<number>(ctx.animals.length).fill(0);
     for (let u = 0; u < usersPerHabitat; u++) {
-      const winner = runQuiz(ctx, (qid) => {
-        if (qid === habitat.id) return option.id;
-        const options = ctx.questionsById.get(qid)!.options;
-        return options[Math.floor(rand() * options.length)]!.id;
-      });
+      const winner = runQuiz(ctx, (qid) => (qid === habitat.id ? option.id : pickOption(ctx, qid, rand)));
       wins[winner]!++;
     }
     result.set(option.id, wins.map((w) => w / usersPerHabitat));
@@ -88,10 +110,9 @@ for (let round = 1; round <= MAX_ROUNDS; round++) {
 
   const failed = personaFailures(ctx);
   for (const a of failed) {
-    if (offsets[a]! < 0) {
-      offsets[a] = Math.min(0, offsets[a]! + STEP);
-      floors[a] = offsets[a]!;
-    }
+    // Relax any penalty first; if there is none, give a small boost so every animal stays winnable.
+    offsets[a] = offsets[a]! < 0 ? Math.min(0, offsets[a]! + STEP) : Math.min(MAX_BOOST, offsets[a]! + STEP / 2);
+    floors[a] = offsets[a]!;
   }
 
   const worst = Math.max(...ids.map((_, a) => worstShare(shares, a)));

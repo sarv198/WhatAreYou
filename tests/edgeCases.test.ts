@@ -92,8 +92,8 @@ describe('edge cases', () => {
     expect(() => createQuizContext({ animals: [...ANIMALS, { ...HONEY_BADGER, id: 'tiger' }] })).toThrow(/Duplicate/);
   });
 
-  it('ships with a valid data set of exactly 80 animals', () => {
-    expect(ANIMALS).toHaveLength(80);
+  it('ships with a valid data set of exactly 85 animals', () => {
+    expect(ANIMALS).toHaveLength(85);
     expect(ANIMALS.flatMap(validateAnimal)).toEqual([]);
     expect(Object.keys(TRAIT_MAPPINGS).sort()).toEqual(QUESTIONS.map((q) => q.id).sort());
   });

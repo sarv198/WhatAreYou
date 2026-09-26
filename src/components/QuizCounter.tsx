@@ -9,7 +9,7 @@ interface QuizCounterProps {
 
 const formatter = new Intl.NumberFormat('en-US');
 
-/** "1,284 Quizzes Taken". Renders nothing until the count is known. */
+/** "1,284 Quiz Takers". Renders nothing until the count is known. */
 export function QuizCounter({ count, variant, className }: QuizCounterProps) {
   return (
     <AnimatePresence>
@@ -25,7 +25,7 @@ export function QuizCounter({ count, variant, className }: QuizCounterProps) {
           <motion.strong key={count} initial={{ opacity: 0.4 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
             {formatter.format(count)}
           </motion.strong>{' '}
-          {count === 1 ? 'Quiz Taken' : 'Quizzes Taken'}
+          {count === 1 ? 'Quiz Taker' : 'Quiz Takers'}
         </motion.p>
       )}
     </AnimatePresence>

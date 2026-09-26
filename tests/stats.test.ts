@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { formatShare, MIN_COMPLETIONS_FOR_SHARE, summarizeShare } from '../src/lib/animalShare';
-import { createMemoryStore, createStatsHandlers, findRedisCredentials } from '../src/lib/statsService';
+import { buildCatalog, createMemoryStore, createStatsHandlers, findRedisCredentials } from '../src/lib/statsService';
 
 describe('Redis credential lookup', () => {
   it('finds credentials that Vercel saved with a custom prefix', () => {
@@ -26,7 +26,13 @@ describe('Redis credential lookup', () => {
   });
 });
 
-const valid = new Set(['tiger', 'orca']);
+const valid = buildCatalog(
+  [{ id: 'tiger' }, { id: 'orca' }],
+  [
+    { id: 'habitat', options: [{ id: 'ocean' }, { id: 'snow' }] },
+    { id: 'rhythm', options: [{ id: 'night' }, { id: 'morning' }] },
+  ],
+);
 const get = (query = '') => new Request(`http://test/api/stats${query}`);
 const post = (body: unknown) =>
   new Request('http://test/api/stats', {
@@ -71,6 +77,49 @@ describe('completion stats API', () => {
     const handlers = createStatsHandlers(null, valid);
     expect((await handlers.GET(get())).status).toBe(503);
     expect((await handlers.POST(post({ animalId: 'tiger' }))).status).toBe(503);
+  });
+
+  it('records anonymous answer choices alongside a completion', async () => {
+    const store = createMemoryStore();
+    const handlers = createStatsHandlers(store, valid);
+    const answers = [
+      ['habitat', 'ocean'],
+      ['rhythm', 'night'],
+    ];
+    expect((await handlers.POST(post({ animalId: 'orca', answers }))).status).toBe(200);
+    expect((await handlers.POST(post({ animalId: 'tiger', answers: [['habitat', 'ocean']] }))).status).toBe(200);
+
+    expect(Object.fromEntries(store.answerCounts)).toEqual({ 'habitat:ocean': 2, 'rhythm:night': 1 });
+    expect(store.answerLog).toHaveLength(2);
+    expect(store.answerLog[1]).toMatchObject({ a: 'orca', r: answers });
+    expect(store.answerLog[1]!.d).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  });
+
+  it('still accepts completions from older clients that send no answers', async () => {
+    const store = createMemoryStore();
+    const handlers = createStatsHandlers(store, valid);
+    expect((await handlers.POST(post({ animalId: 'orca' }))).status).toBe(200);
+    expect(await store.getTotal()).toBe(1);
+    expect(store.answerLog).toHaveLength(0);
+  });
+
+  it('rejects answers that do not match the question bank, and counts nothing', async () => {
+    const store = createMemoryStore();
+    const handlers = createStatsHandlers(store, valid);
+    const bad = [
+      [['habitat', 'moon']],
+      [['colour', 'blue']],
+      [['habitat', 'ocean'], ['habitat', 'snow']],
+      [],
+      'habitat:ocean',
+      [['habitat']],
+      Array.from({ length: 3 }, () => ['habitat', 'ocean']),
+    ];
+    for (const answers of bad) {
+      expect((await handlers.POST(post({ animalId: 'orca', answers }))).status).toBe(400);
+    }
+    expect(await store.getTotal()).toBe(0);
+    expect(store.answerCounts.size).toBe(0);
   });
 });
 

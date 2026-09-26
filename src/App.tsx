@@ -30,10 +30,12 @@ export function App() {
   const [revealing, setRevealing] = useState(false);
   const previousStatus = useRef(state.status);
   const resultAnimalId = view.result?.animal.id;
+  const latestAnswers = useRef(view.answers);
+  latestAnswers.current = view.answers;
   useEffect(() => {
     if (previousStatus.current === 'quiz' && state.status === 'result') {
       setRevealing(true);
-      if (resultAnimalId) void recordCompletion(resultAnimalId);
+      if (resultAnimalId) void recordCompletion(resultAnimalId, latestAnswers.current);
     }
     previousStatus.current = state.status;
   }, [state.status, resultAnimalId, recordCompletion]);
