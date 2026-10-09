@@ -30,6 +30,8 @@ export const TRAIT_SCHEMA = {
       snow: { label: 'Snowy winters', phrase: 'a tolerance for the cold' },
       grassland: { label: 'Open plains', phrase: 'a need for wide-open space' },
       ocean: { label: 'Ocean', phrase: 'a deep affinity for the water' },
+      freshwater: { label: 'Rivers & lakes', phrase: 'a love of rivers and still water' },
+      city: { label: 'Urban explorer', phrase: 'a knack for thriving among the ruins' },
     },
   },
   rhythm: {
@@ -129,6 +131,17 @@ export const TRAIT_SCHEMA = {
       aesthetic: { label: 'Aesthetic', phrase: 'an eye for beauty and display' },
     },
   },
+  diet: {
+    label: 'Diet',
+    defaultValue: 0,
+    traits: {
+      meat: { label: 'Carnivore', phrase: 'a carnivore’s appetite' },
+      fish: { label: 'Seafood lover', phrase: 'a taste for seafood' },
+      plants: { label: 'Plant-powered', phrase: 'a plant-powered appetite' },
+      sweet: { label: 'Sweet tooth', phrase: 'a serious sweet tooth' },
+      anything: { label: 'Eats anything', phrase: 'an anything-goes appetite' },
+    },
+  },
 } as const satisfies Record<string, TraitGroupMeta>;
 
 export type TraitGroup = keyof typeof TRAIT_SCHEMA;
@@ -173,5 +186,5 @@ export function isTraitId(value: string): value is TraitId {
   return TRAIT_BY_ID.has(value as TraitId);
 }
 
-/** Habitat and activity-cycle traits describe circumstances rather than personality. */
-export const CONTEXT_GROUPS: ReadonlySet<TraitGroup> = new Set<TraitGroup>(['habitat', 'rhythm']);
+/** Habitat, activity-cycle and diet traits describe circumstances rather than personality. */
+export const CONTEXT_GROUPS: ReadonlySet<TraitGroup> = new Set<TraitGroup>(['habitat', 'rhythm', 'diet']);

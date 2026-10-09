@@ -1,7 +1,7 @@
 /**
- * Calibrates per-animal offsets so no animal takes more than CAP of the results
- * within any habitat, for simulated users answering at random. Writes
- * src/data/balance.ts. Run with `npm run balance` after changing animals.
+ * Calibrates per-animal offsets so no animal takes much more than 10% (at most
+ * CAP) of the results within any habitat. Writes src/data/balance.ts.
+ * Run with `npm run balance` after changing animals.
  *
  * Every round also checks that each animal still wins when answering exactly
  * as that animal would; an animal that stops winning has its offset relaxed.
@@ -11,11 +11,17 @@
  * toward flattering answers. With `--answers scripts/data/answer-stats.json`
  * (from `npm run export-answers`), they pick each option as often as real quiz
  * takers do instead.
+ *
+ * Each round is split across parallel worker processes (scripts/balance-worker.ts).
+ * Starts from the current calibration; pass --fresh to start from zero.
  */
-import { readFileSync, writeFileSync } from 'node:fs';
-import { evaluateQuiz } from '../src/lib/adaptiveQuiz';
-import { createQuizContext, MAX_BALANCE_OFFSET, type QuizContext } from '../src/lib/context';
-import type { Answer } from '../src/types';
+import { spawn } from 'node:child_process';
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { cpus, tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { ANIMAL_BALANCE } from '../src/data/balance';
+import { createQuizContext, MAX_BALANCE_OFFSET } from '../src/lib/context';
+import type { AnswerCounts } from './balance-sim';
 
 /** Aim for no animal above 10% of a habitat's results; up to CAP is acceptable. */
 const CAP = 0.12;
@@ -27,119 +33,94 @@ const STEP = 0.012;
 /** Animals that can't win as themselves may get a small boost, never more than this. */
 const MAX_BOOST = 0.05;
 
-/** Real answer popularity, if provided: questionId → optionId → times chosen. */
 const answersArg = process.argv.indexOf('--answers');
-const answerCounts: Record<string, Record<string, number>> =
+const answerCounts: AnswerCounts =
   answersArg > -1 ? JSON.parse(readFileSync(process.argv[answersArg + 1]!, 'utf8')).options : {};
 if (answersArg > -1) console.log(`Using real answer popularity from ${process.argv[answersArg + 1]}`);
 
-/**
- * Until real answer data exists, half the simulated users lean toward the
- * answers people like to give about themselves (4x as likely), and half
- * answer uniformly. Real people sit somewhere in between.
- */
-const FLATTERING: Record<string, string[]> = {
-  lifestyle: ['roam', 'social', 'active'],
-  sociality: ['bestFriend', 'family', 'squad'],
-  rhythm: ['morning', 'afternoon', 'evening'],
-  problemSolving: ['dissect', 'unconventional'],
-  sports: ['team', 'gym', 'precision'],
-  dailyActivity: ['exploring', 'studying', 'building'],
-  arguments: ['dismantle', 'above'],
-  friends: ['dependable', 'comedian', 'leader'],
-  discipline: ['science', 'art', 'nature'],
-  confidence: ['quiet', 'knowGood'],
-  outlook: ['fascinating', 'beautiful', 'explore'],
-  danger: ['assess', 'advantage', 'stand'],
-  superpower: ['flight', 'speed', 'regeneration'],
-  personalSpace: ['oneOrTwo', 'ownSpace'],
-};
-const FLATTERING_WEIGHT = 4;
+const workDir = mkdtempSync(join(tmpdir(), 'animal-balance-'));
+let jobCounter = 0;
 
-/**
- * Picks an option at random: weighted by real popularity (+1 smoothing) when
- * known, otherwise uniformly or (for "flattering" users) toward flattering answers.
- */
-function pickOption(ctx: QuizContext, questionId: string, rand: () => number, flattering = false): string {
-  const options = ctx.questionsById.get(questionId)!.options;
-  const counts = answerCounts[questionId];
-  if (!counts && !flattering) return options[Math.floor(rand() * options.length)]!.id;
-  const weights = counts
-    ? options.map((o) => (counts[o.id] ?? 0) + 1)
-    : options.map((o) => (FLATTERING[questionId]?.includes(o.id) ? FLATTERING_WEIGHT : 1));
-  let r = rand() * weights.reduce((a, b) => a + b, 0);
-  for (let i = 0; i < options.length; i++) {
-    r -= weights[i]!;
-    if (r <= 0) return options[i]!.id;
-  }
-  return options[options.length - 1]!.id;
-}
-
-function mulberry32(seed: number) {
-  return () => {
-    seed |= 0;
-    seed = (seed + 0x6d2b79f5) | 0;
-    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-function runQuiz(ctx: QuizContext, pick: (questionId: string) => string): number {
-  const answers: Answer[] = [];
-  for (;;) {
-    const ev = evaluateQuiz(ctx, answers);
-    if (ev.done) return ev.scores.ranked[0]!.index;
-    const q = ev.next!.question;
-    answers.push({ questionId: q.id, optionId: pick(q.id) });
-  }
-}
-
-/** shares[habitatOption][animalIndex] for random users who picked that habitat. */
-function habitatShares(ctx: QuizContext, usersPerHabitat: number, seed: number): Map<string, number[]> {
-  const habitat = ctx.broadQuestions[0]!;
-  const result = new Map<string, number[]>();
-  habitat.options.forEach((option, h) => {
-    const rand = mulberry32(seed + h * 7919);
-    const wins = new Array<number>(ctx.animals.length).fill(0);
-    for (let u = 0; u < usersPerHabitat; u++) {
-      const flattering = u % 2 === 1;
-      const winner = runQuiz(ctx, (qid) => (qid === habitat.id ? option.id : pickOption(ctx, qid, rand, flattering)));
-      wins[winner]!++;
-    }
-    result.set(option.id, wins.map((w) => w / usersPerHabitat));
+/** Runs one worker job in a separate process and returns its parsed result. */
+function runJob<T>(job: unknown): Promise<T> {
+  const file = join(workDir, `job-${jobCounter++}.json`);
+  writeFileSync(file, JSON.stringify(job));
+  return new Promise((resolve, reject) => {
+    const child = spawn('npx', ['vite-node', 'scripts/balance-worker.ts', file], { shell: true });
+    let out = '';
+    let err = '';
+    child.stdout.on('data', (d) => (out += d));
+    child.stderr.on('data', (d) => (err += d));
+    child.on('exit', (code) => {
+      const line = out.split('\n').find((l) => l.startsWith('RESULT '));
+      if (code === 0 && line) resolve(JSON.parse(line.slice('RESULT '.length)) as T);
+      else reject(new Error(`worker failed (${code}): ${err.slice(-500)}`));
+    });
   });
+}
+
+const baseCtx = createQuizContext({ balance: {} });
+const ids = baseCtx.animals.map((a) => a.id);
+const habitatOptions = baseCtx.broadQuestions[0]!.options.map((o) => o.id);
+// Enough chunks per habitat to keep the machine busy without oversubscribing it.
+const chunksPerHabitat = Math.max(1, Math.floor((cpus().length - 2) / habitatOptions.length));
+const personaChunks = 4;
+
+/** shares[habitatOption][animalIndex], computed in parallel. */
+async function habitatShares(balance: Record<string, number>, usersPerHabitat: number, seed: number) {
+  const perChunk = Math.ceil(usersPerHabitat / chunksPerHabitat);
+  const jobs = habitatOptions.flatMap((habitat, h) =>
+    Array.from({ length: chunksPerHabitat }, (_, c) => ({
+      habitat,
+      promise: runJob<number[]>({
+        kind: 'habitat',
+        balance,
+        habitat,
+        users: Math.min(perChunk, usersPerHabitat - c * perChunk),
+        seed: seed + h * 7919 + c * 104729,
+        startIndex: c * perChunk,
+        answerCounts,
+      }),
+    })),
+  );
+  const result = new Map<string, number[]>(habitatOptions.map((h) => [h, new Array(ids.length).fill(0)]));
+  for (const { habitat, promise } of jobs) {
+    const wins = await promise;
+    const totals = result.get(habitat)!;
+    wins.forEach((w, a) => (totals[a]! += w));
+  }
+  for (const totals of result.values()) totals.forEach((w, a) => (totals[a] = w / usersPerHabitat));
   return result;
 }
 
-function personaFailures(ctx: QuizContext): number[] {
-  const failures: number[] = [];
-  ctx.animals.forEach((_, a) => {
-    const winner = runQuiz(ctx, (qid) => {
-      const probs = ctx.likelihoods.get(qid)![a]!;
-      return ctx.questionsById.get(qid)!.options[probs.indexOf(Math.max(...probs))]!.id;
-    });
-    if (winner !== a) failures.push(a);
-  });
-  return failures;
+async function personaFailures(balance: Record<string, number>): Promise<number[]> {
+  const all = ids.map((_, i) => i);
+  const size = Math.ceil(all.length / personaChunks);
+  const parts = await Promise.all(
+    Array.from({ length: personaChunks }, (_, c) =>
+      runJob<number[]>({ kind: 'persona', balance, indices: all.slice(c * size, (c + 1) * size) }),
+    ),
+  );
+  return parts.flat();
 }
 
 const worstShare = (shares: Map<string, number[]>, a: number) =>
   Math.max(...[...shares.values()].map((s) => s[a]!));
 
-const baseCtx = createQuizContext({ balance: {} });
-const ids = baseCtx.animals.map((a) => a.id);
-const offsets = new Array<number>(ids.length).fill(0);
+const offsets = ids.map((id) => (process.argv.includes('--fresh') ? 0 : (ANIMAL_BALANCE[id] ?? 0)));
 /** Lowest offset an animal may reach before its own persona stops winning. */
 const floors = new Array<number>(ids.length).fill(-MAX_BALANCE_OFFSET);
 const toRecord = () => Object.fromEntries(ids.map((id, i) => [id, offsets[i]!]));
 
+console.log(`Running ${habitatOptions.length * chunksPerHabitat + personaChunks} parallel workers per round`);
 for (let round = 1; round <= MAX_ROUNDS; round++) {
-  const ctx = createQuizContext({ balance: toRecord() });
-  const shares = habitatShares(ctx, TUNING_USERS_PER_HABITAT, 1000);
+  const balance = toRecord();
+  const [shares, failed] = await Promise.all([
+    habitatShares(balance, TUNING_USERS_PER_HABITAT, 1000),
+    personaFailures(balance),
+  ]);
   const over = ids.map((_, a) => a).filter((a) => worstShare(shares, a) > TARGET);
 
-  const failed = personaFailures(ctx);
   for (const a of failed) {
     // Relax any penalty first; if there is none, give a small boost so every animal stays winnable.
     offsets[a] = offsets[a]! < 0 ? Math.min(0, offsets[a]! + STEP) : Math.min(MAX_BOOST, offsets[a]! + STEP / 2);
@@ -152,6 +133,8 @@ for (let round = 1; round <= MAX_ROUNDS; round++) {
       `${over.length} over target, ${failed.length} persona failures`,
   );
   if (over.length === 0 && failed.length === 0) break;
+  // Good enough: everything within the acceptable cap and every animal winnable.
+  if (worst <= CAP && failed.length === 0 && round >= 8) break;
 
   for (const a of over) {
     const excess = Math.log(worstShare(shares, a) / TARGET);
@@ -174,18 +157,20 @@ export const ANIMAL_BALANCE: Record<string, number> = ${JSON.stringify(rounded, 
 );
 
 // Independent check on a fresh sample.
-const finalCtx = createQuizContext({ balance: rounded });
-const report = habitatShares(finalCtx, REPORT_USERS_PER_HABITAT, 424242);
+const [report, failures] = await Promise.all([
+  habitatShares(rounded, REPORT_USERS_PER_HABITAT, 424242),
+  personaFailures(rounded),
+]);
 console.log('\nFresh sample, top results per habitat:');
 let passed = true;
 for (const [habitat, shares] of report) {
   const top = shares
-    .map((s, a) => ({ name: finalCtx.animals[a]!.name, s }))
+    .map((s, a) => ({ name: baseCtx.animals[a]!.name, s }))
     .sort((x, y) => y.s - x.s)
     .slice(0, 5);
   if (top[0]!.s > CAP) passed = false;
   console.log(`  ${habitat.padEnd(11)} ${top.map((t) => `${t.name} ${(t.s * 100).toFixed(1)}%`).join(', ')}`);
 }
-const failures = personaFailures(finalCtx);
 console.log(`\nWrote ${Object.keys(rounded).length} offsets to src/data/balance.ts`);
 console.log(`Cap of ${CAP * 100}% ${passed ? 'met' : 'NOT met'} on fresh sample; persona failures: ${failures.length}`);
+rmSync(workDir, { recursive: true, force: true });

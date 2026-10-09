@@ -11,7 +11,17 @@ export const TRAIT_MAPPINGS: TraitMappings = {
     desert: { 'habitat.desert': 1 },
     snow: { 'habitat.snow': 1 },
     grassland: { 'habitat.grassland': 1 },
+    freshwater: { 'habitat.freshwater': 1 },
     ocean: { 'habitat.ocean': 1 },
+    city: { 'habitat.city': 1 },
+  },
+
+  diet: {
+    steak: { 'diet.meat': 1 },
+    seafood: { 'diet.fish': 1 },
+    greens: { 'diet.plants': 1 },
+    sweet: { 'diet.sweet': 1 },
+    anything: { 'diet.anything': 1, 'gifts.adaptability': 0.3 },
   },
 
   lifestyle: {

@@ -29,6 +29,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.8, flee: 0.3, hide: 0.2, assess: 0.6, intimidate: 1, exploit: 0.3 },
       gifts: { strength: 0.5, speed: 0.5, flight: 0, camouflage: 0.3, regeneration: 0.1, adaptability: 0.4, endurance: 0.5, venom: 1 },
       drive: { industrious: 0.3, aesthetic: 0.4 },
+      diet: { meat: 1 },
     },
   },
   {
@@ -53,6 +54,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.4, hide: 0.7, assess: 0.5, exploit: 0.8, flee: 0.2, intimidate: 0.4 },
       gifts: { strength: 1, endurance: 0.7, camouflage: 0.7, speed: 0.1, adaptability: 0.5, regeneration: 0.2, flight: 0, armor: 0.4 },
       drive: { industrious: 0.1, aesthetic: 0.3 },
+      diet: { meat: 1 },
     },
   },
   {
@@ -77,6 +79,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { flee: 0.6, standGround: 0.6, intimidate: 0.8, assess: 0.2, exploit: 0.3, hide: 0.2 },
       gifts: { speed: 1, strength: 0.3, endurance: 0.4, adaptability: 0.4, camouflage: 0.2, flight: 0, venom: 1 },
       drive: { industrious: 0.3, aesthetic: 0.2 },
+      diet: { meat: 1 },
     },
   },
   {
@@ -101,6 +104,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { intimidate: 0.9, standGround: 0.6, hide: 0.6, assess: 0.6, flee: 0.3, exploit: 0.2 },
       gifts: { camouflage: 0.8, endurance: 0.6, strength: 0.3, speed: 0.3, adaptability: 0.4, flight: 0, venom: 1 },
       drive: { industrious: 0.2, aesthetic: 0.3 },
+      diet: { meat: 1 },
     },
   },
   {
@@ -116,7 +120,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Power', 'Patience', 'Staying power'],
     funFact: 'Saltwater crocodiles have the strongest bite ever measured in a living animal.',
     profile: {
-      habitat: { ocean: 0.8, rainforest: 0.7 },
+      habitat: { ocean: 0.8, rainforest: 0.7, freshwater: 0.6 },
       rhythm: { morning: 0.4, afternoon: 0.4, evening: 0.7, night: 0.7 },
       lifestyle: { homebody: 0.8, hunter: 0.8, appetite: 0.9, roaming: 0.4, restless: 0 },
       social: { independence: 0.9, territorial: 1, family: 0.3, pack: 0, gregarious: 0.1, pairBond: 0.1 },
@@ -125,6 +129,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 1, exploit: 0.7, hide: 0.5, intimidate: 0.7, assess: 0.4, flee: 0 },
       gifts: { strength: 1, endurance: 0.9, regeneration: 0.4, camouflage: 0.6, speed: 0.3, adaptability: 0.5, flight: 0, armor: 0.9 },
       drive: { industrious: 0.1, aesthetic: 0.1 },
+      diet: { meat: 1, fish: 0.7, anything: 0.3 },
     },
   },
   {
@@ -140,7 +145,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Calm', 'Protectiveness', 'Resilience'],
     funFact: 'Alligators have been seen balancing sticks on their snouts to lure nest-building birds, a rare case of reptile tool use.',
     profile: {
-      habitat: { rainforest: 0.5, grassland: 0.3, ocean: 0.3, snow: 0.1 },
+      habitat: { rainforest: 0.5, grassland: 0.3, ocean: 0.3, snow: 0.1, freshwater: 0.9 },
       rhythm: { morning: 0.4, afternoon: 0.5, evening: 0.7, night: 0.7 },
       lifestyle: { homebody: 1, appetite: 0.8, hunter: 0.5, restless: 0, roaming: 0.1 },
       social: { independence: 0.6, family: 0.8, gregarious: 0.4, territorial: 0.6, easygoing: 0.4, pairBond: 0.2, pack: 0.1 },
@@ -149,6 +154,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.7, hide: 0.4, exploit: 0.6, intimidate: 0.6, assess: 0.4, flee: 0.2 },
       gifts: { strength: 0.9, endurance: 0.8, adaptability: 0.7, regeneration: 0.5, camouflage: 0.5, speed: 0.2, flight: 0, armor: 0.9 },
       drive: { industrious: 0.3, aesthetic: 0.1 },
+      diet: { meat: 0.9, fish: 0.7, anything: 0.4 },
     },
   },
   {
@@ -173,6 +179,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.9, exploit: 0.6, intimidate: 0.6, flee: 0.1, hide: 0.2, assess: 0.4 },
       gifts: { strength: 0.9, endurance: 0.8, regeneration: 0.3, adaptability: 0.5, speed: 0.4, camouflage: 0.2, flight: 0, armor: 0.7, venom: 0.7 },
       drive: { industrious: 0.2, aesthetic: 0.1 },
+      diet: { meat: 1, anything: 0.3 },
     },
   },
   {
@@ -197,6 +204,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { intimidate: 0.8, hide: 0.4, standGround: 0.4, flee: 0.1, assess: 0.4, exploit: 0.4 },
       gifts: { endurance: 0.6, camouflage: 0.5, adaptability: 0.5, strength: 0.3, speed: 0.05, flight: 0, armor: 0.8 },
       drive: { industrious: 0.2, aesthetic: 0.2 },
+      diet: { plants: 0.7, sweet: 0.5, meat: 0.3, anything: 0.5 },
     },
   },
   {
@@ -221,6 +229,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { flee: 0.8, hide: 0.4, standGround: 0.3, intimidate: 0.3, assess: 0.3, exploit: 0.3 },
       gifts: { speed: 0.7, regeneration: 0.8, camouflage: 0.3, adaptability: 0.6, flight: 0.1, strength: 0.1, endurance: 0.3, armor: 0.1 },
       drive: { aesthetic: 1, industrious: 0.4 },
+      diet: { sweet: 0.9, meat: 0.6 },
     },
   },
   {
@@ -245,6 +254,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { hide: 0.8, intimidate: 0.7, assess: 0.7, flee: 0.2, standGround: 0.3, exploit: 0.3 },
       gifts: { camouflage: 1, adaptability: 0.8, speed: 0.1, strength: 0.1, endurance: 0.3, flight: 0 },
       drive: { aesthetic: 1, industrious: 0.2 },
+      diet: { meat: 0.9, plants: 0.3 },
     },
   },
   {
@@ -269,6 +279,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { flee: 0.5, standGround: 0.3, hide: 0.2, assess: 0.3, intimidate: 0.2, exploit: 0.1 },
       gifts: { endurance: 1, adaptability: 0.8, strength: 0.6, speed: 0.4, regeneration: 0.2, camouflage: 0.2, flight: 0, armor: 0.7 },
       drive: { industrious: 0.3, aesthetic: 0.2 },
+      diet: { fish: 0.9 },
     },
   },
   {
@@ -293,6 +304,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { hide: 0.9, standGround: 0.6, flee: 0, assess: 0.3, intimidate: 0.3, exploit: 0.1 },
       gifts: { endurance: 1, regeneration: 0.4, strength: 0.5, adaptability: 0.6, speed: 0, camouflage: 0.2, flight: 0, armor: 1 },
       drive: { industrious: 0.1, aesthetic: 0.2 },
+      diet: { plants: 1, sweet: 0.4 },
     },
   },
   {
@@ -317,6 +329,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { hide: 0.8, exploit: 0.6, intimidate: 0.8, flee: 0.7, standGround: 0, assess: 0.3 },
       gifts: { camouflage: 0.9, speed: 0.4, adaptability: 0.4, flight: 0.2, strength: 0.1, endurance: 0.2, armor: 0.05, venom: 0.1 },
       drive: { aesthetic: 1, industrious: 0.2 },
+      diet: { meat: 0.9 },
     },
   },
   {
@@ -341,6 +354,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.8, intimidate: 0.9, hide: 0, flee: 0.1, assess: 0.3, exploit: 0.2 },
       gifts: { camouflage: 0, strength: 0.1, speed: 0.2, adaptability: 0.3, endurance: 0.3, flight: 0, armor: 0.05, venom: 1 },
       drive: { aesthetic: 1, industrious: 0.6 },
+      diet: { meat: 0.9 },
     },
   },
   {
@@ -356,7 +370,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Courage', 'Protectiveness', 'Resilience'],
     funFact: 'Male African bullfrogs guard their tadpoles and have been seen digging channels to rescue them from drying puddles.',
     profile: {
-      habitat: { grassland: 0.9, desert: 0.6 },
+      habitat: { grassland: 0.9, desert: 0.6, freshwater: 0.3 },
       rhythm: { morning: 0.2, afternoon: 0.2, evening: 0.7, night: 0.7 },
       lifestyle: { homebody: 0.9, appetite: 1, hunter: 0.6, restless: 0.1, roaming: 0.1 },
       social: { independence: 0.8, family: 0.7, territorial: 0.8, gregarious: 0.1, pack: 0, pairBond: 0.1 },
@@ -365,6 +379,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 1, intimidate: 0.8, flee: 0, hide: 0.5, assess: 0.2, exploit: 0.3 },
       gifts: { strength: 0.7, endurance: 0.9, adaptability: 0.7, camouflage: 0.4, speed: 0.1, flight: 0, armor: 0.4 },
       drive: { industrious: 0.5, aesthetic: 0.1 },
+      diet: { meat: 1, anything: 0.7 },
     },
   },
   {
@@ -380,7 +395,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Recovery', 'Optimism', 'Calm'],
     funFact: 'Axolotls can regrow limbs, parts of their spinal cord, their heart and even parts of their brain.',
     profile: {
-      habitat: { ocean: 0.5, rainforest: 0.3, grassland: 0.3, snow: 0.1 },
+      habitat: { ocean: 0.2, rainforest: 0.3, grassland: 0.3, snow: 0.1, freshwater: 1 },
       rhythm: { morning: 0.2, afternoon: 0.2, evening: 0.6, night: 0.7 },
       lifestyle: { homebody: 1, appetite: 0.7, roaming: 0, restless: 0.1, hunter: 0.3 },
       social: { independence: 0.6, easygoing: 0.8, gregarious: 0.3, territorial: 0, pack: 0, family: 0.1, pairBond: 0.2 },
@@ -389,6 +404,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { hide: 0.6, flee: 0.4, standGround: 0.1, assess: 0.2, intimidate: 0.1, exploit: 0.1 },
       gifts: { regeneration: 1, adaptability: 0.5, camouflage: 0.3, endurance: 0.4, speed: 0.1, strength: 0.05, flight: 0, armor: 0 },
       drive: { aesthetic: 0.5, industrious: 0.1 },
+      diet: { meat: 0.8, fish: 0.5 },
     },
   },
   {
@@ -404,7 +420,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Leadership', 'Vision', 'Commitment'],
     funFact: 'Bald eagle pairs keep adding to the same nest for years; one was estimated to weigh around two tonnes.',
     profile: {
-      habitat: { snow: 0.9, ocean: 0.5, grassland: 0.4, rainforest: 0.3 },
+      habitat: { snow: 0.9, ocean: 0.5, grassland: 0.4, rainforest: 0.3, freshwater: 0.7 },
       rhythm: { morning: 1, afternoon: 0.8, evening: 0.3, night: 0 },
       lifestyle: { roaming: 0.8, hunter: 0.8, restless: 0.3, homebody: 0.4, appetite: 0.5 },
       social: { pairBond: 1, family: 0.7, territorial: 0.8, independence: 0.6, gregarious: 0.3, pack: 0.1, easygoing: 0.2 },
@@ -413,6 +429,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.8, intimidate: 0.6, assess: 0.6, exploit: 0.6, flee: 0.2, hide: 0 },
       gifts: { flight: 1, strength: 0.7, speed: 0.4, endurance: 0.6, adaptability: 0.4, camouflage: 0 },
       drive: { industrious: 0.7, aesthetic: 0.4 },
+      diet: { fish: 1, meat: 0.6, anything: 0.3 },
     },
   },
   {
@@ -437,6 +454,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.5, assess: 0.6, exploit: 0.6, intimidate: 0.3, flee: 0.3, hide: 0.1 },
       gifts: { flight: 1, speed: 0.6, strength: 0.4, endurance: 0.5, adaptability: 0.5, camouflage: 0.1 },
       drive: { industrious: 0.5, aesthetic: 0.3 },
+      diet: { meat: 1 },
     },
   },
   {
@@ -452,7 +470,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Speed', 'Focus', 'Precision'],
     funFact: 'In a hunting dive a peregrine falcon can exceed 300 km/h, making it the fastest animal on Earth.',
     profile: {
-      habitat: { snow: 0.5, grassland: 0.4, ocean: 0.6, desert: 0.3, rainforest: 0.1 },
+      habitat: { snow: 0.5, grassland: 0.4, ocean: 0.6, desert: 0.3, rainforest: 0.1, city: 0.6 },
       rhythm: { morning: 0.9, afternoon: 0.7, evening: 0.5, night: 0.1 },
       lifestyle: { hunter: 1, roaming: 0.9, restless: 0.6, homebody: 0.2, appetite: 0.4 },
       social: { independence: 0.7, pairBond: 0.9, territorial: 0.7, family: 0.4, gregarious: 0.1, pack: 0.1 },
@@ -461,6 +479,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.6, intimidate: 0.4, flee: 0.3, assess: 0.5, exploit: 0.5, hide: 0.1 },
       gifts: { speed: 1, flight: 1, adaptability: 0.7, strength: 0.4, endurance: 0.6, camouflage: 0.1 },
       drive: { industrious: 0.3, aesthetic: 0.3 },
+      diet: { meat: 1 },
     },
   },
   {
@@ -476,7 +495,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Patience', 'Observation', 'Grace'],
     funFact: 'Great blue herons have specially shaped neck vertebrae that let them strike at prey in a fraction of a second.',
     profile: {
-      habitat: { ocean: 0.6, snow: 0.6, grassland: 0.5, rainforest: 0.2 },
+      habitat: { ocean: 0.6, snow: 0.6, grassland: 0.5, rainforest: 0.2, freshwater: 0.9 },
       rhythm: { morning: 0.8, afternoon: 0.4, evening: 0.8, night: 0.4 },
       lifestyle: { hunter: 0.8, homebody: 0.5, roaming: 0.4, restless: 0.1, appetite: 0.4 },
       social: { independence: 0.9, gregarious: 0.4, family: 0.4, territorial: 0.5, pairBond: 0.4, pack: 0.1, easygoing: 0.2 },
@@ -485,6 +504,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { assess: 0.8, flee: 0.6, standGround: 0.3, hide: 0.2, intimidate: 0.3, exploit: 0.3 },
       gifts: { flight: 0.9, adaptability: 0.6, camouflage: 0.3, speed: 0.3, endurance: 0.5, strength: 0.2 },
       drive: { aesthetic: 0.7, industrious: 0.2 },
+      diet: { fish: 1, meat: 0.4 },
     },
   },
   {
@@ -509,6 +529,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 1, intimidate: 0.9, flee: 0.3, hide: 0.4, assess: 0.3, exploit: 0.2 },
       gifts: { strength: 0.9, speed: 0.8, flight: 0, endurance: 0.5, regeneration: 0.2, camouflage: 0.2, armor: 0.5 },
       drive: { aesthetic: 0.7, industrious: 0.3 },
+      diet: { sweet: 1, plants: 0.4, meat: 0.2 },
     },
   },
   {
@@ -533,6 +554,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { hide: 0.8, flee: 0.5, standGround: 0.4, assess: 0.4, intimidate: 0.2, exploit: 0.2 },
       gifts: { flight: 0, camouflage: 0.6, speed: 0.4, endurance: 0.5, adaptability: 0.4, strength: 0.2 },
       drive: { aesthetic: 0.1, industrious: 0.5 },
+      diet: { meat: 0.8, sweet: 0.3 },
     },
   },
   {
@@ -557,6 +579,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { intimidate: 0.6, flee: 0.6, standGround: 0.4, exploit: 0.3, hide: 0.1, assess: 0.4 },
       gifts: { flight: 1, strength: 0.4, adaptability: 0.4, speed: 0.5, endurance: 0.4, camouflage: 0 },
       drive: { aesthetic: 1, industrious: 0.3 },
+      diet: { sweet: 1, plants: 0.6 },
     },
   },
   {
@@ -572,7 +595,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Problem-solving', 'Adaptability', 'Memory'],
     funFact: 'Crows recognise individual human faces, and can hold a grudge for years.',
     profile: {
-      habitat: { grassland: 0.7, snow: 0.6, desert: 0.3, rainforest: 0.4, ocean: 0.3 },
+      habitat: { grassland: 0.7, snow: 0.6, desert: 0.3, rainforest: 0.4, ocean: 0.3, city: 0.6 },
       rhythm: { morning: 1, afternoon: 0.8, evening: 0.5, night: 0 },
       lifestyle: { roaming: 0.5, restless: 0.7, appetite: 0.7, hunter: 0.3, homebody: 0.3 },
       social: { family: 0.8, pack: 0.5, gregarious: 0.6, easygoing: 0.5, pairBond: 0.6, independence: 0.2, territorial: 0.5 },
@@ -581,6 +604,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { assess: 0.9, exploit: 0.9, standGround: 0.4, flee: 0.4, intimidate: 0.4, hide: 0.2 },
       gifts: { flight: 1, adaptability: 1, strength: 0.1, speed: 0.4, endurance: 0.5, camouflage: 0.2 },
       drive: { industrious: 0.6, aesthetic: 0.3 },
+      diet: { anything: 1, meat: 0.5, plants: 0.4, sweet: 0.3 },
     },
   },
   {
@@ -605,6 +629,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { flee: 0.5, standGround: 0.5, hide: 0.1, assess: 0.4, intimidate: 0.2, exploit: 0.1 },
       gifts: { endurance: 1, flight: 0, adaptability: 0.5, speed: 0.5, strength: 0.3, camouflage: 0.1 },
       drive: { industrious: 0.6, aesthetic: 0.6 },
+      diet: { fish: 1 },
     },
   },
   {
@@ -620,7 +645,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Wit', 'Vigilance', 'Foresight'],
     funFact: 'Blue jays can mimic the calls of hawks, possibly to scare other birds away from food.',
     profile: {
-      habitat: { snow: 0.8, grassland: 0.3, rainforest: 0.6 },
+      habitat: { snow: 0.8, grassland: 0.3, rainforest: 0.6, city: 0.4 },
       rhythm: { morning: 1, afternoon: 0.7, evening: 0.3, night: 0 },
       lifestyle: { restless: 0.8, roaming: 0.3, homebody: 0.5, appetite: 0.6, hunter: 0.2 },
       social: { family: 0.8, pairBond: 0.8, gregarious: 0.6, pack: 0.5, easygoing: 0.4, territorial: 0.4, independence: 0.2 },
@@ -629,6 +654,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { intimidate: 0.7, exploit: 0.7, standGround: 0.6, assess: 0.5, flee: 0.3, hide: 0.2 },
       gifts: { flight: 0.8, adaptability: 0.6, speed: 0.4, strength: 0.2, endurance: 0.4, camouflage: 0.1 },
       drive: { industrious: 0.7, aesthetic: 0.8 },
+      diet: { plants: 0.8, anything: 0.5, meat: 0.3 },
     },
   },
   {
@@ -644,7 +670,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Charisma', 'Adaptability', 'Fun'],
     funFact: 'A California sea lion named Ronan learned to bob her head in time to music, making her one of the first non-human mammals shown to keep a beat.',
     profile: {
-      habitat: { ocean: 1, desert: 0.2 },
+      habitat: { ocean: 1, desert: 0.2, city: 0.3 },
       rhythm: { morning: 0.5, afternoon: 0.8, evening: 0.5, night: 0.5 },
       lifestyle: { restless: 0.6, roaming: 0.5, homebody: 0.4, hunter: 0.6, appetite: 0.7 },
       social: { gregarious: 1, easygoing: 0.9, pack: 0.5, family: 0.4, independence: 0.1, territorial: 0.4, pairBond: 0.2 },
@@ -653,6 +679,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { flee: 0.5, standGround: 0.4, intimidate: 0.5, assess: 0.3, exploit: 0.5, hide: 0.1 },
       gifts: { speed: 0.7, adaptability: 0.7, endurance: 0.5, strength: 0.4, flight: 0, camouflage: 0.1 },
       drive: { aesthetic: 0.3, industrious: 0.2 },
+      diet: { fish: 1 },
     },
   },
   {
@@ -677,6 +704,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.8, exploit: 0.8, intimidate: 0.7, flee: 0.1, hide: 0.3, assess: 0.5 },
       gifts: { strength: 0.8, speed: 0.7, endurance: 0.6, adaptability: 0.5, camouflage: 0.2, flight: 0 },
       drive: { industrious: 0.1, aesthetic: 0.2 },
+      diet: { meat: 1, fish: 0.7 },
     },
   },
   {
@@ -692,7 +720,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Wisdom', 'Empathy', 'Strength'],
     funFact: 'Asian elephants can recognise themselves in a mirror, a rare sign of self-awareness.',
     profile: {
-      habitat: { rainforest: 0.9, grassland: 0.7 },
+      habitat: { rainforest: 0.9, grassland: 0.7, freshwater: 0.3 },
       rhythm: { morning: 0.7, afternoon: 0.5, evening: 0.7, night: 0.4 },
       lifestyle: { roaming: 0.8, appetite: 1, homebody: 0.2, restless: 0.4, hunter: 0 },
       social: { family: 1, pack: 0.6, gregarious: 0.6, pairBond: 0.3, independence: 0.1, territorial: 0.2, easygoing: 0.3 },
@@ -701,6 +729,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.8, intimidate: 0.6, assess: 0.7, flee: 0.2, hide: 0, exploit: 0.2 },
       gifts: { strength: 1, endurance: 0.8, adaptability: 0.5, speed: 0.2, regeneration: 0.2, camouflage: 0, flight: 0, armor: 0.6 },
       drive: { industrious: 0.6, aesthetic: 0.3 },
+      diet: { plants: 1, sweet: 0.6 },
     },
   },
   {
@@ -716,7 +745,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Presence', 'Power', 'Focus'],
     funFact: 'Unlike most cats, tigers love water. They’re strong swimmers and often cool off in rivers.',
     profile: {
-      habitat: { rainforest: 0.8, snow: 0.5, grassland: 0.5 },
+      habitat: { rainforest: 0.7, snow: 0.9, grassland: 0.5, freshwater: 0.3 },
       rhythm: { morning: 0.3, afternoon: 0.1, evening: 0.9, night: 0.8 },
       lifestyle: { hunter: 1, roaming: 0.7, homebody: 0.3, restless: 0.3, appetite: 0.7 },
       social: { independence: 1, territorial: 1, family: 0.5, pairBond: 0.1, gregarious: 0, pack: 0 },
@@ -725,6 +754,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 1, intimidate: 0.8, exploit: 0.5, assess: 0.6, flee: 0, hide: 0.4 },
       gifts: { strength: 1, camouflage: 0.8, speed: 0.6, endurance: 0.5, adaptability: 0.5, flight: 0 },
       drive: { aesthetic: 0.6, industrious: 0.2 },
+      diet: { meat: 1 },
     },
   },
   {
@@ -749,6 +779,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { hide: 0.6, assess: 0.8, flee: 0.5, standGround: 0.4, exploit: 0.4, intimidate: 0.3 },
       gifts: { camouflage: 0.8, adaptability: 0.6, speed: 0.5, endurance: 0.6, strength: 0.4, flight: 0 },
       drive: { aesthetic: 0.5, industrious: 0.2 },
+      diet: { meat: 1 },
     },
   },
   {
@@ -773,6 +804,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { flee: 0.9, standGround: 0.1, hide: 0.3, assess: 0.6, exploit: 0.3, intimidate: 0.2 },
       gifts: { speed: 1, strength: 0.3, endurance: 0.2, camouflage: 0.5, adaptability: 0.3, flight: 0 },
       drive: { aesthetic: 0.6, industrious: 0.2 },
+      diet: { meat: 1 },
     },
   },
   {
@@ -797,6 +829,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { flee: 0.6, hide: 0.5, assess: 0.5, standGround: 0.3, intimidate: 0.3, exploit: 0.4 },
       gifts: { speed: 0.6, flight: 0.3, camouflage: 0.6, adaptability: 0.5, strength: 0.3, endurance: 0.4 },
       drive: { aesthetic: 0.6, industrious: 0.2 },
+      diet: { meat: 1 },
     },
   },
   {
@@ -821,6 +854,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { hide: 0.8, flee: 0.6, assess: 0.5, standGround: 0.4, exploit: 0.4, intimidate: 0.3 },
       gifts: { camouflage: 0.8, speed: 0.5, adaptability: 0.6, flight: 0.1, strength: 0.1, endurance: 0.3, armor: 0.1 },
       drive: { aesthetic: 0.4, industrious: 0.2 },
+      diet: { meat: 1 },
     },
   },
   {
@@ -836,7 +870,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Adaptability', 'Cunning', 'Resilience'],
     funFact: 'Coyotes have been seen teaming up with badgers to hunt: the badger digs while the coyote chases.',
     profile: {
-      habitat: { desert: 0.8, grassland: 0.8, snow: 0.5, rainforest: 0.1 },
+      habitat: { desert: 0.8, grassland: 0.8, snow: 0.5, rainforest: 0.1, city: 0.5 },
       rhythm: { morning: 0.5, afternoon: 0.2, evening: 0.8, night: 0.8 },
       lifestyle: { roaming: 0.8, hunter: 0.7, appetite: 0.8, restless: 0.5, homebody: 0.3 },
       social: { pairBond: 0.8, family: 0.6, pack: 0.3, easygoing: 0.5, independence: 0.6, territorial: 0.5, gregarious: 0.2 },
@@ -845,6 +879,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { exploit: 1, flee: 0.6, assess: 0.7, hide: 0.4, standGround: 0.3, intimidate: 0.3 },
       gifts: { adaptability: 1, speed: 0.6, endurance: 0.7, strength: 0.3, camouflage: 0.4, flight: 0 },
       drive: { industrious: 0.2, aesthetic: 0.2 },
+      diet: { anything: 1, meat: 0.7, sweet: 0.3 },
     },
   },
   {
@@ -869,6 +904,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.8, assess: 0.6, intimidate: 0.6, exploit: 0.4, flee: 0.2, hide: 0.1 },
       gifts: { endurance: 1, strength: 0.6, speed: 0.6, adaptability: 0.6, camouflage: 0.2, flight: 0 },
       drive: { industrious: 0.4, aesthetic: 0.2 },
+      diet: { meat: 1 },
     },
   },
   {
@@ -893,6 +929,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.6, flee: 0.4, assess: 0.5, intimidate: 0.4, exploit: 0.4, hide: 0.1 },
       gifts: { endurance: 1, speed: 0.8, adaptability: 0.4, strength: 0.3, camouflage: 0.2, flight: 0 },
       drive: { industrious: 0.4, aesthetic: 0.6 },
+      diet: { meat: 1 },
     },
   },
   {
@@ -917,6 +954,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { flee: 0.8, hide: 0.8, assess: 0.6, standGround: 0.1, exploit: 0.3, intimidate: 0.1 },
       gifts: { adaptability: 0.8, speed: 0.5, camouflage: 0.6, endurance: 0.5, strength: 0.1, flight: 0, armor: 0.1 },
       drive: { aesthetic: 0.6, industrious: 0.5 },
+      diet: { anything: 0.7, meat: 0.7, sweet: 0.4 },
     },
   },
   {
@@ -932,7 +970,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Joy', 'Curiosity', 'Energy'],
     funFact: 'River otters slide down muddy and snowy banks, seemingly just for fun.',
     profile: {
-      habitat: { snow: 0.7, ocean: 0.5, grassland: 0.3, rainforest: 0.2 },
+      habitat: { snow: 0.7, ocean: 0.5, grassland: 0.3, rainforest: 0.2, freshwater: 1 },
       rhythm: { morning: 0.6, afternoon: 0.4, evening: 0.8, night: 0.6 },
       lifestyle: { restless: 0.9, roaming: 0.6, hunter: 0.7, appetite: 0.6, homebody: 0.2 },
       social: { family: 0.7, gregarious: 0.6, pack: 0.5, easygoing: 0.5, pairBond: 0.4, independence: 0.3, territorial: 0.2 },
@@ -941,6 +979,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { flee: 0.6, assess: 0.4, standGround: 0.4, exploit: 0.4, hide: 0.3, intimidate: 0.2 },
       gifts: { speed: 0.6, adaptability: 0.7, endurance: 0.6, strength: 0.3, camouflage: 0.2, flight: 0 },
       drive: { industrious: 0.3, aesthetic: 0.2 },
+      diet: { fish: 1, meat: 0.3 },
     },
   },
   {
@@ -965,6 +1004,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.7, exploit: 0.8, flee: 0.4, hide: 0.4, intimidate: 0.5, assess: 0.3 },
       gifts: { camouflage: 0.8, speed: 0.8, adaptability: 0.8, strength: 0.4, endurance: 0.6, flight: 0 },
       drive: { aesthetic: 0.4, industrious: 0.3 },
+      diet: { meat: 1 },
     },
   },
   {
@@ -989,6 +1029,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 1, intimidate: 0.8, exploit: 0.6, flee: 0, hide: 0.1, assess: 0.3 },
       gifts: { strength: 0.9, endurance: 1, adaptability: 0.7, speed: 0.4, regeneration: 0.3, camouflage: 0.2, flight: 0, armor: 0.6 },
       drive: { industrious: 0.4, aesthetic: 0.1 },
+      diet: { meat: 1, anything: 0.5 },
     },
   },
   {
@@ -1013,6 +1054,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.9, exploit: 0.9, assess: 0.7, intimidate: 0.5, flee: 0, hide: 0.1 },
       gifts: { strength: 1, speed: 0.7, endurance: 0.8, adaptability: 0.7, camouflage: 0.2, flight: 0, armor: 0.4 },
       drive: { industrious: 0.4, aesthetic: 0.3 },
+      diet: { meat: 0.9, fish: 0.8 },
     },
   },
   {
@@ -1037,6 +1079,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.5, exploit: 0.6, assess: 0.6, flee: 0.4, intimidate: 0.3, hide: 0.1 },
       gifts: { speed: 0.65, adaptability: 0.7, endurance: 0.7, regeneration: 0.4, strength: 0.4, flight: 0, camouflage: 0.1 },
       drive: { industrious: 0.3, aesthetic: 0.3 },
+      diet: { fish: 1 },
     },
   },
   {
@@ -1061,6 +1104,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.6, assess: 0.5, flee: 0.4, intimidate: 0.4, hide: 0.1, exploit: 0.2 },
       gifts: { endurance: 1, strength: 0.9, adaptability: 0.5, speed: 0.3, camouflage: 0.1, flight: 0, armor: 0.4 },
       drive: { aesthetic: 1, industrious: 0.4 },
+      diet: { fish: 1 },
     },
   },
   {
@@ -1085,6 +1129,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.8, exploit: 0.9, intimidate: 0.5, assess: 0.4, flee: 0.1, hide: 0.3 },
       gifts: { strength: 0.8, adaptability: 0.9, endurance: 0.7, speed: 0.5, camouflage: 0.4, regeneration: 0.6, flight: 0, armor: 0.5 },
       drive: { aesthetic: 0.3, industrious: 0.1 },
+      diet: { anything: 1, meat: 0.8, fish: 0.8 },
     },
   },
   {
@@ -1109,6 +1154,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { flee: 0.8, hide: 0.2, assess: 0.4, standGround: 0.1, intimidate: 0.1, exploit: 0.1 },
       gifts: { flight: 0.8, speed: 0.5, adaptability: 0.5, endurance: 0.6, camouflage: 0.3, strength: 0.2, armor: 0.1, venom: 0.1 },
       drive: { aesthetic: 0.9, industrious: 0.1 },
+      diet: { fish: 0.8 },
     },
   },
   {
@@ -1133,6 +1179,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { flee: 0.6, standGround: 0.4, intimidate: 0.8, exploit: 0.5, assess: 0.3, hide: 0.1 },
       gifts: { speed: 1, endurance: 0.6, adaptability: 0.4, strength: 0.4, camouflage: 0.4, flight: 0.2 },
       drive: { aesthetic: 0.9, industrious: 0.2 },
+      diet: { fish: 1 },
     },
   },
   {
@@ -1157,6 +1204,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { hide: 0.8, exploit: 0.8, flee: 0.7, assess: 0.8, intimidate: 0.3, standGround: 0.2 },
       gifts: { camouflage: 1, adaptability: 0.9, regeneration: 0.9, strength: 0.6, speed: 0.4, endurance: 0.3, flight: 0, armor: 0, venom: 0.5 },
       drive: { industrious: 0.4, aesthetic: 0.6 },
+      diet: { fish: 0.9, meat: 0.3 },
     },
   },
   {
@@ -1181,6 +1229,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.8, intimidate: 0.7, hide: 0.7, flee: 0.6, assess: 0.3, exploit: 0.3 },
       gifts: { regeneration: 1, endurance: 0.9, strength: 0.7, camouflage: 0.3, adaptability: 0.4, speed: 0.3, flight: 0, armor: 0.9 },
       drive: { industrious: 0.3, aesthetic: 0.1 },
+      diet: { fish: 0.9, anything: 0.6 },
     },
   },
   {
@@ -1196,7 +1245,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Work ethic', 'Kindness', 'Reliability'],
     funFact: 'Bumblebees have been observed rolling small balls for no reward, apparently just for fun.',
     profile: {
-      habitat: { grassland: 1, snow: 0.6, rainforest: 0.4 },
+      habitat: { grassland: 1, snow: 0.6, rainforest: 0.4, city: 0.3 },
       rhythm: { morning: 1, afternoon: 0.8, evening: 0.3, night: 0 },
       lifestyle: { restless: 1, roaming: 0.5, appetite: 0.6, homebody: 0.3, hunter: 0 },
       social: { family: 1, pack: 0.8, gregarious: 0.6, easygoing: 0.6, independence: 0.1, territorial: 0.2, pairBond: 0.1 },
@@ -1205,6 +1254,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { flee: 0.5, standGround: 0.5, intimidate: 0.3, assess: 0.3, hide: 0.2, exploit: 0.1 },
       gifts: { flight: 0.9, endurance: 0.7, adaptability: 0.6, strength: 0.3, speed: 0.3, camouflage: 0, venom: 0.7 },
       drive: { industrious: 1, aesthetic: 0.6 },
+      diet: { sweet: 1 },
     },
   },
   {
@@ -1229,6 +1279,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.7, intimidate: 0.3, flee: 0.2, assess: 0.3, hide: 0.1, exploit: 0.2 },
       gifts: { strength: 0.8, endurance: 0.9, adaptability: 0.4, speed: 0.2, camouflage: 0, flight: 0, armor: 0.5, venom: 0.1 },
       drive: { industrious: 1, aesthetic: 0.1 },
+      diet: { plants: 0.8 },
     },
   },
   {
@@ -1253,6 +1304,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { exploit: 0.9, assess: 0.6, hide: 0.4, standGround: 0.4, flee: 0.3, intimidate: 0.3 },
       gifts: { strength: 0.5, camouflage: 0.4, adaptability: 0.5, endurance: 0.5, regeneration: 0.4, speed: 0.1, flight: 0, venom: 0.6 },
       drive: { industrious: 1, aesthetic: 1 },
+      diet: { meat: 1 },
     },
   },
   {
@@ -1277,6 +1329,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { hide: 0.9, flee: 0.6, assess: 0.6, intimidate: 0.5, standGround: 0.3, exploit: 0.4 },
       gifts: { strength: 0.7, camouflage: 0.8, speed: 0.4, adaptability: 0.5, endurance: 0.6, regeneration: 0.3, flight: 0, armor: 0.1 },
       drive: { industrious: 0.1, aesthetic: 0.3 },
+      diet: { fish: 1 },
     },
   },
   {
@@ -1301,6 +1354,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.3, flee: 0.4, hide: 0.4, assess: 0.5, intimidate: 0.3, exploit: 0.5 },
       gifts: { adaptability: 0.9, camouflage: 0.2, speed: 0.4, strength: 0.2, endurance: 0.6, flight: 0, venom: 1 },
       drive: { aesthetic: 0.8, industrious: 0.2 },
+      diet: { fish: 1 },
     },
   },
   {
@@ -1325,6 +1379,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { hide: 0.8, assess: 0.7, flee: 0.6, standGround: 0.3, intimidate: 0.2, exploit: 0.4 },
       gifts: { camouflage: 1, endurance: 0.8, adaptability: 0.6, strength: 0.7, speed: 0.5, flight: 0.3 },
       drive: { aesthetic: 0.9, industrious: 0.1 },
+      diet: { meat: 1 },
     },
   },
   {
@@ -1340,7 +1395,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Resilience', 'Grit', 'Self-defence'],
     funFact: 'Snapping turtles can spend months under frozen ponds, taking in oxygen through their skin while they hibernate.',
     profile: {
-      habitat: { snow: 0.7, grassland: 0.3, rainforest: 0.2 },
+      habitat: { snow: 0.7, grassland: 0.3, rainforest: 0.2, freshwater: 1 },
       rhythm: { morning: 0.4, afternoon: 0.4, evening: 0.6, night: 0.6 },
       lifestyle: { homebody: 0.9, hunter: 0.6, appetite: 0.8, roaming: 0.1, restless: 0.1 },
       social: { independence: 1, territorial: 0.6, gregarious: 0, pack: 0, family: 0, pairBond: 0, easygoing: 0.1 },
@@ -1349,6 +1404,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 1, intimidate: 0.6, hide: 0.6, flee: 0.1, assess: 0.2, exploit: 0.4 },
       gifts: { endurance: 1, strength: 0.8, regeneration: 0.4, camouflage: 0.7, adaptability: 0.6, speed: 0.1, flight: 0, armor: 0.9 },
       drive: { industrious: 0.1, aesthetic: 0 },
+      diet: { anything: 0.8, meat: 0.7, fish: 0.6, plants: 0.3 },
     },
   },
   {
@@ -1364,7 +1420,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Problem-solving', 'Dexterity', 'Adaptability'],
     funFact: 'Raccoons can remember the solution to a puzzle for up to three years.',
     profile: {
-      habitat: { snow: 0.6, grassland: 0.5, rainforest: 0.6, desert: 0.2, ocean: 0.2 },
+      habitat: { snow: 0.6, grassland: 0.5, rainforest: 0.6, desert: 0.2, ocean: 0.2, freshwater: 0.6, city: 0.9 },
       rhythm: { morning: 0.1, afternoon: 0, evening: 0.8, night: 1 },
       lifestyle: { appetite: 0.9, restless: 0.6, roaming: 0.5, homebody: 0.4, hunter: 0.3 },
       social: { independence: 0.5, easygoing: 0.8, family: 0.5, gregarious: 0.4, pack: 0.1, territorial: 0.2, pairBond: 0.1 },
@@ -1373,6 +1429,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { exploit: 0.9, flee: 0.6, hide: 0.6, assess: 0.6, standGround: 0.3, intimidate: 0.4 },
       gifts: { adaptability: 1, camouflage: 0.4, speed: 0.3, strength: 0.2, endurance: 0.4, flight: 0 },
       drive: { industrious: 0.4, aesthetic: 0.2 },
+      diet: { anything: 1, sweet: 0.5, fish: 0.4 },
     },
   },
   {
@@ -1397,6 +1454,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { hide: 0.8, intimidate: 0.7, flee: 0.5, standGround: 0.2, assess: 0.4, exploit: 0.1 },
       gifts: { camouflage: 0.7, adaptability: 0.4, endurance: 0.3, speed: 0.2, strength: 0.1, flight: 0.2, armor: 0.1 },
       drive: { aesthetic: 0.8, industrious: 0.1 },
+      diet: { plants: 1, sweet: 0.4 },
     },
   },
   {
@@ -1412,7 +1470,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Strength', 'Protectiveness', 'Balance'],
     funFact: 'Brown bears have one of the best noses in the animal kingdom, thought to be several times sharper than a bloodhound’s.',
     profile: {
-      habitat: { snow: 1, grassland: 0.4, rainforest: 0.6 },
+      habitat: { snow: 1, grassland: 0.4, rainforest: 0.6, freshwater: 0.5 },
       rhythm: { morning: 0.7, afternoon: 0.4, evening: 0.8, night: 0.4 },
       lifestyle: { appetite: 1, homebody: 0.7, roaming: 0.7, hunter: 0.5, restless: 0.3 },
       social: { independence: 0.9, family: 0.7, territorial: 0.4, easygoing: 0.4, gregarious: 0.2, pack: 0, pairBond: 0.1 },
@@ -1421,6 +1479,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.9, intimidate: 0.8, assess: 0.6, flee: 0.1, hide: 0.1, exploit: 0.4 },
       gifts: { strength: 1, endurance: 0.8, adaptability: 0.7, speed: 0.5, regeneration: 0.3, camouflage: 0.1, flight: 0, armor: 0.5 },
       drive: { industrious: 0.3, aesthetic: 0.1 },
+      diet: { anything: 0.9, fish: 0.7, sweet: 0.7, meat: 0.5, plants: 0.5 },
     },
   },
   {
@@ -1445,6 +1504,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.9, assess: 0.6, intimidate: 0.6, exploit: 0.6, hide: 0.2, flee: 0.1 },
       gifts: { endurance: 1, strength: 1, camouflage: 0.7, adaptability: 0.6, speed: 0.4, flight: 0, armor: 0.5 },
       drive: { industrious: 0.2, aesthetic: 0.3 },
+      diet: { meat: 1, fish: 0.5 },
     },
   },
   {
@@ -1469,6 +1529,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.4, flee: 0.3, hide: 0.2, assess: 0.3, intimidate: 0.6, exploit: 0.1 },
       gifts: { adaptability: 1, endurance: 0.8, regeneration: 0.3, strength: 0.3, speed: 0.1, camouflage: 0.4, flight: 0, armor: 0.5 },
       drive: { aesthetic: 0.4, industrious: 0.1 },
+      diet: { plants: 1 },
     },
   },
   {
@@ -1493,6 +1554,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { flee: 0.8, assess: 0.5, hide: 0.3, standGround: 0.2, intimidate: 0.3, exploit: 0.4 },
       gifts: { speed: 0.7, adaptability: 0.5, endurance: 0.6, strength: 0.3, camouflage: 0.3, flight: 0 },
       drive: { aesthetic: 0.4, industrious: 0.2 },
+      diet: { fish: 1 },
     },
   },
   {
@@ -1517,6 +1579,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.7, intimidate: 0.6, exploit: 0.4, assess: 0.5, flee: 0.4, hide: 0.3 },
       gifts: { strength: 0.6, adaptability: 0.8, endurance: 0.6, speed: 0.4, regeneration: 0.4, camouflage: 0.3, flight: 0, armor: 0.5 },
       drive: { industrious: 0.3, aesthetic: 0.5 },
+      diet: { anything: 1, meat: 0.6, sweet: 0.5 },
     },
   },
   {
@@ -1541,6 +1604,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 1, intimidate: 0.8, flee: 0.2, hide: 0, assess: 0.4, exploit: 0.1 },
       gifts: { strength: 1, endurance: 0.7, speed: 0.4, adaptability: 0.3, camouflage: 0, regeneration: 0.2, flight: 0, armor: 0.9 },
       drive: { industrious: 0.2, aesthetic: 0.1 },
+      diet: { plants: 1 },
     },
   },
   {
@@ -1556,7 +1620,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Presence', 'Power', 'Loyalty to the group'],
     funFact: 'Hippos can’t actually swim. They walk or bounce along the bottom of rivers and lakes.',
     profile: {
-      habitat: { grassland: 0.9, rainforest: 0.3, ocean: 0.3 },
+      habitat: { grassland: 0.9, rainforest: 0.3, ocean: 0.3, freshwater: 1 },
       rhythm: { morning: 0.3, afternoon: 0.1, evening: 0.8, night: 1 },
       lifestyle: { homebody: 0.8, appetite: 0.9, roaming: 0.4, hunter: 0, restless: 0.1 },
       social: { gregarious: 0.8, territorial: 1, family: 0.6, pack: 0.4, independence: 0.2, easygoing: 0.3, pairBond: 0.1 },
@@ -1565,6 +1629,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 1, intimidate: 1, flee: 0, hide: 0.3, assess: 0.2, exploit: 0.2 },
       gifts: { strength: 1, endurance: 0.6, speed: 0.5, adaptability: 0.4, regeneration: 0.3, camouflage: 0.1, flight: 0, armor: 0.8 },
       drive: { industrious: 0.1, aesthetic: 0.1 },
+      diet: { plants: 1 },
     },
   },
   {
@@ -1589,6 +1654,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { assess: 0.8, hide: 0.5, flee: 0.3, standGround: 0.3, intimidate: 0.3, exploit: 0.4 },
       gifts: { strength: 0.8, flight: 0.2, adaptability: 0.4, endurance: 0.5, camouflage: 0.3, speed: 0.1 },
       drive: { industrious: 0.7, aesthetic: 0.4 },
+      diet: { sweet: 1, plants: 0.6 },
     },
   },
   {
@@ -1613,6 +1679,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { intimidate: 0.6, flee: 0.6, assess: 0.5, standGround: 0.4, hide: 0.2, exploit: 0.3 },
       gifts: { adaptability: 0.6, speed: 0.4, flight: 0.3, strength: 0.1, endurance: 0.4, camouflage: 0.1 },
       drive: { aesthetic: 0.8, industrious: 0.3 },
+      diet: { sweet: 0.8, plants: 0.7 },
     },
   },
   {
@@ -1637,6 +1704,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.7, intimidate: 0.6, hide: 0.5, flee: 0.2, assess: 0.4, exploit: 0.1 },
       gifts: { flight: 0.2, camouflage: 0.6, strength: 0.3, endurance: 0.4, adaptability: 0.3, speed: 0.1, armor: 0.4 },
       drive: { industrious: 0.2, aesthetic: 0.3 },
+      diet: { plants: 1 },
     },
   },
   {
@@ -1652,7 +1720,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Stamina', 'Community', 'Freedom'],
     funFact: 'Indian flying foxes can have wingspans of well over a metre and fly long distances each night to find fruit.',
     profile: {
-      habitat: { rainforest: 0.7, grassland: 0.5, desert: 0.1 },
+      habitat: { rainforest: 0.7, grassland: 0.5, desert: 0.1, city: 0.6 },
       rhythm: { morning: 0, afternoon: 0, evening: 0.9, night: 1 },
       lifestyle: { roaming: 0.8, appetite: 0.7, homebody: 0.4, restless: 0.5, hunter: 0 },
       social: { gregarious: 1, easygoing: 0.7, family: 0.5, pack: 0.4, independence: 0.1, territorial: 0.3, pairBond: 0.2 },
@@ -1661,6 +1729,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { flee: 0.8, assess: 0.4, intimidate: 0.4, hide: 0.3, standGround: 0.2, exploit: 0.3 },
       gifts: { flight: 1, endurance: 0.6, adaptability: 0.7, speed: 0.5, strength: 0.1, camouflage: 0.2, armor: 0.1 },
       drive: { industrious: 0.4, aesthetic: 0.3 },
+      diet: { sweet: 1 },
     },
   },
   {
@@ -1685,6 +1754,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.9, intimidate: 0.7, hide: 0.4, flee: 0.2, assess: 0.2, exploit: 0.1 },
       gifts: { strength: 1, armor: 1, flight: 0.6, endurance: 0.6, camouflage: 0.4, adaptability: 0.3, speed: 0.1, regeneration: 0, venom: 0 },
       drive: { industrious: 0.3, aesthetic: 0.5 },
+      diet: { sweet: 1 },
     },
   },
   {
@@ -1700,7 +1770,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Energy', 'Precision', 'Drive'],
     funFact: 'Ruby-throated hummingbirds fly non-stop across the Gulf of Mexico on migration, a journey of up to about 800 km.',
     profile: {
-      habitat: { snow: 0.6, rainforest: 0.6, grassland: 0.4 },
+      habitat: { snow: 0.6, rainforest: 0.6, grassland: 0.4, city: 0.3 },
       rhythm: { morning: 1, afternoon: 0.8, evening: 0.4, night: 0 },
       lifestyle: { restless: 1, appetite: 0.9, roaming: 0.8, homebody: 0.1, hunter: 0.2 },
       social: { independence: 0.9, territorial: 1, gregarious: 0, pack: 0, family: 0.2, pairBond: 0, easygoing: 0.1 },
@@ -1709,6 +1779,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.6, flee: 0.6, intimidate: 0.5, assess: 0.3, hide: 0.1, exploit: 0.3 },
       gifts: { speed: 1, flight: 1, endurance: 0.8, strength: 0.05, camouflage: 0.1, adaptability: 0.5, armor: 0.05, venom: 0 },
       drive: { aesthetic: 0.9, industrious: 0.6 },
+      diet: { sweet: 1, meat: 0.3 },
     },
   },
   {
@@ -1733,6 +1804,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { intimidate: 1, standGround: 0.8, exploit: 0.6, flee: 0.3, hide: 0.3, assess: 0.2 },
       gifts: { strength: 0.6, endurance: 0.7, adaptability: 0.5, speed: 0.4, regeneration: 0.2, armor: 0.2, camouflage: 0.3, flight: 0, venom: 0 },
       drive: { industrious: 0.1, aesthetic: 0.1 },
+      diet: { meat: 1, anything: 0.8 },
     },
   },
   {
@@ -1750,13 +1822,14 @@ export const ANIMALS: AnimalProfile[] = [
     profile: {
       habitat: { rainforest: 1 },
       rhythm: { morning: 0.4, afternoon: 0.1, evening: 0.8, night: 0.8 },
-      lifestyle: { hunter: 1, homebody: 0.5, roaming: 0.4, restless: 0.3, appetite: 0.4 },
+      lifestyle: { hunter: 1, homebody: 0.3, roaming: 0.5, restless: 0.5, appetite: 0.4 },
       social: { independence: 1, territorial: 0.5, family: 0.3, gregarious: 0, pack: 0, pairBond: 0.1, easygoing: 0.1 },
       mind: { patience: 0.8, precision: 0.8, cunning: 0.6, intellect: 0.5, curiosity: 0.4, creativity: 0.3 },
       temperament: { reserve: 1, calm: 0.7, confidence: 0.6, aggression: 0.4, playfulness: 0.2, chaos: 0.1, ambition: 0.3, persistence: 0.6, leadership: 0.2, loyalty: 0.2 },
       defense: { hide: 0.9, assess: 0.7, flee: 0.5, standGround: 0.3, exploit: 0.5, intimidate: 0.3 },
       gifts: { camouflage: 1, flight: 0.5, strength: 0.5, speed: 0.4, adaptability: 0.4, endurance: 0.4, armor: 0.2, venom: 0 },
       drive: { aesthetic: 0.9, industrious: 0.1 },
+      diet: { meat: 1 },
     },
   },
   {
@@ -1772,7 +1845,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Calm', 'Warmth', 'Community'],
     funFact: 'Capybaras are the world’s largest rodents and can stay underwater for around five minutes.',
     profile: {
-      habitat: { grassland: 0.8, rainforest: 0.6 },
+      habitat: { grassland: 0.8, rainforest: 0.6, freshwater: 1 },
       rhythm: { morning: 0.6, afternoon: 0.3, evening: 0.8, night: 0.4 },
       lifestyle: { homebody: 0.9, appetite: 0.8, roaming: 0.2, restless: 0.1, hunter: 0 },
       social: { gregarious: 1, easygoing: 1, family: 0.7, pack: 0.4, independence: 0.1, territorial: 0.3, pairBond: 0.2 },
@@ -1781,6 +1854,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { flee: 0.6, hide: 0.5, assess: 0.3, standGround: 0.2, intimidate: 0.1, exploit: 0.1 },
       gifts: { adaptability: 0.5, endurance: 0.4, speed: 0.3, strength: 0.3, camouflage: 0.3, armor: 0.2, flight: 0, venom: 0 },
       drive: { aesthetic: 0.2, industrious: 0.1 },
+      diet: { plants: 1 },
     },
   },
   {
@@ -1805,6 +1879,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { flee: 0.4, assess: 0.4, standGround: 0.4, intimidate: 0.2, exploit: 0.2, hide: 0.1 },
       gifts: { flight: 1, endurance: 1, speed: 0.5, adaptability: 0.5, strength: 0.3, camouflage: 0.1, armor: 0.2, venom: 0 },
       drive: { aesthetic: 0.6, industrious: 0.2 },
+      diet: { fish: 1 },
     },
   },
   {
@@ -1829,6 +1904,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.8, assess: 0.6, intimidate: 0.5, exploit: 0.3, flee: 0.2, hide: 0.1 },
       gifts: { strength: 1, endurance: 1, adaptability: 0.5, armor: 0.4, speed: 0.3, camouflage: 0.1, flight: 0, venom: 0 },
       drive: { aesthetic: 0.2, industrious: 0.2 },
+      diet: { fish: 1 },
     },
   },
   {
@@ -1844,7 +1920,7 @@ export const ANIMALS: AnimalProfile[] = [
     strengths: ['Longevity', 'Patience', 'Resilience'],
     funFact: 'White sturgeon can live for more than 100 years, and their lineage dates back to the age of the dinosaurs.',
     profile: {
-      habitat: { snow: 0.5, ocean: 0.7 },
+      habitat: { snow: 0.5, ocean: 0.7, freshwater: 0.9 },
       rhythm: { morning: 0.3, afternoon: 0.3, evening: 0.6, night: 0.7 },
       lifestyle: { homebody: 0.6, appetite: 0.7, roaming: 0.5, hunter: 0.3, restless: 0.1 },
       social: { independence: 0.6, easygoing: 0.7, gregarious: 0.5, territorial: 0.1, family: 0, pack: 0, pairBond: 0 },
@@ -1853,6 +1929,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { hide: 0.6, flee: 0.4, standGround: 0.2, assess: 0.5, intimidate: 0.2, exploit: 0.1 },
       gifts: { endurance: 1, armor: 0.8, strength: 0.6, adaptability: 0.6, camouflage: 0.3, speed: 0.2, regeneration: 0.2, flight: 0, venom: 0 },
       drive: { aesthetic: 0.1, industrious: 0.1 },
+      diet: { fish: 0.9, anything: 0.4 },
     },
   },
   {
@@ -1877,6 +1954,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { flee: 0.4, standGround: 0.3, assess: 0.3, hide: 0.1, intimidate: 0.1, exploit: 0.1 },
       gifts: { endurance: 0.9, strength: 0.9, armor: 0.6, regeneration: 0.5, adaptability: 0.5, camouflage: 0.3, speed: 0.1, flight: 0, venom: 0 },
       drive: { aesthetic: 0.7, industrious: 0.1 },
+      diet: { fish: 0.9 },
     },
   },
   {
@@ -1901,6 +1979,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { assess: 0.9, standGround: 0.6, intimidate: 0.5, flee: 0.5, exploit: 0.5, hide: 0.3 },
       gifts: { speed: 0.7, flight: 0.5, venom: 0.5, adaptability: 0.5, strength: 0.3, camouflage: 0.3, endurance: 0.3, armor: 0.1 },
       drive: { aesthetic: 0.8, industrious: 0.3 },
+      diet: { meat: 1 },
     },
   },
   {
@@ -1925,6 +2004,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 1, intimidate: 0.9, exploit: 0.6, assess: 0.3, flee: 0, hide: 0 },
       gifts: { venom: 1, flight: 1, strength: 0.7, speed: 0.7, endurance: 0.6, armor: 0.4, adaptability: 0.4, camouflage: 0.1 },
       drive: { industrious: 0.8, aesthetic: 0.3 },
+      diet: { meat: 0.9, sweet: 0.6 },
     },
   },
   {
@@ -1949,6 +2029,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { flee: 0.5, assess: 0.6, hide: 0.3, standGround: 0.3, exploit: 0.3, intimidate: 0.1 },
       gifts: { adaptability: 0.6, endurance: 0.5, speed: 0.4, strength: 0.3, camouflage: 0.2, regeneration: 0.2, armor: 0.1, flight: 0, venom: 0 },
       drive: { industrious: 0.7, aesthetic: 0.6 },
+      diet: { fish: 1 },
     },
   },
   {
@@ -1973,6 +2054,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { assess: 0.5, flee: 0.5, standGround: 0.2, hide: 0.1, intimidate: 0.1, exploit: 0.1 },
       gifts: { endurance: 0.7, flight: 0.6, strength: 0.5, adaptability: 0.5, speed: 0.4, camouflage: 0.2, armor: 0.2, venom: 0 },
       drive: { aesthetic: 0.8, industrious: 0.1 },
+      diet: { fish: 0.9 },
     },
   },
   {
@@ -1997,6 +2079,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { flee: 0.5, assess: 0.5, hide: 0.4, standGround: 0.3, exploit: 0.2, intimidate: 0.1 },
       gifts: { endurance: 0.7, adaptability: 0.6, camouflage: 0.5, strength: 0.4, speed: 0.3, armor: 0.3, flight: 0, venom: 0 },
       drive: { aesthetic: 0.6, industrious: 0.2 },
+      diet: { fish: 1 },
     },
   },
   {
@@ -2021,6 +2104,7 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { flee: 0.6, hide: 0.5, assess: 0.5, standGround: 0.3, intimidate: 0.2, exploit: 0.2 },
       gifts: { flight: 0.8, speed: 0.6, endurance: 0.6, adaptability: 0.5, strength: 0.2, camouflage: 0.1, armor: 0.1, venom: 0 },
       drive: { aesthetic: 1, industrious: 0.7 },
+      diet: { fish: 1 },
     },
   },
   {
@@ -2045,6 +2129,382 @@ export const ANIMALS: AnimalProfile[] = [
       defense: { standGround: 0.6, intimidate: 0.5, exploit: 0.6, hide: 0.5, assess: 0.5, flee: 0.1 },
       gifts: { strength: 0.9, endurance: 0.8, camouflage: 0.6, adaptability: 0.5, armor: 0.4, speed: 0.2, regeneration: 0.2, flight: 0, venom: 0 },
       drive: { aesthetic: 0.3, industrious: 0.1 },
+      diet: { fish: 1, meat: 0.4 },
+    },
+  },
+  {
+    id: 'mute-swan',
+    name: 'Mute Swan',
+    animalClass: 'bird',
+    tagline: 'The Graceful Guardian',
+    color: '#d8d2c2',
+    wikiTitle: 'Mute_swan',
+    description:
+      'You are elegant, composed and completely devoted to your person. Most of the time you glide through life with effortless grace, but threaten your family or your patch of water and you’ll discover a ferocious side nobody expected.',
+    traits: ['Graceful', 'Devoted', 'Protective', 'Poised'],
+    strengths: ['Loyalty', 'Grace', 'Protectiveness'],
+    funFact: 'Mute swans usually pair for life, and the parents often carry their young cygnets around on their backs.',
+    profile: {
+      habitat: { freshwater: 1, snow: 0.5, city: 0.3, grassland: 0.3 },
+      rhythm: { morning: 0.8, afternoon: 0.8, evening: 0.4, night: 0.1 },
+      lifestyle: { homebody: 0.6, appetite: 0.6, roaming: 0.3, restless: 0.3, hunter: 0 },
+      social: { pairBond: 1, family: 0.9, territorial: 1, independence: 0.4, gregarious: 0.3, easygoing: 0.2, pack: 0.1 },
+      mind: { patience: 0.6, intellect: 0.4, curiosity: 0.3, precision: 0.3, creativity: 0.2, cunning: 0.2 },
+      temperament: { loyalty: 1, confidence: 0.8, calm: 0.7, aggression: 0.6, persistence: 0.6, reserve: 0.5, leadership: 0.4, ambition: 0.2, playfulness: 0.1, chaos: 0.1 },
+      defense: { standGround: 0.9, intimidate: 0.9, assess: 0.4, flee: 0.2, hide: 0.1, exploit: 0.1 },
+      gifts: { flight: 0.8, strength: 0.6, endurance: 0.6, adaptability: 0.5, speed: 0.4, armor: 0.2, camouflage: 0, venom: 0 },
+      drive: { aesthetic: 1, industrious: 0.5 },
+      diet: { plants: 1 },
+    },
+  },
+  {
+    id: 'wood-duck',
+    name: 'Wood Duck',
+    animalClass: 'bird',
+    tagline: 'The Quiet Showstopper',
+    color: '#3f7f6e',
+    wikiTitle: 'Wood_duck',
+    description:
+      'You are a little shy and a lot more stunning than you realise. You keep to the quiet edges of things, but when you do step out, people stop and stare. Underneath the colour is a gentle, loyal soul who is braver than they look.',
+    traits: ['Striking', 'Shy', 'Gentle', 'Quietly brave'],
+    strengths: ['Style', 'Gentleness', 'Courage'],
+    funFact: 'Wood duck ducklings leap from tree-hole nests that can be over 15 metres up, the day after hatching, and bounce off the ground unharmed.',
+    profile: {
+      habitat: { freshwater: 1, rainforest: 0.6, snow: 0.4 },
+      rhythm: { morning: 0.9, afternoon: 0.5, evening: 0.7, night: 0.1 },
+      lifestyle: { restless: 0.5, homebody: 0.5, appetite: 0.5, roaming: 0.4, hunter: 0.1 },
+      social: { pairBond: 0.8, family: 0.6, gregarious: 0.5, easygoing: 0.5, independence: 0.3, pack: 0.3, territorial: 0.2 },
+      mind: { curiosity: 0.5, patience: 0.4, intellect: 0.4, creativity: 0.4, precision: 0.3, cunning: 0.2 },
+      temperament: { reserve: 0.6, loyalty: 0.6, calm: 0.5, confidence: 0.5, persistence: 0.5, playfulness: 0.4, ambition: 0.3, chaos: 0.2, aggression: 0.1, leadership: 0.1 },
+      defense: { flee: 0.8, hide: 0.6, assess: 0.5, exploit: 0.2, standGround: 0.1, intimidate: 0.1 },
+      gifts: { flight: 0.9, speed: 0.6, adaptability: 0.5, endurance: 0.5, camouflage: 0.4, strength: 0.1, armor: 0.1, venom: 0 },
+      drive: { aesthetic: 1, industrious: 0.3 },
+      diet: { plants: 0.7, sweet: 0.4, meat: 0.3 },
+    },
+  },
+  {
+    id: 'kookaburra',
+    name: 'Kookaburra',
+    animalClass: 'bird',
+    tagline: 'The Morning Laugh',
+    color: '#8a6a4a',
+    wikiTitle: 'Laughing_kookaburra',
+    description:
+      'You are the laugh everyone recognises from across the room. You start the day loud and happy, you look after your family and friends fiercely, and you have a surprisingly sharp, patient side when there’s a job to do.',
+    traits: ['Loud', 'Joyful', 'Family-minded', 'Sharp'],
+    strengths: ['Humour', 'Loyalty', 'Focus'],
+    funFact: 'Kookaburra families laugh together at dawn and dusk to announce their territory, and older siblings help raise the chicks.',
+    profile: {
+      habitat: { grassland: 0.6, rainforest: 0.5, city: 0.4, desert: 0.2 },
+      rhythm: { morning: 1, afternoon: 0.5, evening: 0.7, night: 0 },
+      lifestyle: { hunter: 0.8, homebody: 0.5, appetite: 0.6, restless: 0.3, roaming: 0.2 },
+      social: { family: 1, territorial: 1, pack: 0.7, pairBond: 0.7, gregarious: 0.5, easygoing: 0.3, independence: 0.2 },
+      mind: { patience: 0.7, precision: 0.7, curiosity: 0.5, cunning: 0.4, intellect: 0.4, creativity: 0.3 },
+      temperament: { playfulness: 0.9, confidence: 0.8, loyalty: 0.8, persistence: 0.6, leadership: 0.5, calm: 0.5, chaos: 0.4, aggression: 0.4, ambition: 0.3, reserve: 0.1 },
+      defense: { intimidate: 0.6, standGround: 0.6, assess: 0.5, exploit: 0.4, flee: 0.3, hide: 0.1 },
+      gifts: { flight: 0.8, adaptability: 0.6, speed: 0.4, endurance: 0.4, strength: 0.3, camouflage: 0.2, armor: 0.1, venom: 0 },
+      drive: { aesthetic: 0.4, industrious: 0.3 },
+      diet: { meat: 1 },
+    },
+  },
+  {
+    id: 'green-tree-monitor',
+    name: 'Green Tree Monitor',
+    animalClass: 'reptile',
+    tagline: 'The Emerald Climber',
+    color: '#3f9a5a',
+    wikiTitle: 'Green_tree_monitor',
+    description:
+      'You are sleek, private and quietly brilliant. You’d rather watch from a high branch than join the crowd, and you notice far more than anyone gives you credit for. When something catches your interest, you move fast.',
+    traits: ['Sleek', 'Private', 'Watchful', 'Quick'],
+    strengths: ['Agility', 'Perception', 'Independence'],
+    funFact: 'Green tree monitors use their long tails like an extra hand to grip branches high in the rainforest canopy.',
+    profile: {
+      habitat: { rainforest: 1 },
+      rhythm: { morning: 0.8, afternoon: 0.8, evening: 0.2, night: 0 },
+      lifestyle: { hunter: 0.9, restless: 0.6, roaming: 0.4, homebody: 0.4, appetite: 0.5 },
+      social: { independence: 0.9, territorial: 0.5, easygoing: 0.2, gregarious: 0, pack: 0, family: 0, pairBond: 0.1 },
+      mind: { precision: 0.7, intellect: 0.6, curiosity: 0.6, cunning: 0.5, patience: 0.5, creativity: 0.3 },
+      temperament: { reserve: 0.7, confidence: 0.5, persistence: 0.5, calm: 0.4, ambition: 0.4, aggression: 0.3, chaos: 0.3, playfulness: 0.2, loyalty: 0.1, leadership: 0.1 },
+      defense: { flee: 0.7, hide: 0.6, assess: 0.6, intimidate: 0.4, standGround: 0.3, exploit: 0.3 },
+      gifts: { camouflage: 0.8, flight: 0.5, speed: 0.5, adaptability: 0.4, endurance: 0.4, strength: 0.3, armor: 0.3, venom: 0.3 },
+      drive: { aesthetic: 0.9, industrious: 0.2 },
+      diet: { meat: 1 },
+    },
+  },
+  {
+    id: 'gharial',
+    name: 'Gharial',
+    animalClass: 'reptile',
+    tagline: 'The Specialist',
+    color: '#6f7a5a',
+    wikiTitle: 'Gharial',
+    description:
+      'You know exactly what you’re good at and you do it with total precision, without any need to be the loudest presence in the river. Calm, patient and a little unusual-looking, you’ve made your quirks work beautifully.',
+    traits: ['Specialist', 'Calm', 'Precise', 'Unusual'],
+    strengths: ['Precision', 'Patience', 'Focus'],
+    funFact: 'Gharials have long, thin snouts lined with over 100 sharp teeth, built almost entirely for catching fish.',
+    profile: {
+      habitat: { freshwater: 1, grassland: 0.2 },
+      rhythm: { morning: 0.6, afternoon: 0.8, evening: 0.4, night: 0.3 },
+      lifestyle: { hunter: 0.8, homebody: 0.7, appetite: 0.7, roaming: 0.3, restless: 0.2 },
+      social: { family: 0.6, gregarious: 0.5, independence: 0.5, territorial: 0.5, easygoing: 0.4, pack: 0.2, pairBond: 0.2 },
+      mind: { precision: 0.9, patience: 0.9, cunning: 0.4, intellect: 0.3, curiosity: 0.3, creativity: 0.1 },
+      temperament: { calm: 0.9, reserve: 0.7, confidence: 0.6, persistence: 0.6, loyalty: 0.4, leadership: 0.3, aggression: 0.2, ambition: 0.2, playfulness: 0.1, chaos: 0.1 },
+      defense: { flee: 0.5, hide: 0.5, assess: 0.4, intimidate: 0.4, standGround: 0.3, exploit: 0.3 },
+      gifts: { armor: 0.8, endurance: 0.6, speed: 0.5, strength: 0.5, camouflage: 0.5, adaptability: 0.3, venom: 0 },
+      drive: { aesthetic: 0.4, industrious: 0.1 },
+      diet: { fish: 1 },
+    },
+  },
+  {
+    id: 'giant-panda',
+    name: 'Giant Panda',
+    animalClass: 'mammal',
+    tagline: 'The Gentle Snacker',
+    color: '#c9c4b6',
+    wikiTitle: 'Giant_panda',
+    description:
+      'You have mastered the art of the slow, happy life. You love good food, a comfy spot and plenty of me-time, and you are quietly delighted by simple pleasures. People find you impossible not to like, even when you’re just sitting there eating.',
+    traits: ['Mellow', 'Lovable', 'Food-focused', 'Content'],
+    strengths: ['Calm', 'Charm', 'Contentment'],
+    funFact: 'Giant pandas spend up to 14 hours a day eating, and can get through 12 kg or more of bamboo daily.',
+    profile: {
+      habitat: { rainforest: 0.8, snow: 0.7 },
+      rhythm: { morning: 0.6, afternoon: 0.4, evening: 0.7, night: 0.4 },
+      lifestyle: { appetite: 1, homebody: 0.9, roaming: 0.2, restless: 0.1, hunter: 0 },
+      social: { independence: 0.9, easygoing: 0.4, family: 0.4, territorial: 0.3, gregarious: 0.1, pairBond: 0.1, pack: 0 },
+      mind: { patience: 0.8, curiosity: 0.5, intellect: 0.4, precision: 0.4, creativity: 0.3, cunning: 0.2 },
+      temperament: { calm: 1, playfulness: 0.7, reserve: 0.7, confidence: 0.5, persistence: 0.4, loyalty: 0.3, aggression: 0.2, chaos: 0.2, leadership: 0.1, ambition: 0 },
+      defense: { standGround: 0.5, hide: 0.5, flee: 0.4, assess: 0.4, intimidate: 0.3, exploit: 0.1 },
+      gifts: { strength: 0.7, endurance: 0.5, camouflage: 0.4, adaptability: 0.3, armor: 0.3, speed: 0.2, venom: 0 },
+      drive: { aesthetic: 0.7, industrious: 0.1 },
+      diet: { plants: 1 },
+    },
+  },
+  {
+    id: 'jaguar',
+    name: 'Jaguar',
+    animalClass: 'mammal',
+    tagline: 'The Powerhouse',
+    color: '#c9902f',
+    wikiTitle: 'Jaguar',
+    description:
+      'You are power and precision in one package. You don’t waste energy, you don’t make noise, and you don’t miss. You’re at home anywhere wild and wet, and people sense immediately that you are not someone to underestimate.',
+    traits: ['Powerful', 'Precise', 'Self-possessed', 'Fearless'],
+    strengths: ['Strength', 'Focus', 'Confidence'],
+    funFact: 'Jaguars have one of the strongest bites of any big cat, strong enough to crack turtle shells, and are excellent swimmers.',
+    profile: {
+      habitat: { rainforest: 1, freshwater: 0.6, grassland: 0.3 },
+      rhythm: { morning: 0.5, afternoon: 0.1, evening: 0.9, night: 0.8 },
+      lifestyle: { hunter: 1, roaming: 0.6, appetite: 0.7, restless: 0.4, homebody: 0.3 },
+      social: { independence: 1, territorial: 1, family: 0.4, gregarious: 0, pack: 0, pairBond: 0.1, easygoing: 0.1 },
+      mind: { patience: 0.8, precision: 0.8, cunning: 0.6, intellect: 0.5, curiosity: 0.4, creativity: 0.3 },
+      temperament: { confidence: 1, aggression: 0.7, persistence: 0.7, reserve: 0.7, calm: 0.6, leadership: 0.6, ambition: 0.5, playfulness: 0.3, loyalty: 0.3, chaos: 0.1 },
+      defense: { standGround: 1, intimidate: 0.7, exploit: 0.6, assess: 0.6, hide: 0.5, flee: 0 },
+      gifts: { strength: 1, camouflage: 0.8, speed: 0.6, endurance: 0.5, adaptability: 0.5, armor: 0.2, venom: 0 },
+      drive: { aesthetic: 0.7, industrious: 0.1 },
+      diet: { meat: 1, fish: 0.5 },
+    },
+  },
+  {
+    id: 'nile-monitor',
+    name: 'Nile Monitor',
+    animalClass: 'reptile',
+    tagline: 'The Fearless Adventurer',
+    color: '#7a6a3a',
+    wikiTitle: 'Nile_monitor',
+    description:
+      'You are bold, restless and fully capable of handling whatever comes your way. You’ll swim, climb, dig and scrap your way toward anything you want, and you have a reputation for being a little too fearless for your own good.',
+    traits: ['Bold', 'Restless', 'Scrappy', 'Adaptable'],
+    strengths: ['Nerve', 'Adaptability', 'Drive'],
+    funFact: 'Nile monitors are powerful swimmers that raid crocodile nests for eggs, right under the crocodiles’ noses.',
+    profile: {
+      habitat: { freshwater: 1, grassland: 0.6, desert: 0.3, rainforest: 0.3 },
+      rhythm: { morning: 0.8, afternoon: 0.8, evening: 0.3, night: 0 },
+      lifestyle: { appetite: 0.9, hunter: 0.9, roaming: 0.7, restless: 0.7, homebody: 0.2 },
+      social: { independence: 0.9, territorial: 0.5, easygoing: 0.3, gregarious: 0.1, pack: 0, family: 0, pairBond: 0.1 },
+      mind: { cunning: 0.7, curiosity: 0.7, intellect: 0.6, precision: 0.4, patience: 0.4, creativity: 0.4 },
+      temperament: { confidence: 0.9, aggression: 0.8, persistence: 0.7, ambition: 0.6, chaos: 0.5, reserve: 0.4, calm: 0.3, leadership: 0.3, playfulness: 0.2, loyalty: 0.1 },
+      defense: { standGround: 0.8, intimidate: 0.7, exploit: 0.7, flee: 0.4, assess: 0.4, hide: 0.3 },
+      gifts: { adaptability: 0.9, speed: 0.6, strength: 0.6, endurance: 0.6, armor: 0.4, camouflage: 0.3, venom: 0.3 },
+      drive: { aesthetic: 0.3, industrious: 0.2 },
+      diet: { meat: 1, anything: 0.7, fish: 0.6 },
+    },
+  },
+  {
+    id: 'bearded-dragon',
+    name: 'Central Bearded Dragon',
+    animalClass: 'reptile',
+    tagline: 'The Chill Sunbather',
+    color: '#c49a5a',
+    wikiTitle: 'Central_bearded_dragon',
+    description:
+      'You are the most relaxed person in the sunshine, and you see no reason to rush anything. You’re easy to get along with and happy to hang out, but you have a dramatic streak: when you’re annoyed, everyone knows about it.',
+    traits: ['Chill', 'Sun-loving', 'Friendly', 'A bit dramatic'],
+    strengths: ['Calm', 'Approachability', 'Resilience'],
+    funFact: 'Bearded dragons puff out and darken their spiky “beard” to look bigger, and wave an arm to signal they come in peace.',
+    profile: {
+      habitat: { desert: 1, grassland: 0.5 },
+      rhythm: { morning: 0.8, afternoon: 1, evening: 0.3, night: 0 },
+      lifestyle: { homebody: 0.8, appetite: 0.7, hunter: 0.4, roaming: 0.2, restless: 0.2 },
+      social: { easygoing: 0.7, independence: 0.6, territorial: 0.5, gregarious: 0.2, pairBond: 0.1, family: 0, pack: 0 },
+      mind: { patience: 0.6, curiosity: 0.5, intellect: 0.3, cunning: 0.2, creativity: 0.2, precision: 0.3 },
+      temperament: { calm: 0.9, confidence: 0.6, persistence: 0.4, loyalty: 0.4, reserve: 0.4, playfulness: 0.3, aggression: 0.2, leadership: 0.2, chaos: 0.1, ambition: 0.1 },
+      defense: { intimidate: 0.9, standGround: 0.5, hide: 0.4, assess: 0.4, flee: 0.3, exploit: 0.2 },
+      gifts: { camouflage: 0.6, adaptability: 0.6, endurance: 0.6, armor: 0.5, speed: 0.3, strength: 0.2, regeneration: 0.1, venom: 0 },
+      drive: { aesthetic: 0.5, industrious: 0.1 },
+      diet: { anything: 0.7, meat: 0.6, plants: 0.6 },
+    },
+  },
+  {
+    id: 'house-sparrow',
+    name: 'House Sparrow',
+    animalClass: 'bird',
+    tagline: 'The Everyday Hustler',
+    color: '#9a7a5a',
+    wikiTitle: 'House_sparrow',
+    description:
+      'You are the friendliest, most adaptable person around, and you can make a home absolutely anywhere. You love company, you’re always chattering about something, and you never let anyone out-hustle you for the last crumb.',
+    traits: ['Sociable', 'Scrappy', 'Chatty', 'Adaptable'],
+    strengths: ['Adaptability', 'Community', 'Hustle'],
+    funFact: 'House sparrows have followed people around the world and now live on every continent except Antarctica.',
+    profile: {
+      habitat: { city: 1, grassland: 0.5, snow: 0.4, desert: 0.2 },
+      rhythm: { morning: 1, afternoon: 0.8, evening: 0.3, night: 0 },
+      lifestyle: { restless: 0.8, appetite: 0.7, homebody: 0.5, roaming: 0.2, hunter: 0.2 },
+      social: { gregarious: 1, easygoing: 0.9, family: 0.7, pairBond: 0.6, pack: 0.5, territorial: 0.3, independence: 0.1 },
+      mind: { cunning: 0.6, curiosity: 0.6, intellect: 0.5, creativity: 0.5, patience: 0.3, precision: 0.3 },
+      temperament: { playfulness: 0.7, confidence: 0.7, chaos: 0.6, persistence: 0.6, loyalty: 0.5, aggression: 0.4, calm: 0.3, ambition: 0.3, leadership: 0.2, reserve: 0.1 },
+      defense: { flee: 0.7, exploit: 0.7, assess: 0.5, hide: 0.4, standGround: 0.2, intimidate: 0.2 },
+      gifts: { adaptability: 1, flight: 0.8, speed: 0.5, endurance: 0.4, camouflage: 0.4, strength: 0.1, armor: 0.1, venom: 0 },
+      drive: { industrious: 0.5, aesthetic: 0.2 },
+      diet: { anything: 0.9, plants: 0.7 },
+    },
+  },
+  {
+    id: 'beaver',
+    name: 'Beaver',
+    animalClass: 'mammal',
+    tagline: 'The Builder',
+    color: '#7a4f30',
+    wikiTitle: 'Beaver',
+    description:
+      'You are a builder at heart. You see what a place could be and you work, steadily and stubbornly, until it is. Family comes first, your home is your pride, and you have never met a problem that a bit of hard work couldn’t fix.',
+    traits: ['Hardworking', 'Family-first', 'Practical', 'Determined'],
+    strengths: ['Building', 'Persistence', 'Loyalty'],
+    funFact: 'Beavers reshape whole landscapes with their dams, and the largest known one, in Canada, is long enough to spot in satellite images.',
+    profile: {
+      habitat: { freshwater: 1, snow: 0.7, rainforest: 0.4 },
+      rhythm: { morning: 0.3, afternoon: 0.1, evening: 0.9, night: 0.9 },
+      lifestyle: { homebody: 0.7, restless: 0.7, appetite: 0.6, roaming: 0.2, hunter: 0 },
+      social: { family: 1, pairBond: 0.9, territorial: 0.8, pack: 0.6, gregarious: 0.3, independence: 0.2, easygoing: 0.2 },
+      mind: { patience: 0.7, precision: 0.7, intellect: 0.6, creativity: 0.6, curiosity: 0.4, cunning: 0.3 },
+      temperament: { persistence: 1, loyalty: 0.9, calm: 0.6, confidence: 0.6, leadership: 0.5, ambition: 0.5, reserve: 0.5, playfulness: 0.3, aggression: 0.3, chaos: 0.1 },
+      defense: { flee: 0.6, hide: 0.5, intimidate: 0.5, assess: 0.5, standGround: 0.4, exploit: 0.2 },
+      gifts: { endurance: 0.7, strength: 0.6, adaptability: 0.5, armor: 0.3, speed: 0.2, camouflage: 0.2, venom: 0 },
+      drive: { industrious: 1, aesthetic: 0.2 },
+      diet: { plants: 1 },
+    },
+  },
+  {
+    id: 'eurasian-magpie',
+    name: 'Eurasian Magpie',
+    animalClass: 'bird',
+    tagline: 'The Clever Collector',
+    color: '#3e4a6a',
+    wikiTitle: 'Eurasian_magpie',
+    description:
+      'You are clever, bold and slightly mischievous, with an eye for anything that sparkles. You figure out puzzles faster than most people, you stick with your partner through thick and thin, and you’re not above a little cheeky scheming.',
+    traits: ['Clever', 'Cheeky', 'Loyal', 'Flashy'],
+    strengths: ['Intelligence', 'Boldness', 'Loyalty'],
+    funFact: 'The Eurasian magpie was the first non-mammal shown to recognise itself in a mirror.',
+    profile: {
+      habitat: { city: 0.7, grassland: 0.7, snow: 0.5, rainforest: 0.3 },
+      rhythm: { morning: 1, afternoon: 0.7, evening: 0.4, night: 0 },
+      lifestyle: { restless: 0.7, appetite: 0.6, homebody: 0.5, hunter: 0.4, roaming: 0.3 },
+      social: { pairBond: 0.9, territorial: 0.7, family: 0.6, gregarious: 0.5, easygoing: 0.4, pack: 0.4, independence: 0.3 },
+      mind: { intellect: 1, cunning: 0.9, curiosity: 0.9, creativity: 0.7, precision: 0.5, patience: 0.4 },
+      temperament: { confidence: 0.8, loyalty: 0.7, chaos: 0.6, playfulness: 0.6, persistence: 0.6, aggression: 0.5, ambition: 0.5, leadership: 0.4, reserve: 0.3, calm: 0.3 },
+      defense: { exploit: 0.8, assess: 0.7, standGround: 0.5, intimidate: 0.5, flee: 0.4, hide: 0.2 },
+      gifts: { adaptability: 0.9, flight: 0.8, speed: 0.4, strength: 0.1, camouflage: 0.1, armor: 0.1, venom: 0 },
+      drive: { aesthetic: 0.8, industrious: 0.4 },
+      diet: { anything: 1, meat: 0.5 },
+    },
+  },
+  {
+    id: 'mantis-shrimp',
+    name: 'Mantis Shrimp',
+    animalClass: 'invertebrate',
+    tagline: 'The Knockout Artist',
+    color: '#3fa58a',
+    wikiTitle: 'Mantis_shrimp',
+    description:
+      'You are small, colourful and absolutely not to be messed with. You see the world in more detail than anyone around you, you defend your space without hesitation, and when you finally act, it lands like a knockout punch.',
+    traits: ['Fierce', 'Vivid', 'Perceptive', 'Explosive'],
+    strengths: ['Power', 'Precision', 'Perception'],
+    funFact: 'Mantis shrimp punch so fast that the water around their claws briefly boils, and their eyes have far more colour receptors than ours.',
+    profile: {
+      habitat: { ocean: 1, rainforest: 0.1 },
+      rhythm: { morning: 0.6, afternoon: 0.6, evening: 0.4, night: 0.3 },
+      lifestyle: { hunter: 1, homebody: 0.8, appetite: 0.6, restless: 0.4, roaming: 0.1 },
+      social: { independence: 1, territorial: 1, pairBond: 0.4, gregarious: 0, pack: 0, family: 0.1, easygoing: 0.1 },
+      mind: { precision: 1, cunning: 0.6, patience: 0.6, intellect: 0.5, curiosity: 0.5, creativity: 0.4 },
+      temperament: { aggression: 1, confidence: 1, persistence: 0.7, ambition: 0.6, chaos: 0.5, reserve: 0.5, calm: 0.3, leadership: 0.3, loyalty: 0.3, playfulness: 0.2 },
+      defense: { standGround: 1, intimidate: 0.8, exploit: 0.6, assess: 0.5, hide: 0.5, flee: 0.1 },
+      gifts: { speed: 1, strength: 0.9, armor: 0.8, regeneration: 0.4, adaptability: 0.4, endurance: 0.4, camouflage: 0.3, venom: 0 },
+      drive: { aesthetic: 1, industrious: 0.3 },
+      diet: { fish: 1, meat: 0.5 },
+    },
+  },
+  {
+    id: 'red-kangaroo',
+    name: 'Red Kangaroo',
+    animalClass: 'mammal',
+    tagline: 'The Big Bounder',
+    color: '#b0563a',
+    wikiTitle: 'Red_kangaroo',
+    description:
+      'You cover more ground than anyone and make it look effortless. You’re easygoing and social, happy roaming with your crew, but you’re no pushover: if someone wants a fight, you’re more than ready to box.',
+    traits: ['Energetic', 'Easygoing', 'Tough', 'Sociable'],
+    strengths: ['Stamina', 'Strength', 'Sociability'],
+    funFact: 'Red kangaroos can bound along at over 50 km/h and clear around 8 metres in a single hop.',
+    profile: {
+      habitat: { grassland: 1, desert: 0.8 },
+      rhythm: { morning: 0.7, afternoon: 0.1, evening: 0.9, night: 0.6 },
+      lifestyle: { roaming: 0.8, appetite: 0.6, restless: 0.5, homebody: 0.3, hunter: 0 },
+      social: { gregarious: 0.7, family: 0.6, easygoing: 0.6, pack: 0.5, independence: 0.3, territorial: 0.1, pairBond: 0.1 },
+      mind: { patience: 0.4, curiosity: 0.4, intellect: 0.3, cunning: 0.3, precision: 0.3, creativity: 0.2 },
+      temperament: { confidence: 0.7, calm: 0.6, persistence: 0.6, playfulness: 0.5, aggression: 0.5, ambition: 0.5, leadership: 0.5, loyalty: 0.5, reserve: 0.3, chaos: 0.2 },
+      defense: { flee: 0.7, standGround: 0.5, intimidate: 0.5, assess: 0.4, exploit: 0.2, hide: 0.1 },
+      gifts: { endurance: 0.9, speed: 0.8, strength: 0.7, adaptability: 0.7, flight: 0.3, camouflage: 0.2, armor: 0.1, venom: 0 },
+      drive: { industrious: 0.2, aesthetic: 0.2 },
+      diet: { plants: 1 },
+    },
+  },
+  {
+    id: 'three-toed-sloth',
+    name: 'Three-toed Sloth',
+    animalClass: 'mammal',
+    tagline: 'The Master of Slow',
+    color: '#7d7a5a',
+    wikiTitle: 'Brown-throated_sloth',
+    description:
+      'You have perfected the art of doing absolutely nothing in a hurry. You are peaceful, unbothered and remarkably good at blending in, and you’ve figured out that most things people stress about simply aren’t worth the energy.',
+    traits: ['Peaceful', 'Unhurried', 'Low-key', 'Zen'],
+    strengths: ['Calm', 'Patience', 'Self-preservation'],
+    funFact: 'Three-toed sloths move so slowly that algae grows in their fur, giving them a greenish tint that helps them hide in the trees.',
+    profile: {
+      habitat: { rainforest: 1 },
+      rhythm: { morning: 0.4, afternoon: 0.4, evening: 0.4, night: 0.5 },
+      lifestyle: { homebody: 1, appetite: 0.5, restless: 0, roaming: 0, hunter: 0 },
+      social: { independence: 0.9, easygoing: 0.6, territorial: 0.1, gregarious: 0, pack: 0, family: 0.2, pairBond: 0.1 },
+      mind: { patience: 1, precision: 0.3, intellect: 0.2, curiosity: 0.2, creativity: 0.2, cunning: 0.1 },
+      temperament: { calm: 1, reserve: 0.7, persistence: 0.6, confidence: 0.4, playfulness: 0.3, loyalty: 0.2, aggression: 0.05, chaos: 0, ambition: 0, leadership: 0 },
+      defense: { hide: 1, assess: 0.3, standGround: 0.2, exploit: 0.1, flee: 0, intimidate: 0 },
+      gifts: { camouflage: 1, endurance: 0.6, strength: 0.5, regeneration: 0.3, adaptability: 0.3, flight: 0.2, armor: 0.1, speed: 0, venom: 0 },
+      drive: { aesthetic: 0.2, industrious: 0 },
+      diet: { plants: 1 },
     },
   },
 ];

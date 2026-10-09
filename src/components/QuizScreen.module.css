@@ -49,9 +49,9 @@
 .ghost {
   appearance: none;
   cursor: pointer;
-  background: none;
-  border: 1px solid var(--line);
-  color: var(--text-muted);
+  background: var(--bg-surface);
+  border: 1px solid var(--line-strong);
+  color: var(--text);
   border-radius: 999px;
   padding: 0.5rem 1rem;
   font-size: 0.88rem;
@@ -64,7 +64,8 @@
 
 .ghost:hover {
   color: var(--text);
-  border-color: var(--line-strong);
+  border-color: var(--sage);
+  background: var(--bg-surface-hover);
 }
 
 .ghost[data-warn] {
@@ -115,7 +116,7 @@
 
 @keyframes breathe {
   50% {
-    box-shadow: 0 0 0 7px rgba(217, 179, 108, 0.05);
+    box-shadow: 0 0 0 7px rgba(232, 185, 90, 0.05);
   }
 }
 
@@ -125,10 +126,14 @@
   gap: 1.3rem;
   padding: 1.5rem;
   border-radius: var(--radius-lg);
-  border: 1px solid var(--line);
-  background: linear-gradient(180deg, rgba(20, 29, 25, 0.7), rgba(14, 20, 17, 0.5));
+  border: 1px solid var(--line-strong);
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgba(143, 204, 162, 0.1), transparent 70%),
+    linear-gradient(180deg, rgba(30, 44, 37, 0.9), rgba(20, 30, 25, 0.85));
   backdrop-filter: blur(12px);
-  box-shadow: var(--shadow);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    var(--shadow);
 }
 
 .fieldBox {
@@ -178,9 +183,9 @@
 }
 
 .meter {
-  height: 4px;
+  height: 6px;
   border-radius: 99px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.12);
   overflow: hidden;
 }
 
@@ -202,7 +207,7 @@
 .why {
   font-size: 0.82rem;
   line-height: 1.5;
-  color: var(--text-faint);
+  color: var(--text-muted);
   border-top: 1px solid var(--line);
   padding-top: 1rem;
 }

@@ -7,14 +7,14 @@
 
 .orbit {
   fill: none;
-  stroke: var(--line);
-  stroke-width: 0.6;
+  stroke: var(--line-strong);
+  stroke-width: 0.7;
   stroke-dasharray: 1 5;
 }
 
 .constellation {
   fill: none;
-  stroke: rgba(217, 179, 108, 0.45);
+  stroke: rgba(232, 185, 90, 0.65);
   stroke-width: 0.8;
   stroke-linejoin: round;
 }

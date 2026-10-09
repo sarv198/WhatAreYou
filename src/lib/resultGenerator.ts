@@ -1,4 +1,4 @@
-import { TRAIT_DEFINITIONS, type TraitDefinition, type TraitId } from '../data/traits';
+import { CONTEXT_GROUPS, TRAIT_DEFINITIONS, type TraitDefinition, type TraitId } from '../data/traits';
 import type { AnimalProfile, Answer, Question, QuestionOption } from '../types';
 import type { QuizContext } from './context';
 import { optionAffinity } from './informationGain';
@@ -52,8 +52,8 @@ function joinNatural(items: string[]): string {
 }
 
 function buildExplanation(animal: AnimalProfile, shared: TraitDefinition[], questionsAsked: number, total: number): string {
-  const personality = shared.filter((t) => t.group !== 'habitat' && t.group !== 'rhythm').slice(0, 3);
-  const context = shared.find((t) => t.group === 'habitat' || t.group === 'rhythm');
+  const personality = shared.filter((t) => !CONTEXT_GROUPS.has(t.group)).slice(0, 3);
+  const context = shared.find((t) => CONTEXT_GROUPS.has(t.group));
   const parts: string[] = [];
 
   if (personality.length > 0) {

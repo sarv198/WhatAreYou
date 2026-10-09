@@ -20,7 +20,9 @@ export const QUESTIONS: Question[] = [
       { id: 'desert', label: 'Desert' },
       { id: 'snow', label: 'Somewhere with snowy winters' },
       { id: 'grassland', label: 'Open plains / grasslands' },
+      { id: 'freshwater', label: 'By a river or lake' },
       { id: 'ocean', label: 'On a boat in the ocean' },
+      { id: 'city', label: 'An abandoned city' },
     ],
   },
   {
@@ -212,6 +214,20 @@ export const QUESTIONS: Question[] = [
       { id: 'regeneration', label: 'Regeneration' },
       { id: 'indestructible', label: 'Indestructible' },
       { id: 'poison', label: 'Poison' },
+    ],
+  },
+  {
+    id: 'diet',
+    phase: 'adaptive',
+    weight: 0.9,
+    prompt: 'What’s your ideal meal?',
+    kicker: 'No judgement. Well, a little.',
+    options: [
+      { id: 'steak', label: 'A big steak' },
+      { id: 'seafood', label: 'Seafood, all the way' },
+      { id: 'greens', label: 'Something fresh and green' },
+      { id: 'sweet', label: 'Fruit, or anything sweet' },
+      { id: 'anything', label: 'Whatever’s in the fridge' },
     ],
   },
   {

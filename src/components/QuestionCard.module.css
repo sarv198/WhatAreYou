@@ -51,23 +51,26 @@
   padding: 1rem 1.1rem;
   border-radius: var(--radius);
   border: 1px solid var(--line);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.01));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.035));
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
   transition:
     border-color 0.25s,
     background 0.25s,
+    box-shadow 0.25s,
     transform 0.35s var(--ease-out),
     opacity 0.3s;
 }
 
 .option:hover {
-  border-color: var(--line-strong);
-  background: rgba(255, 255, 255, 0.055);
+  border-color: color-mix(in oklab, var(--sage) 60%, transparent);
+  background: var(--bg-surface-hover);
   transform: translateX(3px);
 }
 
 .option[data-active] {
   border-color: var(--gold);
-  background: var(--gold-soft);
+  background: linear-gradient(180deg, rgba(232, 185, 90, 0.26), rgba(232, 185, 90, 0.14));
+  box-shadow: 0 0 0 1px var(--gold), 0 10px 30px -12px rgba(232, 185, 90, 0.5);
 }
 
 .option[data-dimmed] {
@@ -82,13 +85,19 @@
   height: 1.9rem;
   border-radius: 8px;
   border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.04);
   font-size: 0.8rem;
-  color: var(--text-muted);
+  color: var(--text);
   font-variant-numeric: tabular-nums;
   transition:
     background 0.25s,
     color 0.25s,
     border-color 0.25s;
+}
+
+.option:hover .key {
+  border-color: var(--sage);
+  color: var(--sage);
 }
 
 .option[data-active] .key {

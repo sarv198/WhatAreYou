@@ -46,8 +46,8 @@
   font-size: 0.95rem;
   padding: 0.55rem 1rem 0.55rem 0.85rem;
   border-radius: 999px;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid color-mix(in oklab, var(--sage) 45%, transparent);
+  background: var(--sage-soft);
 }
 
 .header {

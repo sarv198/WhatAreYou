@@ -1,17 +1,20 @@
 :root {
   --bg: #0b110e;
-  --bg-raised: #121a16;
-  --bg-card: rgba(22, 31, 27, 0.72);
-  --line: rgba(232, 224, 204, 0.1);
-  --line-strong: rgba(232, 224, 204, 0.22);
-  --text: #ece5d3;
-  --text-muted: #a6a795;
-  --text-faint: #6f7466;
-  --gold: #d9b36c;
-  --gold-soft: rgba(217, 179, 108, 0.16);
-  --sage: #8fb39a;
+  --bg-raised: #17221c;
+  --bg-card: rgba(30, 43, 36, 0.86);
+  --bg-surface: rgba(255, 255, 255, 0.055);
+  --bg-surface-hover: rgba(143, 199, 160, 0.12);
+  --line: rgba(232, 224, 204, 0.16);
+  --line-strong: rgba(232, 224, 204, 0.32);
+  --text: #f2ecdc;
+  --text-muted: #bdbeab;
+  --text-faint: #8a8f7f;
+  --gold: #e8b95a;
+  --gold-soft: rgba(232, 185, 90, 0.2);
+  --sage: #8fcca2;
+  --sage-soft: rgba(143, 204, 162, 0.16);
   --moss: #2c4a38;
-  --danger: #d9776c;
+  --danger: #e8806f;
 
   --font-display: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
   --font-body: 'Inter Tight Variable', ui-sans-serif, system-ui, sans-serif;
@@ -44,8 +47,9 @@ body {
   min-height: 100dvh;
   background-color: var(--bg);
   background-image:
-    radial-gradient(1200px 700px at 12% -10%, rgba(64, 104, 78, 0.28), transparent 60%),
-    radial-gradient(900px 600px at 105% 110%, rgba(150, 110, 52, 0.18), transparent 60%);
+    radial-gradient(1200px 700px at 12% -10%, rgba(70, 128, 92, 0.42), transparent 60%),
+    radial-gradient(900px 600px at 105% 110%, rgba(176, 124, 48, 0.3), transparent 60%),
+    radial-gradient(700px 500px at 85% 15%, rgba(56, 110, 120, 0.16), transparent 65%);
   background-attachment: fixed;
   color: var(--text);
   font-family: var(--font-body);
