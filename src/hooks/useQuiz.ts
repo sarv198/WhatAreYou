@@ -2,20 +2,18 @@ import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'r
 import type { QuizContext } from '../lib/context';
 import { deriveQuizView, quizReducer, restoreState, type QuizAction, type QuizState } from '../lib/quizState';
 
-const STORAGE_KEY = 'what-animal-are-you:v1';
-
-function loadSaved(): unknown {
+function loadSaved(storageKey: string): unknown {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(storageKey);
     return raw ? JSON.parse(raw) : null;
   } catch {
     return null;
   }
 }
 
-function save(state: QuizState) {
+function save(storageKey: string, state: QuizState) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    localStorage.setItem(storageKey, JSON.stringify(state));
   } catch {
     // Storage unavailable (private mode, quota); progress just won't survive a reload.
   }
@@ -34,16 +32,23 @@ export interface Insight {
   remaining: number;
 }
 
-/** Quiz state + derived view, persisted so a reload never loses progress. */
-export function useQuiz(ctx: QuizContext) {
+/**
+ * Quiz state + derived view, persisted so a reload never loses progress.
+ * `startAtIntro` opens on the landing page (with a resume option) instead of
+ * mid-quiz, for when the user has just switched over from another quiz.
+ */
+export function useQuiz(ctx: QuizContext, storageKey: string, startAtIntro = false) {
   const [state, dispatch] = useReducer(
     (s: QuizState, a: QuizAction) => quizReducer(ctx, s, a),
     undefined,
-    () => restoreState(ctx, loadSaved()),
+    () => {
+      const restored = restoreState(ctx, loadSaved(storageKey));
+      return startAtIntro ? { ...restored, status: 'intro' as const } : restored;
+    },
   );
   const view = useMemo(() => deriveQuizView(ctx, state), [ctx, state]);
 
-  useEffect(() => save(state), [state]);
+  useEffect(() => save(storageKey, state), [storageKey, state]);
 
   // Narrate what the last answer did to the candidate pool.
   const [insight, setInsight] = useState<Insight | null>(null);

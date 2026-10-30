@@ -14,7 +14,7 @@
 
 .constellation {
   fill: none;
-  stroke: rgba(232, 185, 90, 0.65);
+  stroke: color-mix(in srgb, var(--gold) 65%, transparent);
   stroke-width: 0.8;
   stroke-linejoin: round;
 }

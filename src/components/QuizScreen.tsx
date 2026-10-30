@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useMemo, useState } from 'react';
+import type { QuizCopy } from '../data/quizCopy';
 import type { Insight } from '../hooks/useQuiz';
 import type { QuizView } from '../lib/quizState';
 import type { AnimalProfile } from '../types';
@@ -9,6 +10,7 @@ import { QuizCounter } from './QuizCounter';
 import styles from './QuizScreen.module.css';
 
 interface QuizScreenProps {
+  copy: QuizCopy;
   animals: readonly AnimalProfile[];
   broadCount: number;
   view: QuizView;
@@ -51,6 +53,7 @@ function narrate(insight: Insight): string {
 }
 
 export function QuizScreen({
+  copy,
   animals,
   broadCount,
   view,
@@ -95,15 +98,15 @@ export function QuizScreen({
       : 'Narrowing in';
 
   const why = isBroad
-    ? 'The first few questions sketch the big picture: where you live, how you spend your time, who you run with and when you come alive.'
-    : `Chosen because it best separates the ${view.pool.length} animals still in the running. Your answers decide what comes next.`;
+    ? copy.broadWhy
+    : `Chosen because it best separates the ${view.pool.length} ${copy.noun} still in the running. Your answers decide what comes next.`;
 
   return (
     <div className={styles.quiz}>
       <header className={styles.topbar}>
         <div className={styles.brandGroup}>
           <button type="button" className={styles.brand} onClick={onExit}>
-            What animal are you?
+            {copy.question}
           </button>
           <QuizCounter count={quizCount} variant="header" />
         </div>
@@ -146,7 +149,7 @@ export function QuizScreen({
               scores={view.candidateScores}
               poolIds={poolIds}
               mode={answered === 0 ? 'idle' : 'quiz'}
-              label={`${view.pool.length} of ${animals.length} animals still in the running`}
+              label={`${view.pool.length} of ${animals.length} ${copy.noun} still in the running`}
             />
           </div>
 
@@ -155,7 +158,9 @@ export function QuizScreen({
               <motion.strong key={view.pool.length} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
                 {view.pool.length}
               </motion.strong>
-              <span>of {animals.length} animals still in the running</span>
+              <span>
+                of {animals.length} {copy.noun} still in the running
+              </span>
             </div>
             <div className={styles.certainty}>
               <span className={styles.certaintyLabel}>{answered === 0 ? 'Waiting for your first answer' : certaintyLabel(top)}</span>

@@ -10,6 +10,12 @@ npm run simulate   # offline tuning report (reachability, accuracy, result sprea
 npm run build
 ```
 
+## Prehistoric quiz
+
+A second quiz lives at `/prehistoric`, reached from the glowing "Prehistoric Animal Quiz" button on the home page. It runs on the same engine with its own 50 creatures (Tyrannosaurus Rex to Dunkleosteus), a ten-question bank, a volcanic colour scheme and its own Quiz Takers count. Its data lives in `src/data/prehistoric/`. Most questions are shared with the main quiz, with a merged "In a body of water" habitat, two new superpowers (Gigantic size and Super senses) and one question of its own ("How do you want to be remembered in 66 million years?").
+
+Each quiz is registered in `src/data/quizzes.ts` (engine data and balancing targets) and `src/data/quizCopy.ts` (wording, URL, colours). The tuning scripts take `--quiz prehistoric`; without it they work on the main quiz.
+
 ## How it works
 
 ```
@@ -65,6 +71,8 @@ npm run export-answers                # writes scripts/data/answer-stats.json
 npm run balance -- --answers scripts/data/answer-stats.json
 ```
 
+For the prehistoric quiz, add `--quiz prehistoric` to both (`npm run export-answers -- --quiz prehistoric` writes `scripts/data/answer-stats-prehistoric.json`). With half as many creatures per habitat, its target is about 12% per habitat, at most 16%.
+
 The habitat question is deliberately not a hard cut-off. It narrows the field visibly, but an animal whose personality comes through strongly still wins from a "wrong" habitat about half the time.
 
 Questions work the same way: add the question to `src/data/questions.ts` and its answer effects to `src/data/traitMappings.ts`.
@@ -73,11 +81,12 @@ Questions work the same way: add the question to `src/data/questions.ts` and its
 
 ```
 src/
-  data/        animals, questions, trait registry, answer → trait mappings
+  data/        animals, questions, trait registry, answer → trait mappings, quiz registry
+  data/prehistoric/  the prehistoric quiz: creatures, questions, mappings, balance
   lib/         scoring, information gain, adaptive selection, results, quiz state reducer
   hooks/       useQuiz (state + persistence), useAnimalImage (Wikipedia photos)
   components/  Landing, QuizScreen, QuestionCard, Field, Revealing, ResultScreen, AnimalPortrait
-tests/         scoring, adaptive selection, navigation, edge cases
+tests/         scoring, adaptive selection, navigation, edge cases, stats API, prehistoric quiz
 scripts/       simulate.ts, the tuning harness
 ```
 

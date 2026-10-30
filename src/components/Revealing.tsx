@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import styles from './Revealing.module.css';
 
 interface RevealingProps {
+  /** What the drumroll says while it runs. */
+  label: string;
   /** Final contenders, best match first. */
   contenders: string[];
   onDone: () => void;
@@ -11,7 +13,7 @@ interface RevealingProps {
 const STEP_DELAYS = [140, 150, 170, 200, 250, 320, 420, 560];
 
 /** A short, skippable drumroll before the result: the final contenders flicker past and settle. */
-export function Revealing({ contenders, onDone }: RevealingProps) {
+export function Revealing({ label, contenders, onDone }: RevealingProps) {
   const reduceMotion = useReducedMotion();
   const sequence = [...contenders.slice(1).reverse(), ...contenders.slice(1).reverse(), contenders[0]!].slice(
     -STEP_DELAYS.length,
@@ -36,7 +38,7 @@ export function Revealing({ contenders, onDone }: RevealingProps) {
   return (
     <div className={styles.reveal} onClick={onDone}>
       <p className="eyebrow" role="status">
-        {settled ? 'Found you' : 'Consulting the animal kingdom…'}
+        {settled ? 'Found you' : label}
       </p>
       <div className={styles.slot} aria-hidden>
         <AnimatePresence mode="popLayout" initial={false}>

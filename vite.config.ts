@@ -1,17 +1,21 @@
 import { defineConfig, type Plugin } from 'vitest/config';
 import react from '@vitejs/plugin-react';
-import { ANIMALS } from './src/data/animals';
-import { QUESTIONS } from './src/data/questions';
+import { QUIZ_DATA, QUIZ_IDS } from './src/data/quizzes';
 import { buildCatalog, createMemoryStore, createStatsHandlers } from './src/lib/statsService';
 
-/** Deterministic sample completions (roughly 700) so the stats UI is visible locally. */
-function sampleCompletions(): Record<string, number> {
+/** Deterministic sample completions for every quiz, so the stats UI is visible locally. */
+function sampleCompletions(): Record<string, Record<string, number>> {
   return Object.fromEntries(
-    ANIMALS.map((animal) => {
-      let h = 2166136261;
-      for (const ch of animal.id) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
-      return [animal.id, 2 + ((h >>> 0) % 15)];
-    }),
+    QUIZ_IDS.map((quiz) => [
+      quiz,
+      Object.fromEntries(
+        QUIZ_DATA[quiz].animals.map((animal) => {
+          let h = 2166136261;
+          for (const ch of animal.id) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
+          return [animal.id, 2 + ((h >>> 0) % 15)];
+        }),
+      ),
+    ]),
   );
 }
 
@@ -25,7 +29,10 @@ function devStatsApi(): Plugin {
     name: 'dev-stats-api',
     apply: 'serve',
     configureServer(server) {
-      const handlers = createStatsHandlers(createMemoryStore(sampleCompletions()), buildCatalog(ANIMALS, QUESTIONS));
+      const catalogs = Object.fromEntries(
+        QUIZ_IDS.map((quiz) => [quiz, buildCatalog(QUIZ_DATA[quiz].animals, QUIZ_DATA[quiz].questions)]),
+      );
+      const handlers = createStatsHandlers(createMemoryStore(sampleCompletions()), catalogs);
       server.middlewares.use('/api/stats', async (req, res) => {
         try {
           const chunks: Buffer[] = [];

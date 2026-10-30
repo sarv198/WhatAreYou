@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { formatShare, MIN_COMPLETIONS_FOR_SHARE, summarizeShare } from '../src/lib/animalShare';
-import { buildCatalog, createMemoryStore, createStatsHandlers, findRedisCredentials } from '../src/lib/statsService';
+import { buildCatalog, createMemoryStore, createStatsHandlers, findRedisCredentials, statsKeys } from '../src/lib/statsService';
 
 describe('Redis credential lookup', () => {
   it('finds credentials that Vercel saved with a custom prefix', () => {
@@ -33,6 +33,8 @@ const valid = buildCatalog(
     { id: 'rhythm', options: [{ id: 'night' }, { id: 'morning' }] },
   ],
 );
+const fossils = buildCatalog([{ id: 'trex' }, { id: 'orca' }], [{ id: 'legacy', options: [{ id: 'biggest' }] }]);
+const catalogs = { animals: valid, prehistoric: fossils };
 const get = (query = '') => new Request(`http://test/api/stats${query}`);
 const post = (body: unknown) =>
   new Request('http://test/api/stats', {
@@ -43,45 +45,75 @@ const post = (body: unknown) =>
 
 describe('completion stats API', () => {
   it('returns the current total', async () => {
-    const handlers = createStatsHandlers(createMemoryStore({ tiger: 30, orca: 11 }), valid);
+    const handlers = createStatsHandlers(createMemoryStore({ animals: { tiger: 30, orca: 11 } }), catalogs);
     const res = await handlers.GET(get());
     expect(res.status).toBe(200);
     expect(await res.json()).toEqual({ total: 41 });
   });
 
   it('returns how many completions ended on a given animal', async () => {
-    const handlers = createStatsHandlers(createMemoryStore({ tiger: 30, orca: 11 }), valid);
+    const handlers = createStatsHandlers(createMemoryStore({ animals: { tiger: 30, orca: 11 } }), catalogs);
     expect(await (await handlers.GET(get('?animal=orca'))).json()).toEqual({ total: 41, animalCount: 11 });
     expect((await handlers.GET(get('?animal=dragon'))).status).toBe(400);
   });
 
   it('records a completion and the animal it ended on', async () => {
     const store = createMemoryStore();
-    const handlers = createStatsHandlers(store, valid);
+    const handlers = createStatsHandlers(store, catalogs);
     expect(await (await handlers.POST(post({ animalId: 'tiger' }))).json()).toEqual({ total: 1, animalCount: 1 });
     expect(await (await handlers.POST(post({ animalId: 'tiger' }))).json()).toEqual({ total: 2, animalCount: 2 });
     expect(await (await handlers.POST(post({ animalId: 'orca' }))).json()).toEqual({ total: 3, animalCount: 1 });
-    expect(Object.fromEntries(store.byAnimal)).toEqual({ tiger: 2, orca: 1 });
+    expect(Object.fromEntries(store.byAnimal.get('animals')!)).toEqual({ tiger: 2, orca: 1 });
+  });
+
+  it('keeps each quiz separate', async () => {
+    const store = createMemoryStore({ animals: { orca: 5 } });
+    const handlers = createStatsHandlers(store, catalogs);
+    expect(await (await handlers.POST(post({ quiz: 'prehistoric', animalId: 'orca' }))).json()).toEqual({ total: 1, animalCount: 1 });
+    expect(await (await handlers.GET(get('?quiz=prehistoric&animal=trex'))).json()).toEqual({ total: 1, animalCount: 0 });
+    expect(await (await handlers.GET(get('?quiz=animals'))).json()).toEqual({ total: 5 });
+    // Animals and answers are validated against the named quiz.
+    expect((await handlers.POST(post({ quiz: 'prehistoric', animalId: 'tiger' }))).status).toBe(400);
+    expect((await handlers.POST(post({ quiz: 'prehistoric', animalId: 'trex', answers: [['habitat', 'ocean']] }))).status).toBe(400);
+    expect((await handlers.POST(post({ quiz: 'prehistoric', animalId: 'trex', answers: [['legacy', 'biggest']] }))).status).toBe(200);
+    expect(Object.fromEntries(store.answerCounts.get('prehistoric')!)).toEqual({ 'legacy:biggest': 1 });
+    expect(store.answerCounts.get('animals')).toBeUndefined();
+  });
+
+  it('rejects unknown quizzes', async () => {
+    const store = createMemoryStore();
+    const handlers = createStatsHandlers(store, catalogs);
+    expect((await handlers.GET(get('?quiz=dragons'))).status).toBe(400);
+    expect((await handlers.GET(get('?quiz=__proto__'))).status).toBe(400);
+    expect((await handlers.POST(post({ quiz: 'dragons', animalId: 'tiger' }))).status).toBe(400);
+    expect((await handlers.POST(post({ quiz: 7, animalId: 'tiger' }))).status).toBe(400);
+    expect(await store.getTotal('animals')).toBe(0);
+  });
+
+  it('keeps the original keys for the main quiz and namespaces the others', () => {
+    expect(statsKeys('animals').total).toBe('quiz:completions');
+    expect(statsKeys('prehistoric').byAnimal).toBe('prehistoric:completions:by-animal');
   });
 
   it('rejects unknown animals and malformed bodies without counting them', async () => {
     const store = createMemoryStore();
-    const handlers = createStatsHandlers(store, valid);
+    const handlers = createStatsHandlers(store, catalogs);
     expect((await handlers.POST(post({ animalId: 'dragon' }))).status).toBe(400);
     expect((await handlers.POST(post({}))).status).toBe(400);
     expect((await handlers.POST(post('not json'))).status).toBe(400);
-    expect(await store.getTotal()).toBe(0);
+    expect((await handlers.POST(post('null'))).status).toBe(400);
+    expect(await store.getTotal('animals')).toBe(0);
   });
 
   it('reports unavailable when no storage is configured', async () => {
-    const handlers = createStatsHandlers(null, valid);
+    const handlers = createStatsHandlers(null, catalogs);
     expect((await handlers.GET(get())).status).toBe(503);
     expect((await handlers.POST(post({ animalId: 'tiger' }))).status).toBe(503);
   });
 
   it('records anonymous answer choices alongside a completion', async () => {
     const store = createMemoryStore();
-    const handlers = createStatsHandlers(store, valid);
+    const handlers = createStatsHandlers(store, catalogs);
     const answers = [
       ['habitat', 'ocean'],
       ['rhythm', 'night'],
@@ -89,23 +121,24 @@ describe('completion stats API', () => {
     expect((await handlers.POST(post({ animalId: 'orca', answers }))).status).toBe(200);
     expect((await handlers.POST(post({ animalId: 'tiger', answers: [['habitat', 'ocean']] }))).status).toBe(200);
 
-    expect(Object.fromEntries(store.answerCounts)).toEqual({ 'habitat:ocean': 2, 'rhythm:night': 1 });
-    expect(store.answerLog).toHaveLength(2);
-    expect(store.answerLog[1]).toMatchObject({ a: 'orca', r: answers });
-    expect(store.answerLog[1]!.d).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(Object.fromEntries(store.answerCounts.get('animals')!)).toEqual({ 'habitat:ocean': 2, 'rhythm:night': 1 });
+    const log = store.answerLogs.get('animals')!;
+    expect(log).toHaveLength(2);
+    expect(log[1]).toMatchObject({ a: 'orca', r: answers });
+    expect(log[1]!.d).toMatch(/^\d{4}-\d{2}-\d{2}$/);
   });
 
   it('still accepts completions from older clients that send no answers', async () => {
     const store = createMemoryStore();
-    const handlers = createStatsHandlers(store, valid);
+    const handlers = createStatsHandlers(store, catalogs);
     expect((await handlers.POST(post({ animalId: 'orca' }))).status).toBe(200);
-    expect(await store.getTotal()).toBe(1);
-    expect(store.answerLog).toHaveLength(0);
+    expect(await store.getTotal('animals')).toBe(1);
+    expect(store.answerLogs.size).toBe(0);
   });
 
   it('rejects answers that do not match the question bank, and counts nothing', async () => {
     const store = createMemoryStore();
-    const handlers = createStatsHandlers(store, valid);
+    const handlers = createStatsHandlers(store, catalogs);
     const bad = [
       [['habitat', 'moon']],
       [['colour', 'blue']],
@@ -118,7 +151,7 @@ describe('completion stats API', () => {
     for (const answers of bad) {
       expect((await handlers.POST(post({ animalId: 'orca', answers }))).status).toBe(400);
     }
-    expect(await store.getTotal()).toBe(0);
+    expect(await store.getTotal('animals')).toBe(0);
     expect(store.answerCounts.size).toBe(0);
   });
 });

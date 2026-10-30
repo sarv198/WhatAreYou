@@ -1,6 +1,16 @@
 import type { TraitId, TraitProfile } from './data/traits';
 
-export type AnimalClass = 'reptile' | 'amphibian' | 'bird' | 'mammal' | 'fish' | 'invertebrate';
+export type AnimalClass =
+  | 'reptile'
+  | 'amphibian'
+  | 'bird'
+  | 'mammal'
+  | 'fish'
+  | 'invertebrate'
+  | 'dinosaur'
+  | 'pterosaur'
+  | 'marine-reptile'
+  | 'synapsid';
 
 export interface AnimalProfile {
   id: string;

@@ -11,6 +11,10 @@ export const CLASS_COLORS: Record<AnimalClass, string> = {
   mammal: '#e6c396',
   fish: '#63c2b8',
   invertebrate: '#e98a72',
+  dinosaur: '#f0a058',
+  pterosaur: '#9fb8e6',
+  'marine-reptile': '#5cc0cc',
+  synapsid: '#d686a4',
 };
 
 const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
@@ -72,8 +76,8 @@ export function Field({ animals, scores, poolIds, mode, winnerId, className, lab
     >
       <defs>
         <radialGradient id="field-halo">
-          <stop offset="0%" stopColor="rgba(217,179,108,0.14)" />
-          <stop offset="100%" stopColor="rgba(217,179,108,0)" />
+          <stop offset="0%" stopColor="var(--gold)" stopOpacity={0.14} />
+          <stop offset="100%" stopColor="var(--gold)" stopOpacity={0} />
         </radialGradient>
         <filter id="field-glow" x="-100%" y="-100%" width="300%" height="300%">
           <feGaussianBlur stdDeviation="4" />

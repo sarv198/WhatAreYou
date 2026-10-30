@@ -69,8 +69,8 @@
 
 .option[data-active] {
   border-color: var(--gold);
-  background: linear-gradient(180deg, rgba(232, 185, 90, 0.26), rgba(232, 185, 90, 0.14));
-  box-shadow: 0 0 0 1px var(--gold), 0 10px 30px -12px rgba(232, 185, 90, 0.5);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--gold) 26%, transparent), color-mix(in srgb, var(--gold) 14%, transparent));
+  box-shadow: 0 0 0 1px var(--gold), 0 10px 30px -12px color-mix(in srgb, var(--gold) 50%, transparent);
 }
 
 .option[data-dimmed] {
@@ -103,7 +103,7 @@
 .option[data-active] .key {
   background: var(--gold);
   border-color: var(--gold);
-  color: #19140a;
+  color: var(--on-gold);
 }
 
 .label {

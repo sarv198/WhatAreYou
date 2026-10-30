@@ -46,6 +46,7 @@
 .heroHead {
   grid-area: head;
   justify-content: flex-end;
+  container-type: inline-size;
 }
 
 .heroBody {
@@ -61,7 +62,8 @@
 }
 
 .name {
-  font-size: clamp(2.8rem, 7.4vw, 6.2rem);
+  /* Shrinks for long single words (Pachycephalosaurus) so they never overflow the column. */
+  font-size: min(clamp(2.8rem, 7.4vw, 6.2rem), calc(100cqi / (var(--longest-word, 8) * 0.68)));
   font-weight: 350;
   line-height: 0.94;
   letter-spacing: -0.04em;
@@ -372,7 +374,7 @@
 .primary {
   border: 0;
   background: var(--gold);
-  color: #19140a;
+  color: var(--on-gold);
   font-weight: 600;
   padding: 0.95rem 1.7rem;
   min-width: 13rem;
@@ -380,7 +382,7 @@
 
 .primary:hover {
   transform: translateY(-2px);
-  background: #f2c86c;
+  background: var(--gold-hover);
 }
 
 .secondary {

@@ -1,5 +1,7 @@
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
+import type { QuizCopy } from '../data/quizCopy';
+import type { QuizId } from '../data/quizzes';
 import { useAnimalStats, type RecordedCompletion } from '../hooks/useQuizCount';
 import { formatShare, summarizeShare } from '../lib/animalShare';
 import type { QuizResult } from '../lib/resultGenerator';
@@ -10,6 +12,8 @@ import { CLASS_COLORS, Field } from './Field';
 import styles from './ResultScreen.module.css';
 
 interface ResultScreenProps {
+  quiz: QuizId;
+  copy: QuizCopy;
   result: QuizResult;
   animals: readonly AnimalProfile[];
   scores: readonly CandidateScore[];
@@ -25,21 +29,21 @@ function article(name: string): 'a' | 'an' {
   return /^[aeiou]/i.test(name) ? 'an' : 'a';
 }
 
-export function ResultScreen({ result, animals, scores, recorded, onRestart, onBack }: ResultScreenProps) {
+export function ResultScreen({ quiz, copy, result, animals, scores, recorded, onRestart, onBack }: ResultScreenProps) {
   const reduceMotion = useReducedMotion();
   const { animal } = result;
-  const animalStats = useAnimalStats(animal.id, recorded);
+  const animalStats = useAnimalStats(quiz, animal.id, recorded);
   const shareSummary = animalStats ? summarizeShare(animalStats, animals.length) : null;
   const [shareState, setShareState] = useState<'idle' | 'copied' | 'failed'>('idle');
 
   useEffect(() => {
     const previous = document.title;
-    document.title = `I’m ${article(animal.name)} ${animal.name} | What Animal Are You?`;
+    document.title = `I’m ${article(animal.name)} ${animal.name} | ${copy.documentTitle}`;
     window.scrollTo({ top: 0 });
     return () => {
       document.title = previous;
     };
-  }, [animal.name]);
+  }, [animal.name, copy.documentTitle]);
 
   const rise = useMemo(
     () => ({
@@ -54,11 +58,11 @@ export function ResultScreen({ result, animals, scores, recorded, onRestart, onB
   );
 
   const share = async () => {
-    const text = `I’m ${article(animal.name)} ${animal.name}: ${animal.tagline}. What animal are you?`;
+    const text = `I’m ${article(animal.name)} ${animal.name}: ${animal.tagline}. ${copy.question}`;
     const url = window.location.href.split('#')[0]!;
     try {
       if (navigator.share) {
-        await navigator.share({ title: 'What animal are you?', text, url });
+        await navigator.share({ title: copy.question, text, url });
         return;
       }
       await navigator.clipboard.writeText(`${text} ${url}`);
@@ -82,7 +86,14 @@ export function ResultScreen({ result, animals, scores, recorded, onRestart, onB
           <motion.p className={styles.youAre} variants={rise} initial="hidden" animate="show" custom={0}>
             You are {article(animal.name)}…
           </motion.p>
-          <motion.h1 className={styles.name} variants={rise} initial="hidden" animate="show" custom={1}>
+          <motion.h1
+            className={styles.name}
+            style={{ '--longest-word': Math.max(...animal.name.split(/[\s-]+/).map((w) => w.length)) } as CSSProperties}
+            variants={rise}
+            initial="hidden"
+            animate="show"
+            custom={1}
+          >
             {animal.name}
           </motion.h1>
           <motion.p className={styles.tagline} variants={rise} initial="hidden" animate="show" custom={2}>
@@ -192,7 +203,7 @@ export function ResultScreen({ result, animals, scores, recorded, onRestart, onB
         <motion.article className={`${styles.card} ${styles.notes}`} variants={rise} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-60px' }} custom={2}>
           <h2>Field notes</h2>
           <div className={styles.fieldMini}>
-            <Field animals={animals} scores={scores} mode="result" winnerId={animal.id} label={`${animal.name}, out of ${animals.length} animals`} />
+            <Field animals={animals} scores={scores} mode="result" winnerId={animal.id} label={`${animal.name}, out of ${animals.length} ${copy.noun}`} />
           </div>
           <p className={styles.oneOf}>
             One of {result.animalsConsidered}. Found in {result.questionsAsked} questions.

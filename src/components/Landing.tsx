@@ -1,13 +1,19 @@
 import { motion } from 'motion/react';
+import type { QuizCopy } from '../data/quizCopy';
+import type { QuizId } from '../data/quizzes';
 import type { AnimalProfile } from '../types';
 import { Field } from './Field';
 import styles from './Landing.module.css';
 import { QuizCounter } from './QuizCounter';
+import { TRexSkull } from './TRexSkull';
 
 interface LandingProps {
+  quiz: QuizId;
+  copy: QuizCopy;
   animals: readonly AnimalProfile[];
   onStart: () => void;
   onRestart: () => void;
+  onSwitchQuiz: (quiz: QuizId) => void;
   resumeLabel: string | null;
   quizCount: number | null;
 }
@@ -21,7 +27,7 @@ const rise = {
   }),
 };
 
-export function Landing({ animals, onStart, onRestart, resumeLabel, quizCount }: LandingProps) {
+export function Landing({ quiz, copy, animals, onStart, onRestart, onSwitchQuiz, resumeLabel, quizCount }: LandingProps) {
   return (
     <main className={styles.landing}>
       <motion.div
@@ -35,14 +41,29 @@ export function Landing({ animals, onStart, onRestart, resumeLabel, quizCount }:
       </motion.div>
 
       <div className={styles.content}>
+        <motion.div className={styles.switcher} variants={rise} initial="hidden" animate="show" custom={0}>
+          {quiz === 'animals' ? (
+            <button type="button" className={styles.prehistoric} onClick={() => onSwitchQuiz('prehistoric')}>
+              <TRexSkull className={styles.skull} />
+              Prehistoric Animal Quiz
+              <span className={styles.arrow} aria-hidden>
+                →
+              </span>
+            </button>
+          ) : (
+            <button type="button" className={styles.back} onClick={() => onSwitchQuiz('animals')}>
+              <span aria-hidden>←</span> Back to the modern animal quiz
+            </button>
+          )}
+        </motion.div>
         <motion.p className="eyebrow" variants={rise} initial="hidden" animate="show" custom={0}>
-          A field guide to you
+          {copy.eyebrow}
         </motion.p>
         <motion.h1 className={styles.title} variants={rise} initial="hidden" animate="show" custom={1}>
-          What <em>animal</em> are&nbsp;you?
+          {copy.headline.before} <em>{copy.headline.em}</em> {copy.headline.after}
         </motion.h1>
         <motion.p className={styles.lede} variants={rise} initial="hidden" animate="show" custom={2}>
-          {animals.length} animals. A handful of questions. We’ll figure it out.
+          {copy.lede(animals.length)}
         </motion.p>
 
         <motion.div className={styles.actions} variants={rise} initial="hidden" animate="show" custom={3}>
@@ -57,14 +78,14 @@ export function Landing({ animals, onStart, onRestart, resumeLabel, quizCount }:
             </>
           ) : (
             <button type="button" className={styles.cta} onClick={onStart} autoFocus>
-              Find my animal <span aria-hidden>→</span>
+              {copy.cta} <span aria-hidden>→</span>
             </button>
           )}
           <QuizCounter count={quizCount} variant="landing" />
         </motion.div>
 
         <motion.p className={styles.disclaimer} variants={rise} initial="hidden" animate="show" custom={4}>
-          No astrology. No nonsense. Just vibes, instincts, and questionable methodology.
+          {copy.disclaimer}
         </motion.p>
       </div>
 
@@ -74,11 +95,16 @@ export function Landing({ animals, onStart, onRestart, resumeLabel, quizCount }:
         animate={{ opacity: 1 }}
         transition={{ delay: 1.1, duration: 1 }}
       >
-        <span>Adaptive: every answer changes the next question</span>
-        <span className={styles.dot} aria-hidden>·</span>
-        <span>Usually 9–13 questions</span>
-        <span className={styles.dot} aria-hidden>·</span>
-        <span>About two minutes</span>
+        {copy.footer.map((line, i) => (
+          <span key={line} className={styles.footerItem}>
+            {i > 0 && (
+              <span className={styles.dot} aria-hidden>
+                ·
+              </span>
+            )}
+            {line}
+          </span>
+        ))}
       </motion.footer>
     </main>
   );

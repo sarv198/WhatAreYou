@@ -1,5 +1,6 @@
 /**
- * Offline tuning harness. Run with `npm run simulate`.
+ * Offline tuning harness. Run with `npm run simulate`
+ * (add `-- --quiz prehistoric` for the prehistoric quiz).
  *
  *  1. Ideal personas: for every animal, answer each question the way that animal
  *     most likely would. Every animal should win its own persona.
@@ -9,7 +10,9 @@
  *     and how many questions does it take?
  */
 import { evaluateQuiz } from '../src/lib/adaptiveQuiz';
-import { createQuizContext, type QuizContext } from '../src/lib/context';
+import { isQuizId } from '../src/data/quizzes';
+import type { QuizContext } from '../src/lib/context';
+import { createContextFor } from '../src/lib/quizContexts';
 import type { Answer } from '../src/types';
 
 function mulberry32(seed: number) {
@@ -36,7 +39,10 @@ function run(ctx: QuizContext, pick: Picker) {
   }
 }
 
-const ctx = createQuizContext();
+const quizArg = process.argv.indexOf('--quiz');
+const quizId = quizArg > -1 ? process.argv[quizArg + 1] : 'animals';
+if (!isQuizId(quizId)) throw new Error(`Unknown quiz "${quizId}"`);
+const ctx = createContextFor(quizId);
 const { animals, questionsById, likelihoods } = ctx;
 
 // 1. Ideal personas

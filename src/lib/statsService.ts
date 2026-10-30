@@ -1,7 +1,7 @@
 /**
  * Server-side logic for the completion stats, independent of any hosting
  * platform. The Vercel function and the local dev server both plug a store
- * into these handlers.
+ * into these handlers. Each quiz keeps its own counts.
  */
 
 export interface AnimalStats {
@@ -13,25 +13,35 @@ export interface AnimalStats {
 export type RecordedAnswer = [questionId: string, optionId: string];
 
 export interface StatsStore {
-  getTotal(): Promise<number>;
-  getAnimalStats(animalId: string): Promise<AnimalStats>;
+  getTotal(quiz: string): Promise<number>;
+  getAnimalStats(quiz: string, animalId: string): Promise<AnimalStats>;
   /**
    * Records one completed quiz: which animal it ended on and, when provided,
    * the anonymous answer choices that led there.
    */
-  recordCompletion(animalId: string, answers: RecordedAnswer[] | null): Promise<AnimalStats>;
+  recordCompletion(quiz: string, animalId: string, answers: RecordedAnswer[] | null): Promise<AnimalStats>;
 }
 
-export const STATS_KEYS = {
-  total: 'quiz:completions',
-  byAnimal: 'quiz:completions:by-animal',
-  /** Hash of "questionId:optionId" → times chosen in a completed quiz. */
-  answerCounts: 'quiz:answers:counts',
-  /** List of recent completed answer sets (JSON), newest first, capped. */
-  answerLog: 'quiz:answers:log',
-} as const;
+/** The original quiz; requests that don't name a quiz refer to it. */
+export const DEFAULT_QUIZ = 'animals';
 
-/** How many recent completed answer sets to keep in the log. */
+/**
+ * Redis keys for one quiz. The original quiz keeps its historical "quiz:" keys
+ * so existing counts carry over; other quizzes are namespaced by their id.
+ */
+export function statsKeys(quiz: string) {
+  const prefix = quiz === DEFAULT_QUIZ ? 'quiz' : quiz;
+  return {
+    total: `${prefix}:completions`,
+    byAnimal: `${prefix}:completions:by-animal`,
+    /** Hash of "questionId:optionId" → times chosen in a completed quiz. */
+    answerCounts: `${prefix}:answers:counts`,
+    /** List of recent completed answer sets (JSON), newest first, capped. */
+    answerLog: `${prefix}:answers:log`,
+  };
+}
+
+/** How many recent completed answer sets to keep in the log, per quiz. */
 export const ANSWER_LOG_LIMIT = 10_000;
 
 export interface AnswerLogEntry {
@@ -73,6 +83,9 @@ export interface StatsCatalog {
   questions: ReadonlyMap<string, ReadonlySet<string>>;
 }
 
+/** quizId → what's valid in that quiz. */
+export type StatsCatalogs = Record<string, StatsCatalog>;
+
 /**
  * Validates submitted answers against the real question bank.
  * undefined (older clients that don't send answers) is allowed and yields null;
@@ -100,18 +113,28 @@ const json = (body: unknown, init?: ResponseInit) =>
     headers: { 'Content-Type': 'application/json', ...init?.headers },
   });
 
-export function createStatsHandlers(store: StatsStore | null, catalog: StatsCatalog) {
+export function createStatsHandlers(store: StatsStore | null, catalogs: StatsCatalogs) {
   const unavailable = () => json({ error: 'Stats storage is not configured' }, { status: 503 });
   const badRequest = (error: string) => json({ error }, { status: 400 });
+  const resolveQuiz = (raw: unknown) => {
+    const quiz = raw === undefined || raw === null || raw === '' ? DEFAULT_QUIZ : raw;
+    return typeof quiz === 'string' && Object.hasOwn(catalogs, quiz) ? quiz : null;
+  };
 
   return {
-    /** GET /api/stats → { total }; GET /api/stats?animal=id → { total, animalCount } */
+    /**
+     * GET /api/stats[?quiz=id] → { total }
+     * GET /api/stats?animal=id[&quiz=id] → { total, animalCount }
+     */
     async GET(request: Request): Promise<Response> {
       if (!store) return unavailable();
-      const animalId = new URL(request.url).searchParams.get('animal');
-      if (animalId !== null && !catalog.animalIds.has(animalId)) return badRequest('Unknown animal');
+      const params = new URL(request.url).searchParams;
+      const quiz = resolveQuiz(params.get('quiz'));
+      if (!quiz) return badRequest('Unknown quiz');
+      const animalId = params.get('animal');
+      if (animalId !== null && !catalogs[quiz]!.animalIds.has(animalId)) return badRequest('Unknown animal');
 
-      const body = animalId ? await store.getAnimalStats(animalId) : { total: await store.getTotal() };
+      const body = animalId ? await store.getAnimalStats(quiz, animalId) : { total: await store.getTotal(quiz) };
       // Browsers always revalidate; only Vercel's edge briefly caches, to spare the database.
       return json(body, {
         headers: {
@@ -121,53 +144,71 @@ export function createStatsHandlers(store: StatsStore | null, catalog: StatsCata
       });
     },
 
-    /** POST /api/stats { animalId, answers? } → { total, animalCount } */
+    /** POST /api/stats { quiz?, animalId, answers? } → { total, animalCount } */
     async POST(request: Request): Promise<Response> {
       if (!store) return unavailable();
-      let body: { animalId?: unknown; answers?: unknown };
+      let body: { quiz?: unknown; animalId?: unknown; answers?: unknown };
       try {
         body = (await request.json()) as typeof body;
       } catch {
         return badRequest('Expected a JSON body');
       }
-      if (typeof body?.animalId !== 'string' || !catalog.animalIds.has(body.animalId)) {
+      if (typeof body !== 'object' || body === null) return badRequest('Expected a JSON object');
+      const quiz = resolveQuiz(body.quiz);
+      if (!quiz) return badRequest('Unknown quiz');
+      const catalog = catalogs[quiz]!;
+      if (typeof body.animalId !== 'string' || !catalog.animalIds.has(body.animalId)) {
         return badRequest('Unknown animal');
       }
       const answers = parseAnswers(body.answers, catalog);
       if (answers === 'invalid') return badRequest('Invalid answers');
 
-      const stats = await store.recordCompletion(body.animalId, answers);
+      const stats = await store.recordCompletion(quiz, body.animalId, answers);
       return json(stats, { headers: { 'Cache-Control': 'no-store' } });
     },
   };
 }
 
-/** In-memory store for local development and tests. */
-export function createMemoryStore(seed: Record<string, number> = {}) {
-  const byAnimal = new Map(Object.entries(seed));
-  const answerCounts = new Map<string, number>();
-  const answerLog: AnswerLogEntry[] = [];
-  let total = [...byAnimal.values()].reduce((a, b) => a + b, 0);
-  const statsFor = (animalId: string) => ({ total, animalCount: byAnimal.get(animalId) ?? 0 });
+/** In-memory store for local development and tests. Seed is quiz → animal → count. */
+export function createMemoryStore(seed: Record<string, Record<string, number>> = {}) {
+  const byAnimal = new Map<string, Map<string, number>>();
+  const totals = new Map<string, number>();
+  const answerCounts = new Map<string, Map<string, number>>();
+  const answerLogs = new Map<string, AnswerLogEntry[]>();
+  const getOrInit = <V>(map: Map<string, V>, key: string, init: () => V) => {
+    if (!map.has(key)) map.set(key, init());
+    return map.get(key)!;
+  };
+  for (const [quiz, counts] of Object.entries(seed)) {
+    byAnimal.set(quiz, new Map(Object.entries(counts)));
+    totals.set(quiz, Object.values(counts).reduce((a, b) => a + b, 0));
+  }
+  const statsFor = (quiz: string, animalId: string) => ({
+    total: totals.get(quiz) ?? 0,
+    animalCount: byAnimal.get(quiz)?.get(animalId) ?? 0,
+  });
 
   const store: StatsStore = {
-    getTotal: async () => total,
-    getAnimalStats: async (animalId) => statsFor(animalId),
-    recordCompletion: async (animalId, answers) => {
-      byAnimal.set(animalId, (byAnimal.get(animalId) ?? 0) + 1);
-      total++;
+    getTotal: async (quiz) => totals.get(quiz) ?? 0,
+    getAnimalStats: async (quiz, animalId) => statsFor(quiz, animalId),
+    recordCompletion: async (quiz, animalId, answers) => {
+      const animals = getOrInit(byAnimal, quiz, () => new Map<string, number>());
+      animals.set(animalId, (animals.get(animalId) ?? 0) + 1);
+      totals.set(quiz, (totals.get(quiz) ?? 0) + 1);
       if (answers) {
-        for (const [q, o] of answers) answerCounts.set(`${q}:${o}`, (answerCounts.get(`${q}:${o}`) ?? 0) + 1);
-        answerLog.unshift(answerLogEntry(animalId, answers));
-        answerLog.length = Math.min(answerLog.length, ANSWER_LOG_LIMIT);
+        const counts = getOrInit(answerCounts, quiz, () => new Map<string, number>());
+        for (const [q, o] of answers) counts.set(`${q}:${o}`, (counts.get(`${q}:${o}`) ?? 0) + 1);
+        const log = getOrInit(answerLogs, quiz, () => [] as AnswerLogEntry[]);
+        log.unshift(answerLogEntry(animalId, answers));
+        log.length = Math.min(log.length, ANSWER_LOG_LIMIT);
       }
-      return statsFor(animalId);
+      return statsFor(quiz, animalId);
     },
   };
-  return Object.assign(store, { byAnimal, answerCounts, answerLog });
+  return Object.assign(store, { byAnimal, answerCounts, answerLogs });
 }
 
-/** Builds the validation catalog from the animal and question data. */
+/** Builds the validation catalog for one quiz from its animal and question data. */
 export function buildCatalog(
   animals: readonly { id: string }[],
   questions: readonly { id: string; options: readonly { id: string }[] }[],

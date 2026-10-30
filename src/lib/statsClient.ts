@@ -1,8 +1,11 @@
+import type { QuizId } from '../data/quizzes';
 import type { Answer } from '../types';
 import type { AnimalStats } from './statsService';
 
 const ENDPOINT = '/api/stats';
-const RUN_KEY = 'what-animal-are-you:run';
+
+/** The original quiz keeps its historical storage key; others are namespaced. */
+const runKey = (quiz: QuizId) => (quiz === 'animals' ? 'what-animal-are-you:run' : `what-animal-are-you:${quiz}:run`);
 
 async function readJson(res: Response): Promise<Record<string, unknown> | null> {
   if (!res.ok) return null;
@@ -16,18 +19,18 @@ function toAnimalStats(data: Record<string, unknown> | null): AnimalStats | null
 }
 
 /** Total completed quizzes, or null when the counter isn't available (e.g. not deployed). */
-export async function fetchQuizCount(signal?: AbortSignal): Promise<number | null> {
+export async function fetchQuizCount(quiz: QuizId, signal?: AbortSignal): Promise<number | null> {
   try {
-    const data = await readJson(await fetch(ENDPOINT, { signal, cache: 'no-cache' }));
+    const data = await readJson(await fetch(`${ENDPOINT}?quiz=${quiz}`, { signal, cache: 'no-cache' }));
     return typeof data?.total === 'number' ? data.total : null;
   } catch {
     return null;
   }
 }
 
-export async function fetchAnimalStats(animalId: string, signal?: AbortSignal): Promise<AnimalStats | null> {
+export async function fetchAnimalStats(quiz: QuizId, animalId: string, signal?: AbortSignal): Promise<AnimalStats | null> {
   try {
-    const url = `${ENDPOINT}?animal=${encodeURIComponent(animalId)}`;
+    const url = `${ENDPOINT}?quiz=${quiz}&animal=${encodeURIComponent(animalId)}`;
     return toAnimalStats(await readJson(await fetch(url, { signal, cache: 'no-cache' })));
   } catch {
     return null;
@@ -35,14 +38,18 @@ export async function fetchAnimalStats(animalId: string, signal?: AbortSignal): 
 }
 
 /** Records a completed quiz with its anonymous answer choices (no personal data). */
-export async function recordQuizCompletion(animalId: string, answers: readonly Answer[]): Promise<AnimalStats | null> {
+export async function recordQuizCompletion(
+  quiz: QuizId,
+  animalId: string,
+  answers: readonly Answer[],
+): Promise<AnimalStats | null> {
   try {
     return toAnimalStats(
       await readJson(
         await fetch(ENDPOINT, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ animalId, answers: answers.map((a) => [a.questionId, a.optionId]) }),
+          body: JSON.stringify({ quiz, animalId, answers: answers.map((a) => [a.questionId, a.optionId]) }),
         }),
       ),
     );
@@ -52,7 +59,7 @@ export async function recordQuizCompletion(animalId: string, answers: readonly A
 }
 
 /**
- * A "run" is one attempt at the quiz, from a fresh start to its first result.
+ * A "run" is one attempt at a quiz, from a fresh start to its first result.
  * Each run is counted once, so revisiting a result, reloading, or going back
  * to tweak an answer doesn't inflate the total.
  */
@@ -61,31 +68,31 @@ interface Run {
   counted: boolean;
 }
 
-function readRun(): Run | null {
+function readRun(quiz: QuizId): Run | null {
   try {
-    const raw = localStorage.getItem(RUN_KEY);
+    const raw = localStorage.getItem(runKey(quiz));
     return raw ? (JSON.parse(raw) as Run) : null;
   } catch {
     return null;
   }
 }
 
-function writeRun(run: Run) {
+function writeRun(quiz: QuizId, run: Run) {
   try {
-    localStorage.setItem(RUN_KEY, JSON.stringify(run));
+    localStorage.setItem(runKey(quiz), JSON.stringify(run));
   } catch {
     // Without storage every completion counts; acceptable for a fun tally.
   }
 }
 
-export function startNewRun() {
-  writeRun({ id: `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`, counted: false });
+export function startNewRun(quiz: QuizId) {
+  writeRun(quiz, { id: `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`, counted: false });
 }
 
 /** Returns true exactly once per run, and marks the run as counted. */
-export function claimRunCompletion(): boolean {
-  const run = readRun() ?? { id: 'legacy', counted: false };
+export function claimRunCompletion(quiz: QuizId): boolean {
+  const run = readRun(quiz) ?? { id: 'legacy', counted: false };
   if (run.counted) return false;
-  writeRun({ ...run, counted: true });
+  writeRun(quiz, { ...run, counted: true });
   return true;
 }

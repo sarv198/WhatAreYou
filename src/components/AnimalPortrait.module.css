@@ -24,7 +24,7 @@
   place-items: center;
   background:
     radial-gradient(circle at 50% 60%, color-mix(in srgb, var(--accent) 55%, transparent), transparent 65%),
-    linear-gradient(180deg, color-mix(in srgb, var(--accent) 25%, #0b110e), #0b110e);
+    linear-gradient(180deg, color-mix(in srgb, var(--accent) 25%, var(--bg)), var(--bg));
 }
 
 .contours {

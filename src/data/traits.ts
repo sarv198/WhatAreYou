@@ -121,6 +121,7 @@ export const TRAIT_SCHEMA = {
       endurance: { label: 'Enduring', phrase: 'serious staying power' },
       armor: { label: 'Armoured', phrase: 'a near-indestructible shell', defaultValue: 0.2 },
       venom: { label: 'Venomous', phrase: 'a dangerously toxic edge', defaultValue: 0 },
+      size: { label: 'Massive', phrase: 'sheer, ground-shaking size', defaultValue: 0.4 },
     },
   },
   drive: {
